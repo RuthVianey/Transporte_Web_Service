@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿//git push origin master --force
+
+using Microsoft.EntityFrameworkCore;
 using static Transporte_Web_Service.Entity.Respuesta;
 
 namespace Transporte_Web_Service.Entity
