@@ -1,4 +1,5 @@
-﻿using Transporte_Web_Service.Data;
+﻿using System.Runtime.InteropServices.ObjectiveC;
+using Transporte_Web_Service.Data;
 using Transporte_Web_Service.Entity;
 
 namespace Transporte_Web_Service.Bussines
@@ -18,32 +19,6 @@ namespace Transporte_Web_Service.Bussines
             _dal = dal;
         }
 
-        public object Dashboard_ViajesPorEstado(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
-        {
-            List<Dashboard_ViajesPorEstado> listaDatos = new List<Dashboard_ViajesPorEstado>();
-
-            try
-            {
-                listaDatos = _dal.daschObtenViajeEstado(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
-
-                if (listaDatos.Count > 0)
-                {
-                    resp.setDatos(new { listaDatos });
-                }
-                else
-                {
-                    resp.setEstatus(0);
-                    resp.setMensaje("No se actualizo la informacion.");
-                }
-            }
-            catch (Exception ex)
-            {
-                resp.setEstatus(-1);
-                resp.setMensaje(ex.Message);
-            }
-            return resp.GetRespuestaJSON();
-        }
-
         public object Dashboard_CostosPorTipo(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
         {
             List<Dashboard_CostosPorTipo> listaDatos = new List<Dashboard_CostosPorTipo>();
@@ -60,6 +35,56 @@ namespace Transporte_Web_Service.Bussines
                 {
                     resp.setEstatus(0);
                     resp.setMensaje("No se encontraron datos.");
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.setEstatus(-1);
+                resp.setMensaje(ex.Message);
+            }
+            return resp.GetRespuestaJSON();
+        }
+
+        public Object Dashboard_RentabilidadMensual(int IdEmpresa, int IdSucursal, int Anio)
+        {
+            List<Dasboard_RentabilidadMensual> listaDatos = new List<Dasboard_RentabilidadMensual>();
+            try
+            {
+                listaDatos = _dal.dashRentaBilidadMensual(IdEmpresa, IdSucursal, Anio);
+                if (listaDatos.Count > 0)
+                {
+                    resp.setDatos(new { listaDatos });
+                }
+                else
+                {
+                    resp.setEstatus(0);
+                    resp.setMensaje("No se encontraron datos.");
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.setEstatus(-1);
+                resp.setMensaje(ex.Message);
+            }
+            return resp.GetRespuestaJSON();
+        }
+
+        public object Dashboard_ViajesPorEstado(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
+        {
+            List<Dashboard_ViajesPorEstado> listaDatos = new List<Dashboard_ViajesPorEstado>();
+
+            try
+            {
+                listaDatos = _dal.dashObtenViajeEstado(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
+
+                if (listaDatos.Count > 0)
+                {
+                    resp.setDatos(new { listaDatos });
+                }
+                else
+                {
+                    resp.setEstatus(0);
+                    resp.setMensaje("No se actualizo la informacion.");
                 }
             }
             catch (Exception ex)

@@ -28,5 +28,10 @@ namespace Transporte_Web_Service.Controllers
             return _bs.Dashboard_CostosPorTipo(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
         }
 
+        [HttpGet("RentabilidadMensual")]
+        public object Dashboard_RentabilidadMensual(int IdEmpresa, int IdSucursal, int Anio)
+        {
+            return _bs.Dashboard_RentabilidadMensual(IdEmpresa, IdSucursal, Anio);
+        }
     }
 }
