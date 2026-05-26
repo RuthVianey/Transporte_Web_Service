@@ -18,5 +18,57 @@ namespace Transporte_Web_Service.Bussines
             _dal = dal;
         }
 
+        public object Dashboard_ViajesPorEstado(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
+        {
+            List<Dashboard_ViajesPorEstado> listaDatos = new List<Dashboard_ViajesPorEstado>();
+
+            try
+            {
+                listaDatos = _dal.daschObtenViajeEstado(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
+
+                if (listaDatos.Count > 0)
+                {
+                    resp.setDatos(new { listaDatos });
+                }
+                else
+                {
+                    resp.setEstatus(0);
+                    resp.setMensaje("No se actualizo la informacion.");
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.setEstatus(-1);
+                resp.setMensaje(ex.Message);
+            }
+            return resp.GetRespuestaJSON();
+        }
+
+        public object Dashboard_CostosPorTipo(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
+        {
+            List<Dashboard_CostosPorTipo> listaDatos = new List<Dashboard_CostosPorTipo>();
+
+            try
+            {
+                listaDatos = _dal.dashObtenCostoTipo(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
+
+                if (listaDatos.Count > 0)
+                {
+                    resp.setDatos(new { listaDatos });
+                }
+                else
+                {
+                    resp.setEstatus(0);
+                    resp.setMensaje("No se encontraron datos.");
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.setEstatus(-1);
+                resp.setMensaje(ex.Message);
+            }
+            return resp.GetRespuestaJSON();
+        }
     }
 }
+

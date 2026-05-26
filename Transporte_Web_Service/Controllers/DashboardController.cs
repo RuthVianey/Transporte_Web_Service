@@ -14,5 +14,19 @@ namespace Transporte_Web_Service.Controllers
         {
             _bs = bs;
         }
+
+
+        [HttpGet("ViajesPorEstado")]
+        public object Dashboard_ViajesPorEstado(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
+        {
+            return _bs.Dashboard_ViajesPorEstado(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
+        }
+
+        [HttpGet("CostosPorTipo")]
+        public object Dashboard_CostosPorTipo(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
+        {
+            return _bs.Dashboard_CostosPorTipo(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
+        }
+
     }
 }
