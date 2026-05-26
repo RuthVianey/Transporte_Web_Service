@@ -12,5 +12,6 @@
         public string? TipoCosto { get; set; }
         public decimal Monto { get; set; }
     }
-}  
+    //comentario de prueba
+}
 
