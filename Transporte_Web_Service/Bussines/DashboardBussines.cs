@@ -19,13 +19,37 @@ namespace Transporte_Web_Service.Bussines
             _dal = dal;
         }
 
-        public object Dashboard_CostosPorTipo(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
+        public object Bs_Dashboard_CostosPorTipo(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
         {
-            List<Dashboard_CostosPorTipo> listaDatos = new List<Dashboard_CostosPorTipo>();
+            List<Entity_Dashboard_CostosPorTipo> listaDatos = new List<Entity_Dashboard_CostosPorTipo>();
 
             try
             {
-                listaDatos = _dal.dashObtenCostoTipo(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
+                listaDatos = _dal.Dal_dashObtenCostoTipo(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
+                if (listaDatos.Count > 0)
+                {
+                    resp.setDatos(new { listaDatos });
+                }
+                else
+                {
+                    resp.setEstatus(0);
+                    resp.setMensaje("No se encontraron datos.");
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.setEstatus(-1);
+                resp.setMensaje(ex.Message);
+            }
+            return resp.GetRespuestaJSON();
+        }
+
+        public object Bs_Dashboard_ResumenOperativo(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
+        {
+            List<Entity_Dashboard_ResumenOperativo> listaDatos = new List<Entity_Dashboard_ResumenOperativo>();
+            try
+            {
+                listaDatos = _dal.Dal_Dashboard_ResumenOperativo_TraeDatos(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
 
                 if (listaDatos.Count > 0)
                 {
@@ -45,12 +69,12 @@ namespace Transporte_Web_Service.Bussines
             return resp.GetRespuestaJSON();
         }
 
-        public Object Dashboard_RentabilidadMensual(int IdEmpresa, int IdSucursal, int Anio)
+        public Object Bs_Dashboard_RentabilidadMensual(int IdEmpresa, int IdSucursal, int Anio)
         {
-            List<Dasboard_RentabilidadMensual> listaDatos = new List<Dasboard_RentabilidadMensual>();
+            List<Entity_Dashboard_RentabilidadMensual> listaDatos = new List<Entity_Dashboard_RentabilidadMensual>();
             try
             {
-                listaDatos = _dal.dashRentaBilidadMensual(IdEmpresa, IdSucursal, Anio);
+                listaDatos = _dal.Dal_dashRentaBilidadMensual(IdEmpresa, IdSucursal, Anio);
                 if (listaDatos.Count > 0)
                 {
                     resp.setDatos(new { listaDatos });
@@ -69,14 +93,13 @@ namespace Transporte_Web_Service.Bussines
             return resp.GetRespuestaJSON();
         }
 
-        public object Dashboard_ViajesPorEstado(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
+        public object Bs_Dashboard_ViajesPorEstado(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
         {
-            List<Dashboard_ViajesPorEstado> listaDatos = new List<Dashboard_ViajesPorEstado>();
+            List<Entity_Dashboard_ViajesPorEstado> listaDatos = new List<Entity_Dashboard_ViajesPorEstado>();
 
             try
             {
-                listaDatos = _dal.dashObtenViajeEstado(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
-
+                listaDatos = _dal.Dal_dashObtenViajeEstado(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
                 if (listaDatos.Count > 0)
                 {
                     resp.setDatos(new { listaDatos });
@@ -84,7 +107,7 @@ namespace Transporte_Web_Service.Bussines
                 else
                 {
                     resp.setEstatus(0);
-                    resp.setMensaje("No se actualizo la informacion.");
+                    resp.setMensaje("No se encontraron datos.");
                 }
             }
             catch (Exception ex)

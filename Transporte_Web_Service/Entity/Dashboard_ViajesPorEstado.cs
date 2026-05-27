@@ -1,13 +1,13 @@
 ﻿namespace Transporte_Web_Service.Entity
 {
     
-    public class Dashboard_CostosPorTipo
+    public class Entity_Dashboard_CostosPorTipo
     { 
         public string? TipoCosto { get; set; }
         public decimal Monto { get; set; }
     }
   
-    public class Dasboard_RentabilidadMensual
+    public class Entity_Dashboard_RentabilidadMensual
     {
         public int Mes { get; set; }
         public string? NombreMes { get; set; }
@@ -17,7 +17,7 @@
         public decimal UtilidadTotal { get; set; }
     }
 
-    public class Dasboard_ResumenOperativo
+    public class Entity_Dashboard_ResumenOperativo
     {
         public int TotalViajes { get; set; }
         public int ViajesPendientes { get; set; }
@@ -34,9 +34,9 @@
         public decimal CostoPorKm { get; set; }
         public decimal LitrosCombustible { get; set; }
         public decimal RendimientoKmPorLitro { get; set; }
-}
+} 
 
-    public class Dashboard_ViajesPorEstado
+    public class Entity_Dashboard_ViajesPorEstado
     {
         public int IdEstadoViaje { get; set; }
         public string? EstadoViaje { get; set; }

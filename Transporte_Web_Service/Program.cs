@@ -15,8 +15,8 @@ builder.Services.AddDbContext<MiDbContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
-builder.Services.AddScoped<CatalogosBS>();
-builder.Services.AddScoped<CatalogosDAC>();
+//builder.Services.AddScoped<CatalogosBS>();
+//builder.Services.AddScoped<CatalogosDAC>();
 
 builder.Services.AddScoped<UsuariosBS>();
 builder.Services.AddScoped<UsuariosDAC>();

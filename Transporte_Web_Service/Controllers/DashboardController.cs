@@ -15,23 +15,28 @@ namespace Transporte_Web_Service.Controllers
             _bs = bs;
         }
 
-
-        [HttpGet("ViajesPorEstado")]
-        public object Dashboard_ViajesPorEstado(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
-        {
-            return _bs.Dashboard_ViajesPorEstado(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
-        }
-
         [HttpGet("CostosPorTipo")]
         public object Dashboard_CostosPorTipo(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
         {
-            return _bs.Dashboard_CostosPorTipo(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
+            return _bs.Bs_Dashboard_CostosPorTipo(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
         }
 
         [HttpGet("RentabilidadMensual")]
         public object Dashboard_RentabilidadMensual(int IdEmpresa, int IdSucursal, int Anio)
         {
-            return _bs.Dashboard_RentabilidadMensual(IdEmpresa, IdSucursal, Anio);
+            return _bs.Bs_Dashboard_RentabilidadMensual(IdEmpresa, IdSucursal, Anio);
+        }
+
+        [HttpGet("ResumenOperativo")]
+        public object Dashboard_ResumenOperativo(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
+        {
+            return _bs.Bs_Dashboard_ResumenOperativo(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
+        }
+
+        [HttpGet("ViajesPorEstado")]
+        public object Dashboard_ViajesPorEstado(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
+        {
+            return _bs.Bs_Dashboard_ViajesPorEstado(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
         }
     }
 }
