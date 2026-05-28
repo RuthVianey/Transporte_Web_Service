@@ -17,9 +17,9 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpPost("listaDatos_Usuario_Valida")]
-        public IActionResult Dal_CargaCombustible(int IdCarga, int IdEmpresa)
+        public IActionResult CargaCombustible(int IdCarga, int IdEmpresa)
         {
-            RespuestaApi resultado = _bs.Dal_CargaCombustible(IdCarga, IdEmpresa); ;
+            RespuestaApi resultado = _bs.Bs_CargaCombustible(IdCarga, IdEmpresa); ;
 
             if (resultado.Estatus == -1)
             {

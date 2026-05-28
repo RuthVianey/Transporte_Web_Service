@@ -18,7 +18,7 @@ namespace Transporte_Web_Service.Bussines
             _dal = dal;
         }
 
-        public RespuestaApi Dal_CargaCombustible(int IdCarga, int IdEmpresa)
+        public RespuestaApi Bs_CargaCombustible(int IdCarga, int IdEmpresa)
         {
             var resp = new RespuestaApi();
 
