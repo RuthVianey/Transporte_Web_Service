@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Transporte_Web_Service.Bussines;
+using Transporte_Web_Service.Entity;
 
 namespace Transporte_Web_Service.Controllers
 {
@@ -16,15 +17,29 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpPost("listaDatos_Usuario_Valida")]
-        public object Usuario_Valida(int iIdEmpresa, string sEmail, string sPasswordIngresado)
+        public IActionResult Usuario_Valida(int iIdEmpresa, string sEmail, string sPasswordIngresado)
         {
-            return _bs.Usuario_Valida(iIdEmpresa, sEmail, sPasswordIngresado);
+            RespuestaApi resultado = _bs.Usuario_Valida(iIdEmpresa, sEmail, sPasswordIngresado);
+            
+            if (resultado.Estatus == -1)
+            {
+                return StatusCode(500, resultado);
+            }
+
+            return Ok(resultado);
         }
 
         [HttpPost("listaDatos_Usuarios_Empresa")]
-        public object Usuarios_Empresa(int iIdEmpresa)
+        public IActionResult Usuarios_Empresa(int iIdEmpresa)
         {
-            return _bs.Usuarios_Empresa(iIdEmpresa);
+            RespuestaApi resultado = _bs.Usuarios_Empresa(iIdEmpresa);
+            
+            if (resultado.Estatus == -1)
+            {
+                return StatusCode(500, resultado);
+            }
+
+            return Ok(resultado);
         }
     }
 }
