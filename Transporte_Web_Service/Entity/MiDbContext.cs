@@ -21,6 +21,11 @@ namespace Transporte_Web_Service.Entity
             modelBuilder.Entity<Lista_Roles>().HasNoKey();
             modelBuilder.Entity<Lista_Usuario>().HasNoKey();
             modelBuilder.Entity<Lista_Programa>().HasNoKey();
+            modelBuilder.Entity<Entity_Dashboard_CostosPorTipo>().HasNoKey();
+            modelBuilder.Entity<Entity_Dashboard_RentabilidadMensual>().HasNoKey();
+            modelBuilder.Entity<Entity_Dashboard_ResumenOperativo>().HasNoKey();
+            modelBuilder.Entity<Entity_Dashboard_ViajesPorEstado>().HasNoKey();
+
         }
 
 
