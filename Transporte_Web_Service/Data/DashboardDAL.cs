@@ -36,8 +36,6 @@ namespace Transporte_Web_Service.Data
 
                 object[] parametros = new object[] { _IdEmpresa, _IdSucursal, _FechaInicio, _FechaFin };
 
-                //listaDatos = _context.Set<Entity_Dashboard_CostosPorTipo>().FromSqlRaw("EXEC sp_Dashboard_CostosPorTipo  @IdEmpresa, @IdSucursal,@FechaInicio, @FechaFin ", parametros).ToList();
-
                 listaDatos = _context.Set<Entity_Dashboard_CostosPorTipo>()
                             .FromSqlRaw("EXEC sp_Dashboard_CostosPorTipo @IdEmpresa, @IdSucursal, @FechaInicio, @FechaFin", parametros)
                             .AsNoTracking() // Agrega esto para consultas de solo lectura

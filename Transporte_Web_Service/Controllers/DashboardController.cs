@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Transporte_Web_Service.Bussines;
+using Transporte_Web_Service.Entity;
 
 namespace Transporte_Web_Service.Controllers
 {
@@ -16,10 +17,6 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpGet("CostosPorTipo")]
-        //public object Dashboard_CostosPorTipo(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
-        //{
-        //    return _bs.Bs_Dashboard_CostosPorTipo(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
-        //}
         public IActionResult Dashboard_CostosPorTipo(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
         {
             // Ejecuta la lógica de negocio

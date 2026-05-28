@@ -4,13 +4,7 @@ using Transporte_Web_Service.Entity;
 
 namespace Transporte_Web_Service.Bussines
 {
-    public class RespuestaApi
-    {
-        public int Estatus { get; set; } = 1; // 1 = Ok, 0 = Sin datos, -1 = Error
-        public string Mensaje { get; set; } = "Operación exitosa.";
-        public object? Datos { get; set; }
-    }
-
+    
     public class DashboardBussines
     {
         private string sBaseDatos;
@@ -25,31 +19,6 @@ namespace Transporte_Web_Service.Bussines
         {
             _dal = dal;
         }
-
-        //public object Bs_Dashboard_CostosPorTipo(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
-        //{
-        //    List<Entity_Dashboard_CostosPorTipo> listaDatos = new List<Entity_Dashboard_CostosPorTipo>();
-
-        //    try
-        //    {
-        //        listaDatos = _dal.Dal_dashObtenCostoTipo(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
-        //        if (listaDatos.Count > 0)
-        //        {
-        //            resp.setDatos(new { listaDatos });
-        //        }
-        //        else
-        //        {
-        //            resp.setEstatus(0);
-        //            resp.setMensaje("No se encontraron datos.");
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        resp.setEstatus(-1);
-        //        resp.setMensaje(ex.Message);
-        //    }
-        //    return resp.GetRespuestaJSON();
-        //}
 
         // Cambiamos el tipo de retorno de 'object' a nuestra clase de respuesta estructurada
         public RespuestaApi Bs_Dashboard_CostosPorTipo(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
