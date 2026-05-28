@@ -33,21 +33,42 @@ namespace Transporte_Web_Service.Controllers
 
 
         [HttpGet("RentabilidadMensual")]
-        public object Dashboard_RentabilidadMensual(int IdEmpresa, int IdSucursal, int Anio)
+        public IActionResult Dashboard_RentabilidadMensual(int IdEmpresa, int IdSucursal, int Anio)
         {
-            return _bs.Bs_Dashboard_RentabilidadMensual(IdEmpresa, IdSucursal, Anio);
+            RespuestaApi resultado = _bs.Bs_Dashboard_RentabilidadMensual(IdEmpresa, IdSucursal, Anio);
+
+            if (resultado.Estatus == -1)
+            {
+                return StatusCode(500, resultado);
+            }
+
+            return Ok(resultado);
         }
 
         [HttpGet("ResumenOperativo")]
-        public object Dashboard_ResumenOperativo(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
+        public IActionResult Dashboard_ResumenOperativo(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
         {
-            return _bs.Bs_Dashboard_ResumenOperativo(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
+            RespuestaApi resultado = _bs.Bs_Dashboard_ResumenOperativo(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
+
+            if (resultado.Estatus == -1)
+            {
+                return StatusCode(500, resultado);
+            }
+
+            return Ok(resultado);
         }
 
         [HttpGet("ViajesPorEstado")]
-        public object Dashboard_ViajesPorEstado(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
+        public IActionResult Dashboard_ViajesPorEstado(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
         {
-            return _bs.Bs_Dashboard_ViajesPorEstado(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
+            RespuestaApi resultado = _bs.Bs_Dashboard_ViajesPorEstado(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
+
+            if (resultado.Estatus == -1)
+            {
+                return StatusCode(500, resultado);
+            }
+
+            return Ok(resultado);
         }
     }
 }
