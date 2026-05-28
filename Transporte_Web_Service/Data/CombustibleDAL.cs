@@ -19,5 +19,26 @@ namespace Transporte_Web_Service.Data
         {
             _context = context;
         }
+
+        public List<RespuestaGeneral> Dal_CargaCombustible(int IdCarga, int IdEmpresa)
+        {
+            List<RespuestaGeneral> listaDatos = new List<RespuestaGeneral>();
+
+            try
+            {
+                var _IdCarga = new SqlParameter("@IdCarga", (object)IdCarga);
+                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)IdEmpresa);
+                
+                object[] parametros = new object[] { _IdCarga, _IdEmpresa };
+                listaDatos = _context.Set<RespuestaGeneral>().FromSqlRaw("EXEC sp_CargaCombustible_Eliminar @IdCarga, @IdEmpresa ", parametros).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return listaDatos;
+        }
     }
 }
+
+
