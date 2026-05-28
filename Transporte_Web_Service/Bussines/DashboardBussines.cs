@@ -49,78 +49,84 @@ namespace Transporte_Web_Service.Bussines
             return resp; // Regresamos el objeto C# limpio
         }
 
-        public object Bs_Dashboard_ResumenOperativo(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
+        public RespuestaApi Bs_Dashboard_ResumenOperativo(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
         {
-            List<Entity_Dashboard_ResumenOperativo> listaDatos = new List<Entity_Dashboard_ResumenOperativo>();
+            var resp = new RespuestaApi();
+
             try
             {
-                listaDatos = _dal.Dal_Dashboard_ResumenOperativo_TraeDatos(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
+                var listaDatos = _dal.Dal_Dashboard_ResumenOperativo_TraeDatos(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
 
-                if (listaDatos.Count > 0)
+                if (listaDatos != null && listaDatos.Count > 0)
                 {
-                    resp.setDatos(new { listaDatos });
+                    // Pasamos el objeto anónimo directamente, sin serializar a texto todavía
+                    resp.Datos = new { listaDatos };
                 }
                 else
                 {
-                    resp.setEstatus(0);
-                    resp.setMensaje("No se encontraron datos.");
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se encontraron datos.";
                 }
             }
             catch (Exception ex)
             {
-                resp.setEstatus(-1);
-                resp.setMensaje(ex.Message);
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
             }
-            return resp.GetRespuestaJSON();
+
+            return resp; // Regresamos el objeto C# limpio
         }
 
-        public Object Bs_Dashboard_RentabilidadMensual(int IdEmpresa, int IdSucursal, int Anio)
+        public RespuestaApi Bs_Dashboard_RentabilidadMensual(int IdEmpresa, int IdSucursal, int Anio)
         {
-            List<Entity_Dashboard_RentabilidadMensual> listaDatos = new List<Entity_Dashboard_RentabilidadMensual>();
+            var resp = new RespuestaApi();
             try
             {
-                listaDatos = _dal.Dal_dashRentaBilidadMensual(IdEmpresa, IdSucursal, Anio);
-                if (listaDatos.Count > 0)
+                var listaDatos = _dal.Dal_dashRentaBilidadMensual(IdEmpresa, IdSucursal, Anio);
+                if (listaDatos != null && listaDatos.Count > 0)
                 {
-                    resp.setDatos(new { listaDatos });
+                    resp.Datos = new { listaDatos } ;
                 }
                 else
                 {
-                    resp.setEstatus(0);
-                    resp.setMensaje("No se encontraron datos.");
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se encontraron datos.";
                 }
             }
             catch (Exception ex)
             {
-                resp.setEstatus(-1);
-                resp.setMensaje(ex.Message);
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
             }
-            return resp.GetRespuestaJSON();
+
+            return resp; // Regresamos el objeto C# limpio
         }
 
-        public object Bs_Dashboard_ViajesPorEstado(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
+        public RespuestaApi Bs_Dashboard_ViajesPorEstado(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
         {
-            List<Entity_Dashboard_ViajesPorEstado> listaDatos = new List<Entity_Dashboard_ViajesPorEstado>();
+            var resp = new RespuestaApi();
 
             try
             {
-                listaDatos = _dal.Dal_dashObtenViajeEstado(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
-                if (listaDatos.Count > 0)
+                var listaDatos = _dal.Dal_dashObtenViajeEstado(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
+
+                if (listaDatos != null && listaDatos.Count > 0)
                 {
-                    resp.setDatos(new { listaDatos });
+                    resp.Datos = new { listaDatos };
                 }
                 else
                 {
-                    resp.setEstatus(0);
-                    resp.setMensaje("No se encontraron datos.");
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se encontraron datos.";
                 }
             }
             catch (Exception ex)
             {
-                resp.setEstatus(-1);
-                resp.setMensaje(ex.Message);
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
             }
-            return resp.GetRespuestaJSON();
+
+            return resp; // Regresamos el objeto C# limpio
         }
     }
 }

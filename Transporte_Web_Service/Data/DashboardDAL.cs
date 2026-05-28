@@ -59,7 +59,10 @@ namespace Transporte_Web_Service.Data
                 var _FechaInicio = new SqlParameter("@FechaInicio", (object)FechaInicio);
                 var _FechaFin = new SqlParameter("@FechaFin", (object)FechaFin);
                 object[] parametros = new object[] { _IdEmpresa, _IdSucursal, _FechaInicio, _FechaFin };
-                listaDatos = _context.Set<Entity_Dashboard_ResumenOperativo>().FromSqlRaw("EXEC sp_Dashboard_ResumenOperativo @IdEmpresa, @IdSucursal,@FechaInicio, @FechaFin ", parametros).ToList();
+                listaDatos = _context.Set<Entity_Dashboard_ResumenOperativo>()
+                                .FromSqlRaw("EXEC sp_Dashboard_ResumenOperativo @IdEmpresa, @IdSucursal,@FechaInicio, @FechaFin ", parametros)
+                                .AsNoTracking() // Agrega esto para consultas de solo lectura
+                                .ToList();
             }
             catch(Exception ex)
             {
@@ -80,7 +83,10 @@ namespace Transporte_Web_Service.Data
 
                 object[] parametros = new object[] { _IdEmpresa, _IdSucursal, _Anio };
 
-                listaDatos = _context.Set<Entity_Dashboard_RentabilidadMensual>().FromSqlRaw("EXEC sp_Dashboard_RentabilidadMensual  @IdEmpresa, @IdSucursal,@Anio ", parametros).ToList();
+                listaDatos = _context.Set<Entity_Dashboard_RentabilidadMensual>()
+                                .FromSqlRaw("EXEC sp_Dashboard_RentabilidadMensual  @IdEmpresa, @IdSucursal,@Anio ", parametros)
+                                .AsNoTracking() // Agrega esto para consultas de solo lectura
+                                .ToList();  
             }
             catch (Exception ex)
             {
@@ -102,7 +108,10 @@ namespace Transporte_Web_Service.Data
 
                 object[] parametros = new object[] { _IdEmpresa, _IdSucursal, _FechaInicio, _FechaFin };
 
-                listaDatos = _context.Set<Entity_Dashboard_ViajesPorEstado>().FromSqlRaw("EXEC sp_Dashboard_ViajesPorEstado  @IdEmpresa, @IdSucursal,@FechaInicio, @FechaFin ", parametros).ToList();
+                listaDatos = _context.Set<Entity_Dashboard_ViajesPorEstado>()
+                                .FromSqlRaw("EXEC sp_Dashboard_ViajesPorEstado  @IdEmpresa, @IdSucursal,@FechaInicio, @FechaFin ", parametros)
+                                .AsNoTracking() // Agrega esto para consultas de solo lectura
+                                .ToList();
             }
             catch (Exception ex)
             {
