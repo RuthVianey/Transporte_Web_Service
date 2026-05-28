@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Transporte_Web_Service.Bussines;
+using Transporte_Web_Service.Entity;
 
 namespace Transporte_Web_Service.Controllers
 {
@@ -16,27 +17,55 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpPost("dato_Empresa_Guardar")]
-        public object Empresa_Guardar(int iIdEmpresa, string sNombre, string sNombre_Corto, string sRFC, string sCalle, string sColonia, string sMunicipio, string sEstado, string sCodigo_Postal, string sTelefono, string sRutaLogo, byte bActivo, string sTipoImagen)
+        public IActionResult Empresa_Guardar(int iIdEmpresa, string sNombre, string sNombre_Corto, string sRFC, string sCalle, string sColonia, string sMunicipio, string sEstado, string sCodigo_Postal, string sTelefono, string sRutaLogo, byte bActivo, string sTipoImagen)
         {
-            return _bs.Empresa_Guardar(iIdEmpresa, sNombre, sNombre_Corto, sRFC, sCalle, sColonia, sMunicipio, sEstado, sCodigo_Postal, sTelefono, sRutaLogo, bActivo, sTipoImagen);
+            RespuestaApi resultado = _bs.Empresa_Guardar(iIdEmpresa, sNombre, sNombre_Corto, sRFC, sCalle, sColonia, sMunicipio, sEstado, sCodigo_Postal, sTelefono, sRutaLogo, bActivo, sTipoImagen);
+
+            if (resultado.Estatus == -1)
+            {
+                return StatusCode(500, resultado);
+            }
+
+            return Ok(resultado);
         }
 
         [HttpPost("dato_Empresa_Desactivar")]
-        public object Empresa_Desactivar(int iIdEmpresa)
+        public IActionResult Empresa_Desactivar(int iIdEmpresa)
         {
-            return _bs.Empresa_Desactivar(iIdEmpresa);
+            RespuestaApi resultado = _bs.Empresa_Desactivar(iIdEmpresa);
+
+            if (resultado.Estatus == -1)
+            {
+                return StatusCode(500, resultado);
+            }
+
+            return Ok(resultado);
         }
 
         [HttpPost("Empresa_Listar")]
-        public object Empresa_Listar(byte bSoloActivos, string sTextoBusqueda)
+        public IActionResult Empresa_Listar(byte bSoloActivos, string sTextoBusqueda)
         {
-            return _bs.Empresa_Listar(bSoloActivos, sTextoBusqueda);
+            RespuestaApi resultado = _bs.Empresa_Listar(bSoloActivos, sTextoBusqueda);
+
+            if (resultado.Estatus == -1)
+            {
+                return StatusCode(500, resultado);
+            }
+
+            return Ok(resultado);
         }
 
         [HttpPost("dato_Empresa_ObtenerPorId")]
-        public object Empresa_ObtenerPorId(int iIdEmpresa)
+        public IActionResult Empresa_ObtenerPorId(int iIdEmpresa)
         {
-            return _bs.Empresa_ObtenerPorId(iIdEmpresa);
+            RespuestaApi resultado = _bs.Empresa_ObtenerPorId(iIdEmpresa);
+
+            if (resultado.Estatus == -1)
+            {
+                return StatusCode(500, resultado);
+            }
+
+            return Ok(resultado);
         }
 
         //[HttpPost("dato_Actualizar_Empresa")]

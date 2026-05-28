@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Transporte_Web_Service.Bussines;
+using Transporte_Web_Service.Entity;
 
 namespace Transporte_Web_Service.Controllers
 {
@@ -18,9 +19,16 @@ namespace Transporte_Web_Service.Controllers
         /*COMIENZA USUARIO*/
 
         [HttpPost("listaDatos_Usuario_Guardar")]
-        public object Usuario_Guardar(int iIdUsuario, int iIdEmpresa, string sNombre, string sEmail, string sContrasenia, int iIdSucursal)
+        public IActionResult Usuario_Guardar(int iIdUsuario, int iIdEmpresa, string sNombre, string sEmail, string sContrasenia, int iIdSucursal)
         {
-            return _Ubs.Usuario_Guardar(iIdUsuario, iIdEmpresa, sNombre, sEmail, sContrasenia, iIdSucursal);
+            RespuestaApi resultado = _Ubs.Usuario_Guardar(iIdUsuario, iIdEmpresa, sNombre, sEmail, sContrasenia, iIdSucursal);
+            
+            if (resultado.Estatus == -1)
+            {
+                return StatusCode(500, resultado);
+            }
+
+            return Ok(resultado);
         }
 
     }
