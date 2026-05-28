@@ -18,101 +18,101 @@ namespace Transporte_Web_Service.Bussines
             _dal = dal;
         }
 
-        public object Cliente_ObtenerPorId(int iIdCliente, int iIdEmpresa)
+        public RespuestaApi Cliente_ObtenerPorId(int iIdCliente, int iIdEmpresa)
         {
-            List<Obtener_Cliente_PorId> listaDatos = new List<Obtener_Cliente_PorId>();
+            var resp = new RespuestaApi();
             try
             {
-                listaDatos = _dal.Cliente_ObtenerPorId(iIdCliente, iIdEmpresa);
+                var listaDatos = _dal.Cliente_ObtenerPorId(iIdCliente, iIdEmpresa);
 
                 if (listaDatos.Count > 0)
                 {
-                    resp.setDatos(new { listaDatos });
+                    resp.Datos = listaDatos;
                 }
                 else
                 {
-                    resp.setEstatus(0);
-                    resp.setMensaje("No se actualizo la informacion.");
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se encontraron datos.";
                 }
             }
             catch (Exception ex)
             {
-                resp.setEstatus(-1);
-                resp.setMensaje("Ocurrio un error al actualizar los datos." + ex.Message);
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
             }
-            return resp.GetRespuestaJSON();
+            return resp;
         }
-        public object Cliente_Listar(int iIdEmpresa, int iIdSucursal, string sSoloActivos, string sTextoBusqueda)
+        public RespuestaApi Cliente_Listar(int iIdEmpresa, int iIdSucursal, string sSoloActivos, string sTextoBusqueda)
         {
-            List<Obtener_Cliente_PorId> listaDatos = new List<Obtener_Cliente_PorId>();
+            var resp = new RespuestaApi();
             try
             {
-                listaDatos = _dal.Cliente_Listar(iIdEmpresa, iIdSucursal, sSoloActivos, sTextoBusqueda);
+                var listaDatos = _dal.Cliente_Listar(iIdEmpresa, iIdSucursal, sSoloActivos, sTextoBusqueda);
 
                 if (listaDatos.Count > 0)
                 {
-                    resp.setDatos(new { listaDatos });
+                    resp.Datos = listaDatos;
                 }
                 else
                 {
-                    resp.setEstatus(0);
-                    resp.setMensaje("No se actualizo la informacion.");
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se encontraron datos.";
                 }
             }
             catch (Exception ex)
             {
-                resp.setEstatus(-1);
-                resp.setMensaje("Ocurrio un error al actualizar los datos." + ex.Message);
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
             }
-            return resp.GetRespuestaJSON();
+            return resp;
         }
-        public object Cliente_Guardar(int iIdCliente, int iIdEmpresa, int iIdSucursal, string sNombre, string sRFC, string sTelefono, string sEmail, int iRegimenFiscal, byte bActivo)
+        public RespuestaApi Cliente_Guardar(int iIdCliente, int iIdEmpresa, int iIdSucursal, string sNombre, string sRFC, string sTelefono, string sEmail, int iRegimenFiscal, byte bActivo)
         {
-            int? dato = 0;
+            var resp = new RespuestaApi();
             try
             {
-                dato = _dal.Cliente_Guardar(iIdCliente, iIdEmpresa, iIdSucursal, sNombre, sRFC, sTelefono, sEmail, iRegimenFiscal, bActivo);
+                var dato = _dal.Cliente_Guardar(iIdCliente, iIdEmpresa, iIdSucursal, sNombre, sRFC, sTelefono, sEmail, iRegimenFiscal, bActivo);
 
                 if (dato != null)
                 {
-                    resp.setDatos(new { dato });
+                    resp.Datos = dato;
                 }
                 else
                 {
-                    resp.setEstatus(0);
-                    resp.setMensaje("No se actualizo la informacion.");
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se encontraron datos.";
                 }
             }
             catch (Exception ex)
             {
-                resp.setEstatus(-1);
-                resp.setMensaje("Ocurrio un error al actualizar los datos." + ex.Message);
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
             }
-            return resp.GetRespuestaJSON();
+            return resp;
         }
-        public object Cliente_Desactivar(int iIdCliente, int iIdEmpresa)
+        public RespuestaApi Cliente_Desactivar(int iIdCliente, int iIdEmpresa)
         {
-            List<RespuestaGeneral> listaDatos = new List<RespuestaGeneral>();
+            var resp = new RespuestaApi();
             try
             {
-                listaDatos = _dal.Cliente_Desactivar(iIdCliente, iIdEmpresa);
+                var listaDatos = _dal.Cliente_Desactivar(iIdCliente, iIdEmpresa);
 
                 if (listaDatos.Count > 0)
                 {
-                    resp.setDatos(new { listaDatos });
+                    resp.Datos = listaDatos ;
                 }
                 else
                 {
-                    resp.setEstatus(0);
-                    resp.setMensaje("No se actualizo la informacion.");
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se encontraron datos.";
                 }
             }
             catch (Exception ex)
             {
-                resp.setEstatus(-1);
-                resp.setMensaje("Ocurrio un error al actualizar los datos." + ex.Message);
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
             }
-            return resp.GetRespuestaJSON();
+            return resp;
         }
     }
 }
