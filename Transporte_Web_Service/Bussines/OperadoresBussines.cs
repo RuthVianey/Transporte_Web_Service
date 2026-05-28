@@ -18,104 +18,104 @@ namespace Transporte_Web_Service.Bussines
             _dal = dal;
         }
 
-        public object Operador_ObtenerPorId(int iIdEmpresa, int iIdOperador)
+        public RespuestaApi Operador_ObtenerPorId(int iIdEmpresa, int iIdOperador)
         {
-            List<Operador_ObtenerPorId> listaDatos = new List<Operador_ObtenerPorId>();
+            var resp = new RespuestaApi();
             try
             {
-                listaDatos = _dal.Operador_ObtenerPorId(iIdEmpresa, iIdOperador);
+                var listaDatos = _dal.Operador_ObtenerPorId(iIdEmpresa, iIdOperador);
 
                 if (listaDatos.Count > 0)
                 {
-                    resp.setDatos(new { listaDatos });
+                    resp.Datos = listaDatos;
                 }
                 else
                 {
-                    resp.setEstatus(0);
-                    resp.setMensaje("No se actualizo la informacion.");
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se encontraron datos.";
                 }
             }
             catch (Exception ex)
             {
-                resp.setEstatus(-1);
-                resp.setMensaje("Ocurrio un error al actualizar los datos." + ex.Message);
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
             }
-            return resp.GetRespuestaJSON();
+            return resp;
         }
 
-        public object Operador_Listar(int iIdEmpresa, int iIdSucursal, byte bSoloActivos, string sTextoBusqueda)
+        public RespuestaApi Operador_Listar(int iIdEmpresa, int iIdSucursal, byte bSoloActivos, string sTextoBusqueda)
         {
-            List<Operador_ObtenerPorId> listaDatos = new List<Operador_ObtenerPorId>();
+            var resp = new RespuestaApi();
             try
             {
-                listaDatos = _dal.Operador_Listar(iIdEmpresa, iIdSucursal, bSoloActivos, sTextoBusqueda);
+                var listaDatos = _dal.Operador_Listar(iIdEmpresa, iIdSucursal, bSoloActivos, sTextoBusqueda);
 
                 if (listaDatos.Count > 0)
                 {
-                    resp.setDatos(new { listaDatos });
+                    resp.Datos = listaDatos;
                 }
                 else
                 {
-                    resp.setEstatus(0);
-                    resp.setMensaje("No se actualizo la informacion.");
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se encontraron datos.";
                 }
             }
             catch (Exception ex)
             {
-                resp.setEstatus(-1);
-                resp.setMensaje("Ocurrio un error al actualizar los datos." + ex.Message);
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
             }
-            return resp.GetRespuestaJSON();
+            return resp;
         }
 
-        public object Operador_Guardar(int iIdOperador, int iIdEmpresa, int iIdSucursal, string sNombre, string sLicencia, string sTipoLicencia, string sFechaVencimientoLicencia, string sCURP, string sTelefono, byte bActivo)
+        public RespuestaApi Operador_Guardar(int iIdOperador, int iIdEmpresa, int iIdSucursal, string sNombre, string sLicencia, string sTipoLicencia, string sFechaVencimientoLicencia, string sCURP, string sTelefono, byte bActivo)
         {
-            List<RespuestaGeneral> listaDatos = new List<RespuestaGeneral>();
+            var resp = new RespuestaApi();
             try
             {
-                listaDatos = _dal.Operador_Guardar(iIdOperador, iIdEmpresa, iIdSucursal, sNombre, sLicencia, sTipoLicencia, sFechaVencimientoLicencia, sCURP, sTelefono, bActivo);
+                var listaDatos = _dal.Operador_Guardar(iIdOperador, iIdEmpresa, iIdSucursal, sNombre, sLicencia, sTipoLicencia, sFechaVencimientoLicencia, sCURP, sTelefono, bActivo);
 
                 if (listaDatos.Count > 0)
                 {
-                    resp.setDatos(new { listaDatos });
+                    resp.Datos = listaDatos;
                 }
                 else
                 {
-                    resp.setEstatus(0);
-                    resp.setMensaje("No se actualizo la informacion.");
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se guardaros los datos.";
                 }
             }
             catch (Exception ex)
             {
-                resp.setEstatus(-1);
-                resp.setMensaje("Ocurrio un error al actualizar los datos." + ex.Message);
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
             }
-            return resp.GetRespuestaJSON();
+            return resp;
         }
 
-        public object Operador_Desactivar(int iIdOperador, int iIdEmpresa)
+        public RespuestaApi Operador_Desactivar(int iIdOperador, int iIdEmpresa)
         {
-            List<RespuestaGeneral> listaDatos = new List<RespuestaGeneral>();
+            var resp = new RespuestaApi();
             try
             {
-                listaDatos = _dal.Operador_Desactivar(iIdOperador, iIdEmpresa);
+                var listaDatos = _dal.Operador_Desactivar(iIdOperador, iIdEmpresa);
 
                 if (listaDatos.Count > 0)
                 {
-                    resp.setDatos(new { listaDatos });
+                    resp.Datos = listaDatos;
                 }
                 else
                 {
-                    resp.setEstatus(0);
-                    resp.setMensaje("No se actualizo la informacion.");
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se desactivo el operador.";
                 }
             }
             catch (Exception ex)
             {
-                resp.setEstatus(-1);
-                resp.setMensaje("Ocurrio un error al actualizar los datos." + ex.Message);
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
             }
-            return resp.GetRespuestaJSON();
+            return resp;
         }
     }
 }

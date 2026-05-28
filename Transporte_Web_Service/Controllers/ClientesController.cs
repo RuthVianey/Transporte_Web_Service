@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Transporte_Web_Service.Bussines;
+using Transporte_Web_Service.Entity;
 
 namespace Transporte_Web_Service.Controllers
 {
@@ -16,27 +17,55 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpPost("listaDatos_Cliente_ObtenerPorId")]
-        public object Cliente_ObtenerPorId(int iIdCliente, int iIdEmpresa)
+        public IActionResult Cliente_ObtenerPorId(int iIdCliente, int iIdEmpresa)
         {
-            return _bs.Cliente_ObtenerPorId(iIdCliente, iIdEmpresa);
+            RespuestaApi resultado = _bs.Cliente_ObtenerPorId(iIdCliente, iIdEmpresa);
+            
+            if (resultado.Estatus == -1)
+            {
+                return StatusCode(500, resultado);
+            }
+
+            return Ok(resultado);
         }
 
         [HttpPost("listaDatos_Cliente_Listar")]
-        public object Cliente_Listar(int iIdEmpresa, int iIdSucursal, string sSoloActivos, string sTextoBusqueda)
+        public IActionResult Cliente_Listar(int iIdEmpresa, int iIdSucursal, string sSoloActivos, string sTextoBusqueda)
         {
-            return _bs.Cliente_Listar(iIdEmpresa, iIdSucursal, sSoloActivos, sTextoBusqueda);
+            RespuestaApi resultado = _bs.Cliente_Listar(iIdEmpresa, iIdSucursal, sSoloActivos, sTextoBusqueda);
+
+            if (resultado.Estatus == -1)
+            {
+                return StatusCode(500, resultado);
+            }
+
+            return Ok(resultado);
         }
 
         [HttpPost("listaDatos_Cliente_Guardar")]
-        public object Cliente_Guardar(int iIdCliente, int iIdEmpresa, int iIdSucursal, string sNombre, string sRFC, string sTelefono, string sEmail, int iRegimenFiscal, byte bActivo)
+        public IActionResult Cliente_Guardar(int iIdCliente, int iIdEmpresa, int iIdSucursal, string sNombre, string sRFC, string sTelefono, string sEmail, int iRegimenFiscal, byte bActivo)
         {
-            return _bs.Cliente_Guardar(iIdCliente, iIdEmpresa, iIdSucursal, sNombre, sRFC, sTelefono, sEmail, iRegimenFiscal, bActivo);
+            RespuestaApi resultado = _bs.Cliente_Guardar(iIdCliente, iIdEmpresa, iIdSucursal, sNombre, sRFC, sTelefono, sEmail, iRegimenFiscal, bActivo);
+
+            if (resultado.Estatus == -1)
+            {
+                return StatusCode(500, resultado);
+            }
+
+            return Ok(resultado);
         }
 
         [HttpPost("listaDatos_Cliente_Desactivar")]
-        public object Cliente_Desactivar(int iIdCliente, int iIdEmpresa)
+        public IActionResult Cliente_Desactivar(int iIdCliente, int iIdEmpresa)
         {
-            return _bs.Cliente_Desactivar(iIdCliente, iIdEmpresa);
+            RespuestaApi resultado = _bs.Cliente_Desactivar(iIdCliente, iIdEmpresa);
+
+            if (resultado.Estatus == -1)
+            {
+                return StatusCode(500, resultado);
+            }
+
+            return Ok(resultado);
         }
     }
 }

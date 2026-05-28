@@ -22,9 +22,9 @@ namespace Transporte_Web_Service.Bussines
             _dac = dac;
         }
 
-        public object Empresa_Guardar(int iIdEmpresa, string sNombre, string sNombre_Corto, string sRFC, string sCalle, string sColonia, string sMunicipio, string sEstado, string sCodigo_Postal, string sTelefono, string sRutaLogo, byte bActivo, string sTipoImagen)
+        public RespuestaApi Empresa_Guardar(int iIdEmpresa, string sNombre, string sNombre_Corto, string sRFC, string sCalle, string sColonia, string sMunicipio, string sEstado, string sCodigo_Postal, string sTelefono, string sRutaLogo, byte bActivo, string sTipoImagen)
         {
-            List<RespuestaGeneral> listaDatos = new List<RespuestaGeneral>();
+            var resp = new RespuestaApi();
             try
             {
                 sPathSubida += "\\" + iIdEmpresa.ToString() + "." + sTipoImagen;
@@ -32,99 +32,99 @@ namespace Transporte_Web_Service.Bussines
                 File.WriteAllBytes(sPathSubida, imageBytes);
                 Console.WriteLine("Imagen guardada en: " + sPathSubida);
 
-                listaDatos = _dac.Empresa_Guardar(iIdEmpresa, sNombre, sNombre_Corto, sRFC, sCalle, sColonia, sMunicipio, sEstado, sCodigo_Postal, sTelefono, sRutaLogo, bActivo);
+                var listaDatos = _dac.Empresa_Guardar(iIdEmpresa, sNombre, sNombre_Corto, sRFC, sCalle, sColonia, sMunicipio, sEstado, sCodigo_Postal, sTelefono, sRutaLogo, bActivo);
 
                 if (listaDatos.Count > 0)
                 {
-                    resp.setDatos(new { listaDatos });
+                    resp.Datos = listaDatos;
                 }
                 else
                 {
-                    resp.setEstatus(0);
-                    resp.setMensaje("No se actualizo la informacion.");
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se encontraron datos.";
                 }
             }
             catch (Exception ex)
             {
-                resp.setEstatus(-1);
-                resp.setMensaje("Ocurrio un error al actualizar los datos." + ex.Message);
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
             }
-            return resp.GetRespuestaJSON();
+            return resp;
         }
 
-        public object Empresa_Desactivar(int iIdEmpresa)
+        public RespuestaApi Empresa_Desactivar(int iIdEmpresa)
         {
-            List<RespuestaGeneral> listaDatos = new List<RespuestaGeneral>();
+            var resp = new RespuestaApi();
             try
             {
-                listaDatos = _dac.Empresa_Desactivar(iIdEmpresa);
+                var listaDatos = _dac.Empresa_Desactivar(iIdEmpresa);
 
                 if (listaDatos.Count > 0)
                 {
-                    resp.setDatos(new { listaDatos });
+                    resp.Datos = listaDatos;
                 }
                 else
                 {
-                    resp.setEstatus(0);
-                    resp.setMensaje("No se actualizo la informacion.");
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se encontraron datos.";
                 }
             }
             catch (Exception ex)
             {
-                resp.setEstatus(-1);
-                resp.setMensaje("Ocurrio un error al actualizar los datos." + ex.Message);
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
             }
-            return resp.GetRespuestaJSON();
+            return resp;
         }
 
-        public object Empresa_Listar(byte bSoloActivos, string sTextoBusqueda)
+        public RespuestaApi Empresa_Listar(byte bSoloActivos, string sTextoBusqueda)
         {
-            List<Empresa_Listar> listaDatos = new List<Empresa_Listar>();
+            var resp = new RespuestaApi();
             try
             {
-                listaDatos = _dac.Empresa_Listar(bSoloActivos, sTextoBusqueda);
+                var listaDatos = _dac.Empresa_Listar(bSoloActivos, sTextoBusqueda);
 
                 if (listaDatos.Count > 0)
                 {
-                    resp.setDatos(new { listaDatos });
+                    resp.Datos = listaDatos;
                 }
                 else
                 {
-                    resp.setEstatus(0);
-                    resp.setMensaje("No se actualizo la informacion.");
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se encontraron datos.";
                 }
             }
             catch (Exception ex)
             {
-                resp.setEstatus(-1);
-                resp.setMensaje("Ocurrio un error al actualizar los datos." + ex.Message);
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
             }
-            return resp.GetRespuestaJSON();
+            return resp;
         }
 
-        public object Empresa_ObtenerPorId(int iIdEmpresa)
+        public RespuestaApi Empresa_ObtenerPorId(int iIdEmpresa)
         {
-            List<Empresa_Listar> listaDatos = new List<Empresa_Listar>();
+            var resp = new RespuestaApi();
             try
             {
-                listaDatos = _dac.Empresa_ObtenerPorId(iIdEmpresa);
+                var listaDatos = _dac.Empresa_ObtenerPorId(iIdEmpresa);
 
                 if (listaDatos.Count > 0)
                 {
-                    resp.setDatos(new { listaDatos });
+                    resp.Datos = listaDatos ;
                 }
                 else
                 {
-                    resp.setEstatus(0);
-                    resp.setMensaje("No se actualizo la informacion.");
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se encontraron datos.";
                 }
             }
             catch (Exception ex)
             {
-                resp.setEstatus(-1);
-                resp.setMensaje("Ocurrio un error al actualizar los datos." + ex.Message);
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
             }
-            return resp.GetRespuestaJSON();
+            return resp;
         }
 
 

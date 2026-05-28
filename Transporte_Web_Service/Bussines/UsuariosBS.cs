@@ -18,29 +18,29 @@ namespace Transporte_Web_Service.Bussines
         }
 
         /*COMIENZA USUARIO*/
-        public object Usuario_Guardar(int iIdUsuario, int iIdEmpresa, string sNombre, string sEmail, string sContrasenia, int iIdSucursal)
+        public RespuestaApi Usuario_Guardar(int iIdUsuario, int iIdEmpresa, string sNombre, string sEmail, string sContrasenia, int iIdSucursal)
         {
-            List<RespuestaGeneral> listaDatos = new List<RespuestaGeneral>();
+            var resp = new RespuestaApi();
             try
             {
-                listaDatos = _dac.Usuario_Guardar(iIdUsuario, iIdEmpresa, sNombre, sEmail, sContrasenia, iIdSucursal);
+                var listaDatos = _dac.Usuario_Guardar(iIdUsuario, iIdEmpresa, sNombre, sEmail, sContrasenia, iIdSucursal);
 
                 if (listaDatos.Count > 0)
                 {
-                    resp.setDatos(new { listaDatos });
+                    resp.Datos = listaDatos;
                 }
                 else
                 {
-                    resp.setEstatus(0);
-                    resp.setMensaje("No se actualizo la informacion.");
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se encontraron datos.";
                 }
             }
             catch (Exception ex)
             {
-                resp.setEstatus(-1);
-                resp.setMensaje("Ocurrio un error al actualizar los datos." + ex.Message);
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
             }
-            return resp.GetRespuestaJSON();
+            return resp;
         }
     }
 }

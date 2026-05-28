@@ -18,54 +18,54 @@ namespace Transporte_Web_Service.Bussines
             _dal = dal;
         }
 
-        public object Usuario_Valida(int iIdEmpresa, string sEmail, string sPasswordIngresado)
+        public RespuestaApi Usuario_Valida(int iIdEmpresa, string sEmail, string sPasswordIngresado)
         {
-            int? dato = 0;
+            var resp = new RespuestaApi();
             try
             {
-                dato = _dal.Usuario_Valida(iIdEmpresa, sEmail, sPasswordIngresado);
+                var dato = _dal.Usuario_Valida(iIdEmpresa, sEmail, sPasswordIngresado);
 
                 if (dato != null)
                 {
-                    resp.setDatos(new { dato });
+                    resp.Datos = dato;
                 }
                 else
                 {
-                    resp.setEstatus(0);
-                    resp.setMensaje("No se actualizo la informacion.");
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se encontraron datos.";
                 }
             }
             catch (Exception ex)
             {
-                resp.setEstatus(-1);
-                resp.setMensaje("Ocurrio un error al actualizar los datos." + ex.Message);
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
             }
-            return resp.GetRespuestaJSON();
+            return resp;
         }
 
-        public object Usuarios_Empresa(int iIdEmpresa)
+        public RespuestaApi Usuarios_Empresa(int iIdEmpresa)
         {
-            List<RespuestaGeneral> listaDatos = new List<RespuestaGeneral>();
+            var resp = new RespuestaApi();
             try
             {
-                listaDatos = _dal.Usuarios_Empresa(iIdEmpresa);
+                var listaDatos = _dal.Usuarios_Empresa(iIdEmpresa);
 
                 if (listaDatos.Count > 0)
                 {
-                    resp.setDatos(new { listaDatos });
+                    resp.Datos = listaDatos;
                 }
                 else
                 {
-                    resp.setEstatus(0);
-                    resp.setMensaje("No se actualizo la informacion.");
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se encontraron datos.";
                 }
             }
             catch (Exception ex)
             {
-                resp.setEstatus(-1);
-                resp.setMensaje("Ocurrio un error al actualizar los datos." + ex.Message);
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
             }
-            return resp.GetRespuestaJSON();
+            return resp;
         }
     }
 }
