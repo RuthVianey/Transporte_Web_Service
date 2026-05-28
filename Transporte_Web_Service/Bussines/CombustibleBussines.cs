@@ -34,7 +34,35 @@ namespace Transporte_Web_Service.Bussines
                 else
                 {
                     resp.Estatus = 0;
-                    resp.Mensaje = "No se encontraron datos.";
+                    resp.Mensaje = "No se eliminaron los datos.";
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
+            }
+
+            return resp; // Regresamos el objeto C# limpio
+        }
+
+        public RespuestaApi Bs_CargaCombustible_Guardar(int IdCarga, int IdEmpresa, int IdSucursal, int IdUnidad, int IdViaje, string Fecha, decimal Litros, decimal PrecioLitro, decimal Km, decimal Odometro, decimal RendimientoKmPorLitro, string Referencia)
+        {
+            var resp = new RespuestaApi();
+
+            try
+            {
+                var listaDatos = _dal.Dal_CargaCombustible_Guardar(IdCarga, IdEmpresa, IdSucursal, IdUnidad, IdViaje, Fecha, Litros, PrecioLitro, Km, Odometro, RendimientoKmPorLitro, Referencia);
+                
+                if (listaDatos != null && listaDatos.Count > 0)
+                {
+                    // Pasamos el objeto anónimo directamente, sin serializar a texto todavía
+                    resp.Datos = new { listaDatos };
+                }
+                else
+                {
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se guardaron los datos.";
                 }
             }
             catch (Exception ex)
