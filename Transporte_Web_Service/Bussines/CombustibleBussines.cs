@@ -18,13 +18,13 @@ namespace Transporte_Web_Service.Bussines
             _dal = dal;
         }
 
-        public RespuestaApi Bs_CargaCombustible(int IdCarga, int IdEmpresa)
+        public RespuestaApi Bs_CargaCombustible_Eliminar(int IdCarga, int IdEmpresa)
         {
             var resp = new RespuestaApi();
 
             try
             {
-                var listaDatos = _dal.Dal_CargaCombustible(IdCarga, IdEmpresa);
+                var listaDatos = _dal.Dal_CargaCombustible_Eliminar(IdCarga, IdEmpresa);
                 
                 if (listaDatos != null && listaDatos.Count > 0)
                 {

@@ -20,7 +20,7 @@ namespace Transporte_Web_Service.Data
             _context = context;
         }
 
-        public List<RespuestaGeneral> Dal_CargaCombustible(int IdCarga, int IdEmpresa)
+        public List<RespuestaGeneral> Dal_CargaCombustible_Eliminar(int IdCarga, int IdEmpresa)
         {
             List<RespuestaGeneral> listaDatos = new List<RespuestaGeneral>();
 
