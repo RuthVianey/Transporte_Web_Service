@@ -42,5 +42,31 @@ namespace Transporte_Web_Service.Controllers
             return Ok(resultado);
         }
 
+        [HttpPost("listaDatos_CargaCombustible_ListarPorViaje")]
+        public IActionResult CargaCombustible_ListarPorViaje(int IdEmpresa, int IdViaje)
+        {
+            RespuestaApi resultado = _bs.Bs_CargaCombustible_ListarPorViaje(IdEmpresa, IdViaje);
+
+            if (resultado.Estatus == -1)
+            {
+                return StatusCode(500, resultado);
+            }
+
+            return Ok(resultado);
+        }
+
+        [HttpPost("listaDatos_CargaCombustible_ObtenerPorId")]
+        public IActionResult CargaCombustible_ObtenerPorId(int IdEmpresa, int IdCarga)
+        {
+            RespuestaApi resultado = _bs.Bs_CargaCombustible_ObtenerPorId(IdEmpresa, IdCarga)
+
+            if (resultado.Estatus == -1)
+            {
+                return StatusCode(500, resultado);
+            }
+
+            return Ok(resultado);
+        }
+
     }
 }

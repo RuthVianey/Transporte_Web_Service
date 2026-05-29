@@ -75,8 +75,50 @@ namespace Transporte_Web_Service.Data
             }
             return listaDatos;
         }
+
+        public List<Ent_CargaCombustible_ListarPorViaje> Dal_CargaCombustible_ListarPorViaje(int IdEmpresa, int IdViaje)
+        {
+            List<Ent_CargaCombustible_ListarPorViaje> listaDatos = new List<Ent_CargaCombustible_ListarPorViaje>();
+
+            try
+            {
+                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)IdEmpresa);
+                var _IdViaje = new SqlParameter("@IdViaje", (object)IdViaje);
+
+                object[] parametros = new object[] { _IdEmpresa, _IdViaje };
+                listaDatos = _context.Set<Ent_CargaCombustible_ListarPorViaje>().
+                            FromSqlRaw("EXEC sp_CargaCombustible_ListarPorViaje @IdViaje, @IdEmpresa ", parametros)
+                            .AsNoTracking()
+                            .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return listaDatos;
+        }
+
+        public List<Ent_CargaCombustible_ObtenerPorId> Dal_CargaCombustible_ObtenerPorId(int IdEmpresa, int IdCarga)
+        {
+            List<Ent_CargaCombustible_ObtenerPorId> listaDatos = new List<Ent_CargaCombustible_ObtenerPorId>();
+
+            try
+            {
+                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)IdEmpresa);
+                var _IdCarga = new SqlParameter("@IdCarga", (object)IdCarga);
+
+                object[] parametros = new object[] { _IdEmpresa, _IdCarga };
+                listaDatos = _context.Set<Ent_CargaCombustible_ObtenerPorId>().
+                            FromSqlRaw("EXEC sp_CargaCombustible_ObtenerPorId @IdCarga, @IdEmpresa ", parametros)
+                            .AsNoTracking()
+                            .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return listaDatos;
+        }
     }
 }
 
-
-//////----------------------------Faltan sp's

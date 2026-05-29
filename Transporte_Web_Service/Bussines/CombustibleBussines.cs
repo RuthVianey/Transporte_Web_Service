@@ -74,5 +74,61 @@ namespace Transporte_Web_Service.Bussines
 
             return resp; // Regresamos el objeto C# limpio
         }
+
+        public RespuestaApi Bs_CargaCombustible_ListarPorViaje(int IdEmpresa, int IdViaje)
+        {
+            var resp = new RespuestaApi();
+
+            try
+            {
+                var listaDatos = _dal.Dal_CargaCombustible_ListarPorViaje(IdEmpresa, IdViaje);
+                
+                if (listaDatos != null && listaDatos.Count > 0)
+                {
+                    // Pasamos el objeto anónimo directamente, sin serializar a texto todavía
+                    resp.Datos = new { listaDatos };
+                }
+                else
+                {
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se encontraron datos.";
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
+            }
+
+            return resp; // Regresamos el objeto C# limpio
+        }
+
+        public RespuestaApi Bs_CargaCombustible_ObtenerPorId(int IdEmpresa, int IdCarga)
+        {
+            var resp = new RespuestaApi();
+
+            try
+            {
+                var listaDatos = _dal.Dal_CargaCombustible_ObtenerPorId(IdEmpresa, IdCarga);
+                
+                if (listaDatos != null && listaDatos.Count > 0)
+                {
+                    // Pasamos el objeto anónimo directamente, sin serializar a texto todavía
+                    resp.Datos = new { listaDatos };
+                }
+                else
+                {
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se encontraron datos.";
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
+            }
+
+            return resp; // Regresamos el objeto C# limpio
+        }
     }
 }

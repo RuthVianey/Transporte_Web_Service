@@ -13,4 +13,6 @@
         public string RegimenFiscal { set; get; }
         public byte Activo { set; get; }
     }
+
+    
 }
