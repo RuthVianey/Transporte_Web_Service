@@ -1,38 +1,39 @@
-﻿using Transporte_Web_Service.Data;
+﻿using System.Runtime.InteropServices.ObjectiveC;
+using Transporte_Web_Service.Data;
 using Transporte_Web_Service.Entity;
 
 namespace Transporte_Web_Service.Bussines
 {
-    public class ClientesBussines
+    public class EmpresaBussines
     {
         private string sBaseDatos;
         private Respuesta resp = new Respuesta();
         private string sPathDescarga = "C:\\inetpub\\wwwroot\\file\\Servicio_Sistema_Gestion_Transporte";
-        private string sPathSubida = "C:\\Program Files\\Integra Empresarial\\Sistema_Gestion_Transporte";
+        private string sPathSubida = "C:\\Program Files\\Sistema_Gestion_Transporte";
 
+        private readonly EmpresaDAL _dal;
 
-        private readonly ClientesDAL _dal;
-
-        public ClientesBussines(ClientesDAL dal)
+        public EmpresaBussines(EmpresaDAL dal)
         {
             _dal = dal;
         }
 
-        public RespuestaApi Bs_Cliente_Desactivar(int iIdCliente, int iIdEmpresa)
+        public RespuestaApi Bs_Empresa_Desactivar(int IdEmpresa)
         {
             var resp = new RespuestaApi();
+
             try
             {
-                var listaDatos = _dal.Dal_Cliente_Desactivar(iIdCliente, iIdEmpresa);
+                var listaDatos = _dal.Dal_Empresa_Desactivar(IdEmpresa);
 
-                if (listaDatos.Count > 0)
+                if (listaDatos != null && listaDatos.Count > 0)
                 {
-                    resp.Datos = listaDatos ;
+                    resp.Datos = new { listaDatos };
                 }
                 else
                 {
                     resp.Estatus = 0;
-                    resp.Mensaje = "No se encontraron datos.";
+                    resp.Mensaje = "No se desactivo la empresa.";
                 }
             }
             catch (Exception ex)
@@ -40,23 +41,26 @@ namespace Transporte_Web_Service.Bussines
                 resp.Estatus = -1;
                 resp.Mensaje = ex.Message;
             }
+
             return resp;
         }
-        public RespuestaApi Bs_Cliente_Guardar(int iIdCliente, int iIdEmpresa, int iIdSucursal, string sNombre, string sRFC, string sTelefono, string sEmail, int iRegimenFiscal, byte bActivo)
+
+        public RespuestaApi Bs_Empresa_Guardar(int iIdEmpresa, string sNombre, string sNombre_Corto, string sRFC, string sCalle, string sColonia, string sMunicipio, string sEstado, string sCodigo_Postal, string sTelefono, string sRutaLogo, byte bActivo)
         {
             var resp = new RespuestaApi();
+
             try
             {
-                var dato = _dal.Dal_Cliente_Guardar(iIdCliente, iIdEmpresa, iIdSucursal, sNombre, sRFC, sTelefono, sEmail, iRegimenFiscal, bActivo);
+                var listaDatos = _dal.Dal_Empresa_Guardar(iIdEmpresa, sNombre, sNombre_Corto, sRFC, sCalle, sColonia, sMunicipio, sEstado, sCodigo_Postal, sTelefono, sRutaLogo, bActivo);
 
-                if (dato != null)
+                if (listaDatos != null && listaDatos.Count > 0)
                 {
-                    resp.Datos = dato;
+                    resp.Datos = new { listaDatos };
                 }
                 else
                 {
                     resp.Estatus = 0;
-                    resp.Mensaje = "No se encontraron datos.";
+                    resp.Mensaje = "No se guardaron los datos.";
                 }
             }
             catch (Exception ex)
@@ -64,18 +68,21 @@ namespace Transporte_Web_Service.Bussines
                 resp.Estatus = -1;
                 resp.Mensaje = ex.Message;
             }
-            return resp;
+
+            return resp; 
         }
-        public RespuestaApi Bs_Cliente_Listar(int iIdEmpresa, int iIdSucursal, string sSoloActivos, string sTextoBusqueda)
+
+        public RespuestaApi Bs_Empresa_Listar(byte bSoloActivos, string sTextoBusqueda)
         {
             var resp = new RespuestaApi();
+
             try
             {
-                var listaDatos = _dal.Dal_Cliente_Listar(iIdEmpresa, iIdSucursal, sSoloActivos, sTextoBusqueda);
+                var listaDatos = _dal.Dal_Empresa_Listar(bSoloActivos, sTextoBusqueda);
 
-                if (listaDatos.Count > 0)
+                if (listaDatos != null && listaDatos.Count > 0)
                 {
-                    resp.Datos = listaDatos;
+                    resp.Datos = new { listaDatos };
                 }
                 else
                 {
@@ -88,18 +95,21 @@ namespace Transporte_Web_Service.Bussines
                 resp.Estatus = -1;
                 resp.Mensaje = ex.Message;
             }
-            return resp;
+
+            return resp; // Regresamos el objeto C# limpio
         }
-        public RespuestaApi Bs_Cliente_ObtenerPorId(int iIdCliente, int iIdEmpresa)
+
+        public RespuestaApi Bs_Empresa_ObtenerPorId(int iIdEmpresa)
         {
             var resp = new RespuestaApi();
+
             try
             {
-                var listaDatos = _dal.Dal_Cliente_ObtenerPorId(iIdCliente, iIdEmpresa);
+                var listaDatos = _dal.Dal_Empresa_ObtenerPorId(iIdEmpresa);
 
-                if (listaDatos.Count > 0)
+                if (listaDatos != null && listaDatos.Count > 0)
                 {
-                    resp.Datos = listaDatos;
+                    resp.Datos = new { listaDatos };
                 }
                 else
                 {
@@ -112,7 +122,8 @@ namespace Transporte_Web_Service.Bussines
                 resp.Estatus = -1;
                 resp.Mensaje = ex.Message;
             }
-            return resp;
+
+            return resp; 
         }
     }
 }

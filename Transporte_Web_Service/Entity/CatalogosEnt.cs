@@ -1,6 +1,6 @@
 ﻿namespace Transporte_Web_Service.Entity
 {
-    public class Obtener_Cliente_PorId
+    public class Ent_Obtener_Cliente_PorId
     {
         public int? IdCliente { set; get; }
         public int? IdEmpresa { set; get; }

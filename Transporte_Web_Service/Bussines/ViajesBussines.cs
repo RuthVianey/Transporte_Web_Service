@@ -17,5 +17,87 @@ namespace Transporte_Web_Service.Bussines
         {
             _dal = dal;
         }
+
+        public RespuestaApi Bs_EstadoViaje_Guardar(int IdEstadoViaje, string Descripcion)
+        {
+            var resp = new RespuestaApi();
+
+            try
+            {
+                var listaDatos = _dal.Dal_EstadoViaje_Guardar(IdEstadoViaje, Descripcion);
+
+                if (listaDatos != null && listaDatos.Count > 0)
+                {
+                    resp.Datos = new { listaDatos };
+                }
+                else
+                {
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se encontraron datos.";
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
+            }
+
+            return resp;
+        }
+
+        public RespuestaApi Bs_EstadoViaje_Listar()
+        {
+            var resp = new RespuestaApi();
+
+            try
+            {
+                var listaDatos = _dal.Dal_EstadoViaje_Listar();
+
+                if (listaDatos != null && listaDatos.Count > 0)
+                {
+                    resp.Datos = new { listaDatos };
+                }
+                else
+                {
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se encontraron datos.";
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
+            }
+
+            return resp;
+        }
+
+        public RespuestaApi Bs_EstadoViaje_ObtenerPorId(int IdEstadoViaje)
+        {
+            var resp = new RespuestaApi();
+
+            try
+            {
+                var listaDatos = _dal.Dal_EstadoViaje_ObtenerPorId(IdEstadoViaje);
+
+                if (listaDatos != null && listaDatos.Count > 0)
+                {
+                    resp.Datos = new { listaDatos };
+                }
+                else
+                {
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se encontraron datos.";
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
+            }
+
+            return resp;
+        }
+
     }
 }
