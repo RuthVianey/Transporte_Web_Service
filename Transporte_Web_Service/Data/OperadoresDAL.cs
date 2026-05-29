@@ -19,38 +19,20 @@ namespace Transporte_Web_Service.Data
         {
             _context = context;
         }
-
-        public List<Operador_ObtenerPorId> Operador_ObtenerPorId(int iIdEmpresa, int iIdOperador)
+        public List<RespuestaGeneral> Operador_Desactivar(int iIdOperador, int iIdEmpresa)
         {
-            List<Operador_ObtenerPorId> listaDatos = new List<Operador_ObtenerPorId>();
+            List<RespuestaGeneral> listaDatos = new List<RespuestaGeneral>();
             try
             {
-                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)iIdEmpresa);
                 var _IdOperador = new SqlParameter("@IdOperador", (object)iIdOperador);
-
-                object[] parametros = new object[] { _IdEmpresa, _IdOperador };
-
-                listaDatos = _context.Set<Operador_ObtenerPorId>().FromSqlRaw("EXEC sp_Operador_ObtenerPorId @IdOperador, @IdEmpresa ", parametros).ToList();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return listaDatos;
-        }
-        public List<Operador_ObtenerPorId> Operador_Listar(int iIdEmpresa, int iIdSucursal, byte bSoloActivos, string sTextoBusqueda)
-        {
-            List<Operador_ObtenerPorId> listaDatos = new List<Operador_ObtenerPorId>();
-            try
-            {
                 var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)iIdEmpresa);
-                var _IdSucursal = new SqlParameter("@IdSucursal", (object)iIdSucursal);
-                var _SoloActivos = new SqlParameter("@SoloActivos", (object)bSoloActivos);
-                var _TextoBusqueda = new SqlParameter("@TextoBusqueda", (object)sTextoBusqueda);
 
-                object[] parametros = new object[] { _IdEmpresa, _IdSucursal, _SoloActivos, _TextoBusqueda };
+                object[] parametros = new object[] { _IdOperador, _IdEmpresa };
 
-                listaDatos = _context.Set<Operador_ObtenerPorId>().FromSqlRaw("EXEC sp_Operador_Listar @IdEmpresa, @IdSucursal, @SoloActivos, @TextoBusqueda ", parametros).ToList();
+                listaDatos = _context.Set<RespuestaGeneral>()
+                             .FromSqlRaw("EXEC sp_Operador_Desactivar @IdOperador, @IdEmpresa ", parametros)
+                             .AsNoTracking()
+                             .ToList();
             }
             catch (Exception ex)
             {
@@ -76,7 +58,10 @@ namespace Transporte_Web_Service.Data
 
                 object[] parametros = new object[] { _IdOperador, _IdEmpresa, _IdSucursal, _Nombre, _Licencia, _TipoLicencia, _FechaVencimientoLicencia, _CURP, _Telefono, _Activo };
 
-                listaDatos = _context.Set<RespuestaGeneral>().FromSqlRaw("EXEC sp_Operador_Guardar @IdOperador, @IdEmpresa, @IdSucursal, @Nombre, @Licencia, @TipoLicencia, @FechaVencimientoLicencia, @CURP, @Telefono, @Activo ", parametros).ToList();
+                listaDatos = _context.Set<RespuestaGeneral>()
+                             .FromSqlRaw("EXEC sp_Operador_Guardar @IdOperador, @IdEmpresa, @IdSucursal, @Nombre, @Licencia, @TipoLicencia, @FechaVencimientoLicencia, @CURP, @Telefono, @Activo ", parametros)
+                             .AsNoTracking()
+                             .ToList();
             }
             catch (Exception ex)
             {
@@ -84,17 +69,43 @@ namespace Transporte_Web_Service.Data
             }
             return listaDatos;
         }
-        public List<RespuestaGeneral> Operador_Desactivar(int iIdOperador, int iIdEmpresa)
+        public List<Operador_ObtenerPorId> Operador_Listar(int iIdEmpresa, int iIdSucursal, byte bSoloActivos, string sTextoBusqueda)
         {
-            List<RespuestaGeneral> listaDatos = new List<RespuestaGeneral>();
+            List<Operador_ObtenerPorId> listaDatos = new List<Operador_ObtenerPorId>();
             try
             {
-                var _IdOperador = new SqlParameter("@IdOperador", (object)iIdOperador);
                 var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)iIdEmpresa);
+                var _IdSucursal = new SqlParameter("@IdSucursal", (object)iIdSucursal);
+                var _SoloActivos = new SqlParameter("@SoloActivos", (object)bSoloActivos);
+                var _TextoBusqueda = new SqlParameter("@TextoBusqueda", (object)sTextoBusqueda);
 
-                object[] parametros = new object[] { _IdOperador, _IdEmpresa };
+                object[] parametros = new object[] { _IdEmpresa, _IdSucursal, _SoloActivos, _TextoBusqueda };
 
-                listaDatos = _context.Set<RespuestaGeneral>().FromSqlRaw("EXEC sp_Operador_Desactivar @IdOperador, @IdEmpresa ", parametros).ToList();
+                listaDatos = _context.Set<Operador_ObtenerPorId>()
+                             .FromSqlRaw("EXEC sp_Operador_Listar @IdEmpresa, @IdSucursal, @SoloActivos, @TextoBusqueda ", parametros)
+                             .AsNoTracking()
+                             .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return listaDatos;
+        }
+        public List<Operador_ObtenerPorId> Operador_ObtenerPorId(int iIdEmpresa, int iIdOperador)
+        {
+            List<Operador_ObtenerPorId> listaDatos = new List<Operador_ObtenerPorId>();
+            try
+            {
+                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)iIdEmpresa);
+                var _IdOperador = new SqlParameter("@IdOperador", (object)iIdOperador);
+
+                object[] parametros = new object[] { _IdEmpresa, _IdOperador };
+
+                listaDatos = _context.Set<Operador_ObtenerPorId>()
+                             .FromSqlRaw("EXEC sp_Operador_ObtenerPorId @IdOperador, @IdEmpresa ", parametros)
+                             .AsNoTracking()
+                             .ToList();
             }
             catch (Exception ex)
             {

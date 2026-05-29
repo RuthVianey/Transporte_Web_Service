@@ -8,7 +8,7 @@ namespace Transporte_Web_Service.Bussines
         private string sBaseDatos;
         private Respuesta resp = new Respuesta();
         private string sPathDescarga = "C:\\inetpub\\wwwroot\\file\\Servicio_Sistema_Gestion_Transporte";
-        private string sPathSubida = "C:\\Program Files\\Integra Empresarial\\Sistema_Gestion_Transporte";
+        private string sPathSubida = "C:\\Program Files\\Sistema_Gestion_Transporte";
 
 
         private readonly OperadoresDAL _dal;
@@ -18,12 +18,12 @@ namespace Transporte_Web_Service.Bussines
             _dal = dal;
         }
 
-        public RespuestaApi Operador_ObtenerPorId(int iIdEmpresa, int iIdOperador)
+        public RespuestaApi Operador_Desactivar(int iIdOperador, int iIdEmpresa)
         {
             var resp = new RespuestaApi();
             try
             {
-                var listaDatos = _dal.Operador_ObtenerPorId(iIdEmpresa, iIdOperador);
+                var listaDatos = _dal.Operador_Desactivar(iIdOperador, iIdEmpresa);
 
                 if (listaDatos.Count > 0)
                 {
@@ -32,32 +32,7 @@ namespace Transporte_Web_Service.Bussines
                 else
                 {
                     resp.Estatus = 0;
-                    resp.Mensaje = "No se encontraron datos.";
-                }
-            }
-            catch (Exception ex)
-            {
-                resp.Estatus = -1;
-                resp.Mensaje = ex.Message;
-            }
-            return resp;
-        }
-
-        public RespuestaApi Operador_Listar(int iIdEmpresa, int iIdSucursal, byte bSoloActivos, string sTextoBusqueda)
-        {
-            var resp = new RespuestaApi();
-            try
-            {
-                var listaDatos = _dal.Operador_Listar(iIdEmpresa, iIdSucursal, bSoloActivos, sTextoBusqueda);
-
-                if (listaDatos.Count > 0)
-                {
-                    resp.Datos = listaDatos;
-                }
-                else
-                {
-                    resp.Estatus = 0;
-                    resp.Mensaje = "No se encontraron datos.";
+                    resp.Mensaje = "No se desactivo el operador.";
                 }
             }
             catch (Exception ex)
@@ -93,12 +68,12 @@ namespace Transporte_Web_Service.Bussines
             return resp;
         }
 
-        public RespuestaApi Operador_Desactivar(int iIdOperador, int iIdEmpresa)
+        public RespuestaApi Operador_Listar(int iIdEmpresa, int iIdSucursal, byte bSoloActivos, string sTextoBusqueda)
         {
             var resp = new RespuestaApi();
             try
             {
-                var listaDatos = _dal.Operador_Desactivar(iIdOperador, iIdEmpresa);
+                var listaDatos = _dal.Operador_Listar(iIdEmpresa, iIdSucursal, bSoloActivos, sTextoBusqueda);
 
                 if (listaDatos.Count > 0)
                 {
@@ -107,7 +82,31 @@ namespace Transporte_Web_Service.Bussines
                 else
                 {
                     resp.Estatus = 0;
-                    resp.Mensaje = "No se desactivo el operador.";
+                    resp.Mensaje = "No se encontraron datos.";
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
+            }
+            return resp;
+        }
+        public RespuestaApi Operador_ObtenerPorId(int iIdEmpresa, int iIdOperador)
+        {
+            var resp = new RespuestaApi();
+            try
+            {
+                var listaDatos = _dal.Operador_ObtenerPorId(iIdEmpresa, iIdOperador);
+
+                if (listaDatos.Count > 0)
+                {
+                    resp.Datos = listaDatos;
+                }
+                else
+                {
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se encontraron datos.";
                 }
             }
             catch (Exception ex)
