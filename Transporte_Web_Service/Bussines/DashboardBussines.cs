@@ -102,6 +102,32 @@ namespace Transporte_Web_Service.Bussines
             return resp; // Regresamos el objeto C# limpio
         }
 
+        public RespuestaApi Bs_DashBoard_TopClientes(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
+        {
+            var resp = new RespuestaApi();
+
+            try
+            {
+                var listaDatos = _dal.Dal_dashDashboardTopClientes(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
+                if (listaDatos != null && listaDatos.Count > 0)
+                {
+                    resp.Datos = new { listaDatos };
+                }
+                else
+                {
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se encontraron datos.";
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
+            }
+            return resp; // Regresamos el objeto C# limpio
+        } 
+        
+
         public RespuestaApi Bs_Dashboard_ViajesPorEstado(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
         {
             var resp = new RespuestaApi();

@@ -58,6 +58,19 @@ namespace Transporte_Web_Service.Controllers
             return Ok(resultado);
         }
 
+        [HttpGet("TopClientes")]
+
+        public IActionResult Dashboard_TopClientes(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
+        {
+            RespuestaApi resultado = _bs.Bs_DashBoard_TopClientes(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
+            if (resultado.Estatus == -1)
+            {
+                return StatusCode(500, resultado);
+            }
+            return Ok(resultado);
+        }
+
+
         [HttpGet("ViajesPorEstado")]
         public IActionResult Dashboard_ViajesPorEstado(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
         {

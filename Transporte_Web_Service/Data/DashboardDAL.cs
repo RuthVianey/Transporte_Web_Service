@@ -95,6 +95,28 @@ namespace Transporte_Web_Service.Data
             return listaDatos;
         }
 
+        public List<Entity_Dashboard_TopClientes> Dal_dashDashboardTopClientes(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
+        {
+            List<Entity_Dashboard_TopClientes> listaDatos = new List<Entity_Dashboard_TopClientes>();
+            try
+            {
+                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)IdEmpresa);
+                var _IdSucursal = new SqlParameter("@IdSucursal", (object)IdSucursal);
+                var _FechaInicio = new SqlParameter("@FechaInicio", (object)FechaInicio);
+                var _FechaFin = new SqlParameter("@FechaFin", (object)FechaFin);
+                object[] parametros = new object[] { _IdEmpresa, _IdSucursal, _FechaInicio, _FechaFin };
+                listaDatos = _context.Set<Entity_Dashboard_TopClientes>()
+                                .FromSqlRaw("EXEC sp_Dashboard_TopClientes  @IdEmpresa, @IdSucursal,@FechaInicio, @FechaFin ", parametros)
+                                .AsNoTracking() // Agrega esto para consultas de solo lectura
+                                .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return listaDatos;
+        }
+
         public List<Entity_Dashboard_ViajesPorEstado> Dal_dashObtenViajeEstado(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
         {
             List<Entity_Dashboard_ViajesPorEstado> listaDatos = new List<Entity_Dashboard_ViajesPorEstado>();
