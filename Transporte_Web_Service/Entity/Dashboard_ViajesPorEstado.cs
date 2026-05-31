@@ -47,6 +47,20 @@
         public decimal MargenPorcentaje { get; set; }
     }
 
+    public class Entity_Dashboard_TopUnidades
+    {
+        public int IdUnidad { get; set; }
+        public string? NumeroEconomico { get; set; }
+        public string? Placas { get; set; }
+        public string? TipoUnidad { get; set; }
+        public int TotalViajes { get; set; }
+        public decimal IngresoTotal { get; set; }
+
+        public decimal CostoTotal { get; set; }
+        public decimal UtilidadTotal { get; set; }
+        public decimal MargenPorcentaje { get; set; }
+    }
+
     public class Entity_Dashboard_ViajesPorEstado
     {
         public int IdEstadoViaje { get; set; }
