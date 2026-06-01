@@ -16,7 +16,7 @@ namespace Transporte_Web_Service.Controllers
             _bs = bs;
         }
 
-        [HttpPost("listaDatos_Operador_Desactivar")]
+        [HttpGet("listaDatos_Operador_Desactivar")]
         public IActionResult Operador_Desactivar(int iIdOperador, int iIdEmpresa)
         {
             RespuestaApi resultado = _bs.Operador_Desactivar(iIdOperador, iIdEmpresa);
@@ -29,7 +29,7 @@ namespace Transporte_Web_Service.Controllers
             return Ok(resultado);
         }
 
-        [HttpPost("listaDatos_Operador_Guardar")]
+        [HttpGet("listaDatos_Operador_Guardar")]
         public IActionResult Operador_Guardar(int iIdOperador, int iIdEmpresa, int iIdSucursal, string sNombre, string sLicencia, string sTipoLicencia, string sFechaVencimientoLicencia, string sCURP, string sTelefono, byte bActivo)
         {
             RespuestaApi resultado = _bs.Operador_Guardar(iIdOperador, iIdEmpresa, iIdSucursal, sNombre, sLicencia, sTipoLicencia, sFechaVencimientoLicencia, sCURP, sTelefono, bActivo);
@@ -42,7 +42,7 @@ namespace Transporte_Web_Service.Controllers
             return Ok(resultado);
         }
 
-        [HttpPost("listaDatos_Operador_Listar")]
+        [HttpGet("listaDatos_Operador_Listar")]
         public IActionResult Operador_Listar(int iIdEmpresa, int iIdSucursal, byte bSoloActivos, string sTextoBusqueda)
         {
             RespuestaApi resultado = _bs.Operador_Listar(iIdEmpresa, iIdSucursal, bSoloActivos, sTextoBusqueda);
@@ -55,7 +55,7 @@ namespace Transporte_Web_Service.Controllers
             return Ok(resultado);
         }
 
-        [HttpPost("listaDatos_Operador_ObtenerPorId")]
+        [HttpGet("listaDatos_Operador_ObtenerPorId")]
         public IActionResult Operador_ObtenerPorId(int iIdEmpresa, int iIdOperador)
         {
             RespuestaApi resultado = _bs.Operador_ObtenerPorId(iIdEmpresa, iIdOperador);

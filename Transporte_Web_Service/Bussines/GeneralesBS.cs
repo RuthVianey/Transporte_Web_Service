@@ -127,6 +127,31 @@ namespace Transporte_Web_Service.Bussines
             return resp;
         }
 
+        public RespuestaApi Bs_Programa_Listar()
+        {
+            var resp = new RespuestaApi();
+            try
+            {
+                var listaDatos = _dac.Dal_Programa_Listar();
+
+                if (listaDatos.Count > 0)
+                {
+                    resp.Datos = listaDatos ;
+                }
+                else
+                {
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se encontraron datos.";
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
+            }
+            return resp;
+        }
+
 
         //public object Actualizar_Empresa(int iTipo, int iIdEmpresa, string sNombre_Completo, string sNombre_Corto, string sRFC, string sCalle, string sColonia, string sMunicipio, string sEstado, string sCodigo_Postal, string sTelefono, string sRutaLogo, string sTipoImagen)
         //{

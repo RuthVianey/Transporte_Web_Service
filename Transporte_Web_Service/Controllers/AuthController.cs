@@ -16,7 +16,7 @@ namespace Transporte_Web_Service.Controllers
             _bs = bs;
         }
 
-        [HttpPost("listaDatos_Usuario_Valida")]
+        [HttpGet("listaDatos_Usuario_Valida")]
         public IActionResult Usuario_Valida(int iIdEmpresa, string sEmail, string sPasswordIngresado)
         {
             RespuestaApi resultado = _bs.Usuario_Valida(iIdEmpresa, sEmail, sPasswordIngresado);
@@ -29,7 +29,7 @@ namespace Transporte_Web_Service.Controllers
             return Ok(resultado);
         }
 
-        [HttpPost("listaDatos_Usuarios_Empresa")]
+        [HttpGet("listaDatos_Usuarios_Empresa")]
         public IActionResult Usuarios_Empresa(int iIdEmpresa)
         {
             RespuestaApi resultado = _bs.Usuarios_Empresa(iIdEmpresa);

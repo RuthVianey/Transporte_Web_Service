@@ -107,14 +107,25 @@ namespace Transporte_Web_Service.Data
             }
             return listaDatos;
         }
-        /*TEMINA EMPRESA*/
 
+        public List<Ent_Programa_Listar> Dal_Programa_Listar()
+        {
+            List<Ent_Programa_Listar> listaDatos = new List<Ent_Programa_Listar>();
+            try
+            {
+                object[] parametros = new object[] {  };
 
-        /*COMIENZA*/
-
-
-        /*TEMINA*/
-
+                listaDatos = _context.Set<Ent_Programa_Listar>()
+                             .FromSqlRaw("EXEC Programa_Listar ", parametros)
+                             .AsNoTracking()
+                             .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return listaDatos;
+        }
 
 
 

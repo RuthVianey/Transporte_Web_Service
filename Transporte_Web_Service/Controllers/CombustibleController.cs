@@ -16,7 +16,7 @@ namespace Transporte_Web_Service.Controllers
             _bs = bs;
         }
 
-        [HttpPost("listaDatos_CargaCombustible_Eliminar")]
+        [HttpGet("listaDatos_CargaCombustible_Eliminar")]
         public IActionResult CargaCombustible_Eliminar(int IdCarga, int IdEmpresa)
         {
             RespuestaApi resultado = _bs.Bs_CargaCombustible_Eliminar(IdCarga, IdEmpresa);
@@ -29,7 +29,7 @@ namespace Transporte_Web_Service.Controllers
             return Ok(resultado);
         }
 
-        [HttpPost("listaDatos_CargaCombustible_Guardar")]
+        [HttpGet("listaDatos_CargaCombustible_Guardar")]
         public IActionResult CargaCombustible_Guardar(int IdCarga, int IdEmpresa, int IdSucursal, int IdUnidad, int IdViaje, string Fecha, decimal Litros, decimal PrecioLitro, decimal Km, decimal Odometro, decimal RendimientoKmPorLitro, string Referencia)
         {
             RespuestaApi resultado = _bs.Bs_CargaCombustible_Guardar(IdCarga, IdEmpresa, IdSucursal, IdUnidad, IdViaje, Fecha, Litros, PrecioLitro, Km, Odometro, RendimientoKmPorLitro, Referencia);
@@ -42,7 +42,7 @@ namespace Transporte_Web_Service.Controllers
             return Ok(resultado);
         }
 
-        [HttpPost("listaDatos_CargaCombustible_ListarPorViaje")]
+        [HttpGet("listaDatos_CargaCombustible_ListarPorViaje")]
         public IActionResult CargaCombustible_ListarPorViaje(int IdEmpresa, int IdViaje)
         {
             RespuestaApi resultado = _bs.Bs_CargaCombustible_ListarPorViaje(IdEmpresa, IdViaje);
@@ -55,7 +55,7 @@ namespace Transporte_Web_Service.Controllers
             return Ok(resultado);
         }
 
-        [HttpPost("listaDatos_CargaCombustible_ObtenerPorId")]
+        [HttpGet("listaDatos_CargaCombustible_ObtenerPorId")]
         public IActionResult CargaCombustible_ObtenerPorId(int IdEmpresa, int IdCarga)
         {
             RespuestaApi resultado = _bs.Bs_CargaCombustible_ObtenerPorId(IdEmpresa, IdCarga);

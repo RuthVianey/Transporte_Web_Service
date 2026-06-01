@@ -16,7 +16,7 @@ namespace Transporte_Web_Service.Controllers
             _bs = bs;
         }
 
-        [HttpPost("dato_Empresa_Guardar")]
+        [HttpGet("dato_Empresa_Guardar")]
         public IActionResult Empresa_Guardar(int iIdEmpresa, string sNombre, string sNombre_Corto, string sRFC, string sCalle, string sColonia, string sMunicipio, string sEstado, string sCodigo_Postal, string sTelefono, string sRutaLogo, byte bActivo, string sTipoImagen)
         {
             RespuestaApi resultado = _bs.Empresa_Guardar(iIdEmpresa, sNombre, sNombre_Corto, sRFC, sCalle, sColonia, sMunicipio, sEstado, sCodigo_Postal, sTelefono, sRutaLogo, bActivo, sTipoImagen);
@@ -29,7 +29,7 @@ namespace Transporte_Web_Service.Controllers
             return Ok(resultado);
         }
 
-        [HttpPost("dato_Empresa_Desactivar")]
+        [HttpGet("dato_Empresa_Desactivar")]
         public IActionResult Empresa_Desactivar(int iIdEmpresa)
         {
             RespuestaApi resultado = _bs.Empresa_Desactivar(iIdEmpresa);
@@ -42,7 +42,7 @@ namespace Transporte_Web_Service.Controllers
             return Ok(resultado);
         }
 
-        [HttpPost("Empresa_Listar")]
+        [HttpGet("Empresa_Listar")]
         public IActionResult Empresa_Listar(byte bSoloActivos, string sTextoBusqueda)
         {
             RespuestaApi resultado = _bs.Empresa_Listar(bSoloActivos, sTextoBusqueda);
@@ -55,10 +55,23 @@ namespace Transporte_Web_Service.Controllers
             return Ok(resultado);
         }
 
-        [HttpPost("dato_Empresa_ObtenerPorId")]
+        [HttpGet("dato_Empresa_ObtenerPorId")]
         public IActionResult Empresa_ObtenerPorId(int iIdEmpresa)
         {
             RespuestaApi resultado = _bs.Empresa_ObtenerPorId(iIdEmpresa);
+
+            if (resultado.Estatus == -1)
+            {
+                return StatusCode(500, resultado);
+            }
+
+            return Ok(resultado);
+        }
+
+        [HttpGet("listaDatos_Programa_Listar")]
+        public IActionResult Programa_Listar()
+        {
+            RespuestaApi resultado = _bs.Bs_Programa_Listar();
 
             if (resultado.Estatus == -1)
             {

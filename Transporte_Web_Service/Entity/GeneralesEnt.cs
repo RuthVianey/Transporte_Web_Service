@@ -36,4 +36,11 @@
         public byte? Activo { set; get; }
         public string FechaAlta { set; get; }
     }
+    public class Ent_Programa_Listar
+    {
+        public int IdPrograma { set; get; }
+        public string Nombre { set; get; }
+        public string Clave { set; get; }
+    }
+
 }
