@@ -18,9 +18,6 @@ namespace Transporte_Web_Service.Controllers
 
         /*COMIENZA USUARIO*/
 
-        [HttpPost("listaDatos_Usuario_Guardar")]
-        {
-        }
 
     }
 }
