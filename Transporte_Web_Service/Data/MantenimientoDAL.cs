@@ -279,6 +279,101 @@ namespace Transporte_Web_Service.Data
             }
             return listaDatos;
         }
+
+        public List<RespuestaGeneral> Dal_TipoMantenimiento_Desactivar(int IdTipoMantenimiento, int IdEmpresa)
+        {
+            List<RespuestaGeneral> listaDatos = new List<RespuestaGeneral>();
+            try
+            {
+                var _IdTipoMantenimiento = new SqlParameter("@IdTipoMantenimiento", (object)IdTipoMantenimiento);
+                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)IdEmpresa);
+
+                object[] parametros = new object[] { _IdTipoMantenimiento, _IdEmpresa };
+
+                listaDatos = _context.Set<RespuestaGeneral>()
+                             .FromSqlRaw("EXEC sp_TipoMantenimiento_Desactivar @IdTipoMantenimiento, @IdEmpresa ", parametros)
+                             .AsNoTracking()
+                             .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return listaDatos;
+        }
+
+        public List<RespuestaGeneral> Dal_TipoMantenimiento_Guardar(int IdTipoMantenimiento, int IdEmpresa, string  Descripcion, byte EsPreventivo, byte EsCorrectivo, byte Activo)
+        {
+            List<RespuestaGeneral> listaDatos = new List<RespuestaGeneral>();
+            try
+            {
+                var _IdTipoMantenimiento = new SqlParameter("@IdTipoMantenimiento", (object)IdTipoMantenimiento);
+                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)IdEmpresa);
+                var _Descripcion = new SqlParameter("@Descripcion", (object)Descripcion);
+                var _EsPreventivo = new SqlParameter("@EsPreventivo", (object)EsPreventivo);
+                var _EsCorrectivo = new SqlParameter("@EsCorrectivo", (object)EsCorrectivo);
+                var _Activo = new SqlParameter("@Activo", (object)Activo);
+
+                object[] parametros = new object[] { _IdTipoMantenimiento, _IdEmpresa, _Descripcion, _EsPreventivo, _EsCorrectivo, _Activo };
+
+                listaDatos = _context.Set<RespuestaGeneral>()
+                             .FromSqlRaw("EXEC sp_TipoMantenimiento_Guardar @IdTipoMantenimiento, @IdEmpresa, @Descripcion, @EsPreventivo, @EsCorrectivo, @Activo ", parametros)
+                             .AsNoTracking()
+                             .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return listaDatos;
+        }
+        
+
+
+        public List<Ent_TipoMantenimiento_Listar> Dal_TipoMantenimiento_Listar(int IdEmpresa, byte SoloActivos, string TextoBusqueda)
+        {
+            List<Ent_TipoMantenimiento_Listar> listaDatos = new List<Ent_TipoMantenimiento_Listar>();
+            try
+            {
+                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)IdEmpresa);
+                var _SoloActivos = new SqlParameter("@SoloActivos", (object)SoloActivos);
+                var _TextoBusqueda = new SqlParameter("@TextoBusqueda", (object)TextoBusqueda);
+
+                object[] parametros = new object[] { _IdEmpresa, _SoloActivos, _TextoBusqueda  };
+
+                listaDatos = _context.Set<Ent_TipoMantenimiento_Listar>()
+                             .FromSqlRaw("EXEC sp_TipoMantenimiento_Listar @IdEmpresa, @SoloActivos, @TextoBusqueda ", parametros)
+                             .AsNoTracking()
+                             .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return listaDatos;
+        }
+
+        public List<Ent_TipoMantenimiento_Listar> Dal_TipoMantenimiento_ObtenerPorId(int IdTipoMantenimiento, int IdEmpresa)
+        {
+            List<Ent_TipoMantenimiento_Listar> listaDatos = new List<Ent_TipoMantenimiento_Listar>();
+            try
+            {
+                var _IdTipoMantenimiento = new SqlParameter("@IdTipoMantenimiento", (object)IdTipoMantenimiento);
+                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)IdEmpresa);
+
+                object[] parametros = new object[] { _IdTipoMantenimiento, _IdEmpresa };
+
+                listaDatos = _context.Set<Ent_TipoMantenimiento_Listar>()
+                             .FromSqlRaw("EXEC sp_TipoMantenimiento_ObtenerPorId @IdTipoMantenimiento, @IdEmpresa ", parametros)
+                             .AsNoTracking()
+                             .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return listaDatos;
+        }
     }
 }
 

@@ -23,7 +23,7 @@
     {
         public int? Resultado { set; get; }
         public string Mensaje { set; get; }
-        public int? NuevoID { set; get; }
+        public int? ID { set; get; }
     }
 
     public class Operador_ObtenerPorId

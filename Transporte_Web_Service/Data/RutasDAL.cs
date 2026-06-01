@@ -159,6 +159,47 @@ namespace Transporte_Web_Service.Data
             }
             return listaDatos;
         }
+        public List<Ent_RutaDetalle_Listar> Dal_RutaDetalle_Listar(int IdRuta)
+        {
+            List<Ent_RutaDetalle_Listar> listaDatos = new List<Ent_RutaDetalle_Listar>();
+            try
+            {
+                var _IdRuta = new SqlParameter("@IdRuta", (object)IdRuta);
+
+                object[] parametros = new object[] { _IdRuta };
+
+                listaDatos = _context.Set<Ent_RutaDetalle_Listar>()
+                             .FromSqlRaw("EXEC sp_RutaDetalle_Listar @IdRuta ", parametros)
+                             .AsNoTracking()
+                             .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return listaDatos;
+        }
+        public List<Ent_RutaDetalle_Listar> Dal_RutaDetalle_ObtenerPorId(int IdRutaDetalle, int IdRuta)
+        {
+            List<Ent_RutaDetalle_Listar> listaDatos = new List<Ent_RutaDetalle_Listar>();
+            try
+            {
+                var _IdRutaDetalle = new SqlParameter("@IdRutaDetalle", (object)IdRutaDetalle);
+                var _IdRuta = new SqlParameter("@IdRuta", (object)IdRuta);
+
+                object[] parametros = new object[] { _IdRuta };
+
+                listaDatos = _context.Set<Ent_RutaDetalle_Listar>()
+                             .FromSqlRaw("EXEC sp_RutaDetalle_ObtenerPorId @IdRutaDetalle, @IdRuta ", parametros)
+                             .AsNoTracking()
+                             .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return listaDatos;
+        }
     }
 }
 

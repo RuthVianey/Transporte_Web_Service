@@ -1,4 +1,5 @@
-﻿using Transporte_Web_Service.Data;
+﻿using System;
+using Transporte_Web_Service.Data;
 using Transporte_Web_Service.Entity;
 
 namespace Transporte_Web_Service.Bussines
@@ -106,6 +107,110 @@ namespace Transporte_Web_Service.Bussines
             try
             {
                 var listaDatos = _dal.Dal_Gasto_ObtenerPorId(IdGasto, IdEmpresa);
+
+                if (listaDatos != null && listaDatos.Count > 0)
+                {
+                    resp.Datos = new { listaDatos };
+                }
+                else
+                {
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se encontraron datos.";
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
+            }
+
+            return resp;
+        }
+        public RespuestaApi Bs_TipoGasto_Desactivar(int IdTipoGasto, int IdEmpresa)
+        {
+            var resp = new RespuestaApi();
+
+            try
+            {
+                var listaDatos = _dal.Dal_TipoGasto_Desactivar(IdTipoGasto, IdEmpresa);
+
+                if (listaDatos != null && listaDatos.Count > 0)
+                {
+                    resp.Datos = new { listaDatos };
+                }
+                else
+                {
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se encontraron datos.";
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
+            }
+
+            return resp;
+        }
+        public RespuestaApi Bs_TipoGasto_Guardar(int IdTipoGasto, int IdEmpresa, string Descripcion, byte EsCostoDirecto, byte EsMantenimiento, byte EsCombustible, byte Activo)
+        {
+            var resp = new RespuestaApi();
+
+            try
+            {
+                var listaDatos = _dal.Dal_TipoGasto_Guardar(IdTipoGasto, IdEmpresa, Descripcion, EsCostoDirecto, EsMantenimiento, EsCombustible, Activo);
+
+                if (listaDatos != null && listaDatos.Count > 0)
+                {
+                    resp.Datos = new { listaDatos };
+                }
+                else
+                {
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se encontraron datos.";
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
+            }
+
+            return resp;
+        }
+        public RespuestaApi Bs_TipoGasto_Listar(int IdEmpresa, byte SoloActivos, string TextoBusqueda)
+        {
+            var resp = new RespuestaApi();
+
+            try
+            {
+                var listaDatos = _dal.Dal_TipoGasto_Listar(IdEmpresa, SoloActivos, TextoBusqueda);
+
+                if (listaDatos != null && listaDatos.Count > 0)
+                {
+                    resp.Datos = new { listaDatos };
+                }
+                else
+                {
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se encontraron datos.";
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
+            }
+
+            return resp;
+        }
+        public RespuestaApi Bs_TipoGasto_ObtenerPorId(int IdTipoGasto, int IdEmpresa)
+        {
+            var resp = new RespuestaApi();
+
+            try
+            {
+                var listaDatos = _dal.Dal_TipoGasto_ObtenerPorId(IdTipoGasto, IdEmpresa);
 
                 if (listaDatos != null && listaDatos.Count > 0)
                 {

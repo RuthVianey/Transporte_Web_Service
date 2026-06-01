@@ -160,5 +160,59 @@ namespace Transporte_Web_Service.Controllers
 
             return Ok(resultado);
         }
+
+        // Nuevos 
+
+        [HttpGet("listaDatos_TipoMantenimiento_Desactivar")]
+        public IActionResult TipoMantenimiento_Desactivar(int IdTipoMantenimiento, int IdEmpresa)
+        {
+            RespuestaApi resultado = _bs.Bs_TipoMantenimiento_Desactivar(IdTipoMantenimiento, IdEmpresa);
+
+            if (resultado.Estatus == -1)
+            {
+                return StatusCode(500, resultado);
+            }
+
+            return Ok(resultado);
+        }
+
+        [HttpGet("listaDatos_TipoMantenimiento_Guardar")]
+        public IActionResult TipoMantenimiento_Guardar(int IdTipoMantenimiento, int IdEmpresa, string Descripcion, byte EsPreventivo, byte EsCorrectivo, byte Activo)
+        {
+            RespuestaApi resultado = _bs.Bs_TipoMantenimiento_Guardar(IdTipoMantenimiento, IdEmpresa, Descripcion, EsPreventivo, EsCorrectivo, Activo);
+
+            if (resultado.Estatus == -1)
+            {
+                return StatusCode(500, resultado);
+            }
+
+            return Ok(resultado);
+        }
+
+        [HttpGet("listaDatos_TipoMantenimiento_Listar")]
+        public IActionResult TipoMantenimiento_Listar(int IdEmpresa, byte SoloActivos, string TextoBusqueda)
+        {
+            RespuestaApi resultado = _bs.Bs_TipoMantenimiento_Listar(IdEmpresa, SoloActivos, TextoBusqueda);
+
+            if (resultado.Estatus == -1)
+            {
+                return StatusCode(500, resultado);
+            }
+
+            return Ok(resultado);
+        }
+
+        [HttpGet("listaDatos_TipoMantenimiento_ObtenerPorId")]
+        public IActionResult TipoMantenimiento_ObtenerPorId(int IdTipoMantenimiento, int IdEmpresa)
+        {
+            RespuestaApi resultado = _bs.Bs_TipoMantenimiento_ObtenerPorId(IdTipoMantenimiento, IdEmpresa);
+
+            if (resultado.Estatus == -1)
+            {
+                return StatusCode(500, resultado);
+            }
+
+            return Ok(resultado);
+        }
     }
 }

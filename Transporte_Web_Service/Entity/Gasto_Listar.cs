@@ -3,7 +3,7 @@
     public class Ent_Gasto_ListarPorViaje
     {
         public int IdGasto {  get; set; }
-            public int IdEmpresa { get; set; }
+        public int IdEmpresa { get; set; }
         public int IdSucursal { get; set; }
         public string Sucursal { get; set; }
         public int IdTipoGasto { get; set; }
@@ -42,5 +42,16 @@
         public string Referencia { get; set; }
         public string Descripcion { get; set; }
         public byte EsFacturable { get; set; }
+    }
+
+    public class Ent_TipoGasto_Listar
+    {
+        public int IdTipoGasto { get; set; }
+        public int IdEmpresa { get; set; }
+        public string Descripcion { get; set; }
+        public byte EsCostoDirecto { get; set; }
+        public byte EsMantenimiento { get; set; }
+        public byte EsCombustible { get; set; }
+        public byte Activo { get; set; }
     }
 }

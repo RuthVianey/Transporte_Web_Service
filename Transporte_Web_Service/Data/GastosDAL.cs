@@ -113,7 +113,98 @@ namespace Transporte_Web_Service.Data
             }
             return listaDatos;
         }
+        public List<RespuestaGeneral> Dal_TipoGasto_Desactivar(int IdTipoGasto, int IdEmpresa)
+        {
+            List<RespuestaGeneral> listaDatos = new List<RespuestaGeneral>();
+            try
+            {
+                var _IdTipoGasto = new SqlParameter("@IdTipoGasto", (object)IdTipoGasto);
+                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)IdEmpresa);
+
+                object[] parametros = new object[] { _IdTipoGasto, _IdEmpresa };
+
+                listaDatos = _context.Set<RespuestaGeneral>()
+                             .FromSqlRaw("EXEC sp_TipoGasto_Desactivar @IdTipoGasto, @IdEmpresa ", parametros)
+                             .AsNoTracking()
+                             .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return listaDatos;
+        }
+        public List<RespuestaGeneral> Dal_TipoGasto_Guardar(int IdTipoGasto, int IdEmpresa, string Descripcion, byte EsCostoDirecto, byte EsMantenimiento, byte EsCombustible, byte Activo)
+        {
+            List<RespuestaGeneral> listaDatos = new List<RespuestaGeneral>();
+            try
+            {
+                var _IdTipoGasto = new SqlParameter("@IdTipoGasto", (object)IdTipoGasto);
+                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)IdEmpresa);
+                var _Descripcion = new SqlParameter("@Descripcion", (object)Descripcion);
+                var _EsCostoDirecto = new SqlParameter("@EsCostoDirecto", (object)EsCostoDirecto);
+                var _EsMantenimiento = new SqlParameter("@EsMantenimiento", (object)EsMantenimiento);
+                var _EsCombustible = new SqlParameter("@EsCombustible", (object)EsCombustible);
+                var _Activo = new SqlParameter("@Activo", (object)Activo);
+
+                object[] parametros = new object[] { _IdTipoGasto, _IdEmpresa, _Descripcion, _EsCostoDirecto, _EsMantenimiento, _EsCombustible, _Activo };
+
+                listaDatos = _context.Set<RespuestaGeneral>()
+                             .FromSqlRaw("EXEC sp_TipoGasto_Guardar @IdTipoGasto, @IdEmpresa, @Descripcion, @EsCostoDirecto, @EsMantenimiento, @EsCombustible, @Activo ", parametros)
+                             .AsNoTracking()
+                             .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return listaDatos;
+        }
+        public List<Ent_TipoGasto_Listar> Dal_TipoGasto_Listar(int IdEmpresa, byte SoloActivos, string TextoBusqueda)
+        {
+            List<Ent_TipoGasto_Listar> listaDatos = new List<Ent_TipoGasto_Listar>();
+            try
+            {
+                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)IdEmpresa);
+                var _SoloActivos = new SqlParameter("@SoloActivos", (object)SoloActivos);
+                var _TextoBusqueda = new SqlParameter("@TextoBusqueda", (object)TextoBusqueda);
+
+                object[] parametros = new object[] { _IdEmpresa, _SoloActivos, _TextoBusqueda };
+
+                listaDatos = _context.Set<Ent_TipoGasto_Listar>()
+                             .FromSqlRaw("EXEC sp_TipoGasto_Listar @IdEmpresa, @SoloActivos, @TextoBusqueda ", parametros)
+                             .AsNoTracking()
+                             .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return listaDatos;
+        }
+        public List<Ent_TipoGasto_Listar> Dal_TipoGasto_ObtenerPorId(int IdTipoGasto, int IdEmpresa)
+        {
+            List<Ent_TipoGasto_Listar> listaDatos = new List<Ent_TipoGasto_Listar>();
+            try
+            {
+                var _IdTipoGasto = new SqlParameter("@IdTipoGasto", (object)IdTipoGasto);
+                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)IdEmpresa);
+
+                object[] parametros = new object[] { _IdTipoGasto, _IdEmpresa };
+
+                listaDatos = _context.Set<Ent_TipoGasto_Listar>()
+                             .FromSqlRaw("EXEC sp_TipoGasto_ObtenerPorId @IdTipoGasto, @IdEmpresa ", parametros)
+                             .AsNoTracking()
+                             .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return listaDatos;
+        }
     }
 }
+
 
 

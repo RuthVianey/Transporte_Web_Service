@@ -16,6 +16,12 @@
 
     public class Ent_RutaDetalle_Listar
     {
-
+        public int IdRutaDetalle { get; set; }
+        public int IdRuta { get; set; }
+        public int Orden { get; set; }
+        public string? Punto { get; set; }
+        public decimal Latitud { get; set; }
+        public decimal Longitud { get; set; }
+        public string? Tipo { get; set; }
     }
 }

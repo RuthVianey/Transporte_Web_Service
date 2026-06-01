@@ -316,5 +316,109 @@ namespace Transporte_Web_Service.Bussines
 
             return resp;
         }
+        public RespuestaApi Bs_TipoMantenimiento_Desactivar(int IdTipoMantenimiento, int IdEmpresa)
+        {
+            var resp = new RespuestaApi();
+
+            try
+            {
+                var listaDatos = _dal.Dal_TipoMantenimiento_Desactivar(IdTipoMantenimiento, IdEmpresa);
+
+                if (listaDatos != null && listaDatos.Count > 0)
+                {
+                    resp.Datos = new { listaDatos };
+                }
+                else
+                {
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se encontraron datos.";
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
+            }
+
+            return resp;
+        }
+        public RespuestaApi Bs_TipoMantenimiento_Guardar(int IdTipoMantenimiento, int IdEmpresa, string Descripcion, byte EsPreventivo, byte EsCorrectivo, byte Activo)
+        {
+            var resp = new RespuestaApi();
+
+            try
+            {
+                var listaDatos = _dal.Dal_TipoMantenimiento_Guardar(IdTipoMantenimiento, IdEmpresa, Descripcion, EsPreventivo, EsCorrectivo, Activo);
+
+                if (listaDatos != null && listaDatos.Count > 0)
+                {
+                    resp.Datos = new { listaDatos };
+                }
+                else
+                {
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se encontraron datos.";
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
+            }
+
+            return resp;
+        }
+        public RespuestaApi Bs_TipoMantenimiento_Listar(int IdEmpresa, byte SoloActivos, string TextoBusqueda)
+        {
+            var resp = new RespuestaApi();
+
+            try
+            {
+                var listaDatos = _dal.Dal_TipoMantenimiento_Listar(IdEmpresa, SoloActivos, TextoBusqueda);
+
+                if (listaDatos != null && listaDatos.Count > 0)
+                {
+                    resp.Datos = new { listaDatos };
+                }
+                else
+                {
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se encontraron datos.";
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
+            }
+
+            return resp;
+        }
+        public RespuestaApi Bs_TipoMantenimiento_ObtenerPorId(int IdTipoMantenimiento, int IdEmpresa)
+        {
+            var resp = new RespuestaApi();
+
+            try
+            {
+                var listaDatos = _dal.Dal_TipoMantenimiento_ObtenerPorId(IdTipoMantenimiento, IdEmpresa);
+
+                if (listaDatos != null && listaDatos.Count > 0)
+                {
+                    resp.Datos = new { listaDatos };
+                }
+                else
+                {
+                    resp.Estatus = 0;
+                    resp.Mensaje = "No se encontraron datos.";
+                }
+            }
+            catch (Exception ex)
+            {
+                resp.Estatus = -1;
+                resp.Mensaje = ex.Message;
+            }
+
+            return resp;
+        }
     }
 }

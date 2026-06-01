@@ -33,7 +33,7 @@ namespace Transporte_Web_Service.Bussines
                 else
                 {
                     resp.Estatus = 0;
-                    resp.Mensaje = "No se encontraron datos.";
+                    resp.Mensaje = "No se guardaron los datos.";
                 }
             }
             catch (Exception ex)

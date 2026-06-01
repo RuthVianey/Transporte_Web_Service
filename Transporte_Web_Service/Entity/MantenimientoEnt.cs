@@ -60,4 +60,14 @@
         public decimal CostoUnitario { get; set; }
         public decimal Total { get; set; }
     }
+
+    public class Ent_TipoMantenimiento_Listar
+    {
+        public int IdTipoMantenimiento { get; set; }
+        public int IdEmpresa { get; set; }
+        public string? Descripcion { get; set; }
+        public byte EsPreventivo { get; set; }
+        public byte EsCorrectivo { get; set; }
+        public byte Activo { get; set; }
+    }
 }
