@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Transporte_Web_Service.Bussines;
 using Transporte_Web_Service.Data;
+using Transporte_Web_Service.Data.Database;
 using Transporte_Web_Service.Entity;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,9 +11,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<MiDbContext>(options =>
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection")));
+//builder.Services.AddDbContext<MiDbContext>(options =>
+//    options.UseSqlServer(
+//        builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
+
 
 
 //builder.Services.AddScoped<CatalogosBS>();
