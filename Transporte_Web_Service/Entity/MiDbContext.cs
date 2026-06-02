@@ -24,8 +24,9 @@ namespace Transporte_Web_Service.Entity
             modelBuilder.Entity<Entity_Dashboard_CostosPorTipo>().HasNoKey();
             modelBuilder.Entity<Entity_Dashboard_RentabilidadMensual>().HasNoKey();
             modelBuilder.Entity<Entity_Dashboard_ResumenOperativo>().HasNoKey();
+            modelBuilder.Entity<Entity_Dashboard_TopClientes>().HasNoKey();
+            modelBuilder.Entity<Entity_Dashboard_TopUnidades>().HasNoKey();
             modelBuilder.Entity<Entity_Dashboard_ViajesPorEstado>().HasNoKey();
-
         }
 
 
