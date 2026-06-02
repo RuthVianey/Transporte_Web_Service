@@ -60,13 +60,26 @@ builder.Services.AddScoped<RentabilidadDAL>();
 builder.Services.AddScoped<SeguridadBussines>();
 builder.Services.AddScoped<SeguridadDAL>();
 
+builder.Services.AddScoped<EmpresaBussines>();
+builder.Services.AddScoped<EmpresaDAL>();
+
+builder.Services.AddScoped<RolesBussines>();
+builder.Services.AddScoped<RolesDAL>();
+
+
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
+
+
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
+
+app.MapGet("/prueba", () => "Swagger cargado");
 
 app.UseDeveloperExceptionPage();
 
