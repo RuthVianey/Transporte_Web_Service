@@ -17,13 +17,6 @@ namespace Transporte_Web_Service.Data
 {
     public class RentabilidadDAL
     {
-        //private readonly MiDbContext _context;
-
-        //public RentabilidadDAL(MiDbContext context)
-        //{
-        //    _context = context;
-        //}
-
         private readonly IDbConnectionFactory _connectionFactory;
 
         public RentabilidadDAL(DbConnectionFactory connectionFactory)
@@ -31,17 +24,21 @@ namespace Transporte_Web_Service.Data
             _connectionFactory = connectionFactory;
         }
 
-        public async Task<Entity_Rentabilidad_ListarViajes?> ObtenerResumenAsync(int idEmpresa, int? idSucursal, DateTime? fechaInicio, DateTime? fechaFin)
+        public async Task<Entity_Rentabilidad_ListarViajes?> ObtenerResumenAsync(int IdEmpresa, int? IdSucursal, string? FechaInicio, string? FechaFin, int? IdCliente,
+                                                                                int? IdUnidad, int? IdRuta )  
         {
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_Rentabilidad_ListarViajes>("dbo.Dashboard_ResumenOperativo",
+            return await connection.QueryFirstOrDefaultAsync<Entity_Rentabilidad_ListarViajes>("dbo.sp_Rentabilidad_ListarViajes",
                 new
                 {
-                    IdEmpresa = idEmpresa,
-                    IdSucursal = idSucursal,
-                    FechaInicio = fechaInicio,
-                    FechaFin = fechaFin
+                    IdEmpresa = IdEmpresa,
+                    IdSucursal = IdSucursal,
+                    FechaInicio = FechaInicio,
+                    FechaFin = FechaFin,
+                    IdCliente = IdCliente,
+                    IdUnidad = IdUnidad,
+                    IdRuta = IdRuta
                 },
                 commandType: CommandType.StoredProcedure
             );
