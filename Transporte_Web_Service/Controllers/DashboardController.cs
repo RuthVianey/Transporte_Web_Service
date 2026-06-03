@@ -23,7 +23,9 @@ namespace Transporte_Web_Service.Controllers
             var response = await _bs.Bs_Dashboard_CostosPorTipo( idEmpresa, idSucursal, fechaInicio, fechaFin );
 
             if (!response.Ok)
+            {
                 return BadRequest(response);
+            }
 
             return Ok(response);
         }

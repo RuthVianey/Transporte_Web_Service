@@ -24,16 +24,21 @@ namespace Transporte_Web_Service.Bussines
         public async Task<ApiResponse<Entity_Dashboard_CostosPorTipo>> Bs_Dashboard_CostosPorTipo(int idEmpresa, int? idSucursal, DateTime? fechaInicio, DateTime? fechaFin)
         {
             if (idEmpresa <= 0)
+            { 
                 return ApiResponse<Entity_Dashboard_CostosPorTipo>.Fail("La empresa es obligatoria.");
+            }
 
             if (fechaInicio.HasValue && fechaFin.HasValue && fechaFin < fechaInicio)
+            {
                 return ApiResponse<Entity_Dashboard_CostosPorTipo>.Fail("La fecha final no puede ser menor a la fecha inicial.");
+            }
 
-            var resumen = await _dal.Dal_dashObtenCostoTipo(idEmpresa, idSucursal, fechaInicio, fechaFin );
+            var resumen = await _dal.Dal_dashObtenCostoTipo(idEmpresa, idSucursal, fechaInicio, fechaFin);
 
             if (resumen == null)
+            { 
                 return ApiResponse<Entity_Dashboard_CostosPorTipo>.Fail("No se encontró información del dashboard.");
-
+            }
             return ApiResponse<Entity_Dashboard_CostosPorTipo>.Success(resumen);
         }
 
