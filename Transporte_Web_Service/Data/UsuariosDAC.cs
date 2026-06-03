@@ -1,50 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Dapper;
 using Microsoft.Data.SqlClient;
-using Transporte_Web_Service.Entity;
-using System.Data;
 using Microsoft.EntityFrameworkCore;
-using Transporte_Web_Service.Controllers;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 using System.Net.NetworkInformation;
+using System.Text;
+using Transporte_Web_Service.Controllers;
+using Transporte_Web_Service.Data.Database;
+using Transporte_Web_Service.Entity;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Transporte_Web_Service.Data
 {
     public class UsuariosDAC
     {
-        private readonly MiDbContext _context;
+        //private readonly MiDbContext _context;
+        private readonly IDbConnectionFactory _connectionFactory;
 
-        public UsuariosDAC(MiDbContext context)
+        public UsuariosDAC(DbConnectionFactory connectionFactory)
         {
-            _context = context;
+            _connectionFactory = connectionFactory;
+
         }
-        
+
         /*COMIENZA USUARIO*/
-        public List<RespuestaGeneral> Usuario_Guardar(int iIdUsuario, int iIdEmpresa, string sNombre, string sEmail, string sContrasenia, int iIdSucursal)
+        public async Task<Entity_RespuestaGeneral?> Usuario_Guardar(int iIdUsuario, int iIdEmpresa, string sNombre, string sEmail, string sContrasenia, int iIdSucursal)
         {
-            List<RespuestaGeneral> listaDatos = new List<RespuestaGeneral>();
-            try
-            {
-                var _IdUsuario = new SqlParameter("@IdUsuario", (object)iIdUsuario);
-                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)iIdEmpresa);
-                var _Nombre = new SqlParameter("@Nombre", (object)sNombre);
-                var _Email = new SqlParameter("@Email", (object)sEmail);
-                var _Contrasenia = new SqlParameter("@Contrasenia", (object)sContrasenia);
-                var _Sucursal = new SqlParameter("@IdSucursal", (object)iIdSucursal);
 
-                object[] parametros = new object[] { _IdUsuario, _IdEmpresa, _Nombre, _Email, _Contrasenia, _Sucursal };
+            using var connection = _connectionFactory.CreateConnection();
 
-                listaDatos = _context.Set<RespuestaGeneral>().FromSqlRaw("EXEC sp_Usuario_Guardar @IdUsuario, @IdEmpresa, @Nombre, @Email, @Contrasenia, @IdSucursal ", parametros).ToList();
-                
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return listaDatos;
-        }
-        
+            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_Usuario_Guardar",
+                new
+                {
+                    iIdUsuario = iIdUsuario,
+                    iIdEmpresa = iIdEmpresa,
+                    sNombre = sNombre,
+                    sEmail = sEmail,
+                    sContrasenia = sContrasenia,
+                    iIdSucursal = iIdSucursal
+                },
+                commandType: CommandType.StoredProcedure
+            );
+        }        
     }
-
 }

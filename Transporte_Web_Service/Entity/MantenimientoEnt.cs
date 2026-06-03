@@ -1,6 +1,6 @@
 ﻿namespace Transporte_Web_Service.Entity
 {
-    public class Ent_Mantenimiento_ListarPorViaje
+    public class Entity_Mantenimiento_ListarPorViaje
     {
         public int IdMantenimiento {  get; set; }
         public int IdEmpresa { get; set; }
@@ -21,7 +21,7 @@
         public byte EsAsignableAViaje { get; set; }
     }
 
-    public class Ent_Mantenimiento_ObtenerPorId
+    public class Entity_Mantenimiento_ObtenerPorId
     {
         public int IdMantenimiento { get; set; }
         public int IdEmpresa { get; set; }
@@ -42,7 +42,7 @@
         public byte EsAsignableAViaje { get; set; }
     }
 
-    public class Ent_MantenimientoConcepto_ObtenerPorId
+    public class Entity_MantenimientoConcepto_ObtenerPorId
     {
         public int IdConcepto { get; set; }
         public int IdEmpresa { get; set; }
@@ -50,7 +50,7 @@
         public byte Activo { get; set; }
     }
 
-    public class Ent_MantenimientoDetalle_Listar
+    public class Entity_MantenimientoDetalle_Listar
     {
         public int IdDetalle { get; set; }
         public int IdMantenimiento { get; set; }
@@ -61,7 +61,7 @@
         public decimal Total { get; set; }
     }
 
-    public class Ent_TipoMantenimiento_Listar
+    public class Entity_TipoMantenimiento_Listar
     {
         public int IdTipoMantenimiento { get; set; }
         public int IdEmpresa { get; set; }

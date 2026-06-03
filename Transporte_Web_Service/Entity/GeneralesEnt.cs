@@ -1,6 +1,6 @@
 ﻿namespace Transporte_Web_Service.Entity
 {
-    public class Obtienen_Datos_Empresa
+    public class Entity_Obtienen_Datos_Empresa
     {
         public string Nombre_Completo { set; get; }
         public string Nombre_Corto { set; get; }
@@ -14,13 +14,13 @@
         public string RutaLogo { set; get; }
     }
 
-    public class Usuarios_Empresa
+    public class Entity_Usuarios_Empresa
     {
         public int? IdEmpresa { set; get; }
         public string Nombre_Corto { set; get; }
     }
 
-    public class Empresa_Listar
+    public class Entity_Empresa_Listar
     {
         public int? IdEmpresa { set; get; }
         public string Nombre { set; get; }
@@ -36,7 +36,7 @@
         public byte? Activo { set; get; }
         public string FechaAlta { set; get; }
     }
-    public class Ent_Programa_Listar
+    public class Entity_Programa_Listar
     {
         public int IdPrograma { set; get; }
         public string Nombre { set; get; }

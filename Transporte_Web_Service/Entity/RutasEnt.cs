@@ -1,6 +1,6 @@
 ﻿namespace Transporte_Web_Service.Entity
 {
-    public class Ent_Ruta_Listar
+    public class Entity_Ruta_Listar
     {
         public int IdRuta {  get; set; }
         public int IdEmpresa { get; set; }
@@ -14,7 +14,7 @@
         public byte Activo { get; set; }
     }
 
-    public class Ent_RutaDetalle_Listar
+    public class Entity_RutaDetalle_Listar
     {
         public int IdRutaDetalle { get; set; }
         public int IdRuta { get; set; }

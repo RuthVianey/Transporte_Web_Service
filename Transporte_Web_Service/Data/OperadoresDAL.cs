@@ -1,117 +1,94 @@
-﻿using System;
+﻿using Dapper;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
-using Microsoft.Data.SqlClient;
-using Transporte_Web_Service.Entity;
-using System.Data;
-using Microsoft.EntityFrameworkCore;
 using Transporte_Web_Service.Controllers;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Transporte_Web_Service.Data.Database;
+using Transporte_Web_Service.Entity;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Transporte_Web_Service.Data
 {
     public class OperadoresDAL
     {
-        private readonly MiDbContext _context;
+        //private readonly MiDbContext _context;
+        private readonly IDbConnectionFactory _connectionFactory;
 
-        public OperadoresDAL(MiDbContext context)
+        public OperadoresDAL(DbConnectionFactory connectionFactory)
         {
-            _context = context;
+            _connectionFactory = connectionFactory;
+
         }
-        public List<RespuestaGeneral> Operador_Desactivar(int iIdOperador, int iIdEmpresa)
+        public async Task<Entity_RespuestaGeneral?> Operador_Desactivar(int iIdOperador, int iIdEmpresa)
         {
-            List<RespuestaGeneral> listaDatos = new List<RespuestaGeneral>();
-            try
-            {
-                var _IdOperador = new SqlParameter("@IdOperador", (object)iIdOperador);
-                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)iIdEmpresa);
 
-                object[] parametros = new object[] { _IdOperador, _IdEmpresa };
+            using var connection = _connectionFactory.CreateConnection();
 
-                listaDatos = _context.Set<RespuestaGeneral>()
-                             .FromSqlRaw("EXEC sp_Operador_Desactivar @IdOperador, @IdEmpresa ", parametros)
-                             .AsNoTracking()
-                             .ToList();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return listaDatos;
+            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_Operador_Desactivar",
+                new
+                {
+                    iIdOperador = iIdOperador,
+                    iIdEmpresa = iIdEmpresa
+                },
+                commandType: CommandType.StoredProcedure
+            );
         }
-        public List<RespuestaGeneral> Operador_Guardar(int iIdOperador, int iIdEmpresa, int iIdSucursal, string sNombre, string sLicencia, string sTipoLicencia, string sFechaVencimientoLicencia, string sCURP, string sTelefono, byte bActivo)
+        public async Task<Entity_RespuestaGeneral?> Operador_Guardar(int iIdOperador, int iIdEmpresa, int iIdSucursal, string sNombre, string sLicencia, string sTipoLicencia, string sFechaVencimientoLicencia, string sCURP, string sTelefono, byte bActivo)
         {
-            List<RespuestaGeneral> listaDatos = new List<RespuestaGeneral>();
-            try
-            {
-                var _IdOperador = new SqlParameter("@IdOperador", (object)iIdOperador);
-                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)iIdEmpresa);
-                var _IdSucursal = new SqlParameter("@IdSucursal", (object)iIdSucursal);
-                var _Nombre = new SqlParameter("@Nombre", (object)sNombre);
-                var _Licencia = new SqlParameter("@Licencia", (object)sLicencia);
-                var _TipoLicencia = new SqlParameter("@TipoLicencia", (object)sTipoLicencia);
-                var _FechaVencimientoLicencia = new SqlParameter("@FechaVencimientoLicencia", (object)sFechaVencimientoLicencia);
-                var _CURP = new SqlParameter("@CURP", (object)sCURP);
-                var _Telefono = new SqlParameter("@Telefono", (object)sTelefono);
-                var _Activo = new SqlParameter("@Activo", (object)bActivo);
 
-                object[] parametros = new object[] { _IdOperador, _IdEmpresa, _IdSucursal, _Nombre, _Licencia, _TipoLicencia, _FechaVencimientoLicencia, _CURP, _Telefono, _Activo };
+            using var connection = _connectionFactory.CreateConnection();
 
-                listaDatos = _context.Set<RespuestaGeneral>()
-                             .FromSqlRaw("EXEC sp_Operador_Guardar @IdOperador, @IdEmpresa, @IdSucursal, @Nombre, @Licencia, @TipoLicencia, @FechaVencimientoLicencia, @CURP, @Telefono, @Activo ", parametros)
-                             .AsNoTracking()
-                             .ToList();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return listaDatos;
+            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_Operador_Guardar",
+                new
+                {
+                    iIdOperador = iIdOperador,
+                    iIdEmpresa = iIdEmpresa,
+                    iIdSucursal = iIdSucursal,
+                    sNombre = sNombre,
+                    sLicencia = sLicencia,
+                    sTipoLicencia = sTipoLicencia,
+                    sFechaVencimientoLicencia = sFechaVencimientoLicencia,
+                    sCURP = sCURP,
+                    sTelefono = sTelefono,
+                    bActivo = bActivo
+                },
+                commandType: CommandType.StoredProcedure
+            );
         }
-        public List<Operador_ObtenerPorId> Operador_Listar(int iIdEmpresa, int iIdSucursal, byte bSoloActivos, string sTextoBusqueda)
+        public async Task<Entity_Operador_ObtenerPorId?> Operador_Listar(int iIdEmpresa, int iIdSucursal, byte bSoloActivos, string sTextoBusqueda)
         {
-            List<Operador_ObtenerPorId> listaDatos = new List<Operador_ObtenerPorId>();
-            try
-            {
-                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)iIdEmpresa);
-                var _IdSucursal = new SqlParameter("@IdSucursal", (object)iIdSucursal);
-                var _SoloActivos = new SqlParameter("@SoloActivos", (object)bSoloActivos);
-                var _TextoBusqueda = new SqlParameter("@TextoBusqueda", (object)sTextoBusqueda);
 
-                object[] parametros = new object[] { _IdEmpresa, _IdSucursal, _SoloActivos, _TextoBusqueda };
+            using var connection = _connectionFactory.CreateConnection();
 
-                listaDatos = _context.Set<Operador_ObtenerPorId>()
-                             .FromSqlRaw("EXEC sp_Operador_Listar @IdEmpresa, @IdSucursal, @SoloActivos, @TextoBusqueda ", parametros)
-                             .AsNoTracking()
-                             .ToList();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return listaDatos;
+            return await connection.QueryFirstOrDefaultAsync<Entity_Operador_ObtenerPorId>("dbo.sp_Operador_Listar",
+                new
+                {
+                    iIdEmpresa = iIdEmpresa,
+                    iIdSucursal = iIdSucursal,
+                    bSoloActivos = bSoloActivos,
+                    sTextoBusqueda = sTextoBusqueda
+                },
+                commandType: CommandType.StoredProcedure
+            );
         }
-        public List<Operador_ObtenerPorId> Operador_ObtenerPorId(int iIdEmpresa, int iIdOperador)
+        public async Task<Entity_Operador_ObtenerPorId?> Operador_ObtenerPorId(int iIdEmpresa, int iIdOperador)
         {
-            List<Operador_ObtenerPorId> listaDatos = new List<Operador_ObtenerPorId>();
-            try
-            {
-                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)iIdEmpresa);
-                var _IdOperador = new SqlParameter("@IdOperador", (object)iIdOperador);
 
-                object[] parametros = new object[] { _IdEmpresa, _IdOperador };
+            using var connection = _connectionFactory.CreateConnection();
 
-                listaDatos = _context.Set<Operador_ObtenerPorId>()
-                             .FromSqlRaw("EXEC sp_Operador_ObtenerPorId @IdOperador, @IdEmpresa ", parametros)
-                             .AsNoTracking()
-                             .ToList();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return listaDatos;
+            return await connection.QueryFirstOrDefaultAsync<Entity_Operador_ObtenerPorId>("dbo.sp_Operador_ObtenerPorId",
+                new
+                {
+                    iIdOperador = iIdOperador,
+                    iIdEmpresa = iIdEmpresa
+                },
+                commandType: CommandType.StoredProcedure
+            );
         }
     }
 }

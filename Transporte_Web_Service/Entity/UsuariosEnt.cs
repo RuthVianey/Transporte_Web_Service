@@ -1,32 +1,32 @@
 ﻿namespace Transporte_Web_Service.Entity
 {
-    public class Lista_Roles
+    public class Entity_Lista_Roles
     {
         public int? IdRol { set; get; }
         public string Nombre { set; get; }
     }
 
-    public class Lista_Usuario
+    public class Entity_Lista_Usuario
     {
         public int? IdUsuario { set; get; }
         public string Nombre { set; get; }
         public string Email { set; get; }
     }
 
-    public class Lista_Programa
+    public class Entity_Lista_Programa
     {
         public int? IdPrograma { set; get; }
         public string Nombre { set; get; }
     }
 
-    public class RespuestaGeneral
+    public class Entity_RespuestaGeneral
     {
         public int? Resultado { set; get; }
-        public string Mensaje { set; get; }
+        public string? Mensaje { set; get; }
         public int? ID { set; get; }
     }
 
-    public class Operador_ObtenerPorId
+    public class Entity_Operador_ObtenerPorId
     {
         public int? IdOperador { set; get; }
         public int? IdEmpresa { set; get; }
@@ -41,7 +41,7 @@
         public string Activo { set; get; }
     }
 
-    public class RutaDetalle_ObtenerPorId
+    public class Entity_RutaDetalle_ObtenerPorId
     {
         public int? IdRutaDetalle { set; get; }
         public int? IdRuta { set; get; }
@@ -52,7 +52,7 @@
         public string Tipo { set; get; }
     }
 
-    public class Ruta_ObtenerPorId
+    public class Entity_Ruta_ObtenerPorId
     {
         public int? IdRuta { set; get; }
         public int? IdEmpresa { set; get; }

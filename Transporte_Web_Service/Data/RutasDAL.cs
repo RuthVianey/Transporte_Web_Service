@@ -1,204 +1,154 @@
-﻿using System;
+﻿using Dapper;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
-using Microsoft.Data.SqlClient;
-using Transporte_Web_Service.Entity;
-using System.Data;
-using Microsoft.EntityFrameworkCore;
 using Transporte_Web_Service.Controllers;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Transporte_Web_Service.Data.Database;
+using Transporte_Web_Service.Entity;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Transporte_Web_Service.Data
 {
     public class RutasDAL
     {
-        private readonly MiDbContext _context;
+        //private readonly MiDbContext _context;
+        private readonly IDbConnectionFactory _connectionFactory;
 
-        public RutasDAL(MiDbContext context)
+        public RutasDAL(DbConnectionFactory connectionFactory)
         {
-            _context = context;
+            _connectionFactory = connectionFactory;
+
         }
-        public List<RespuestaGeneral> Dal_Ruta_Desactivar(int IdRuta, int IdEmpresa)
+
+        public async Task<Entity_RespuestaGeneral?> Dal_Ruta_Desactivar(int IdRuta, int IdEmpresa)
         {
-            List<RespuestaGeneral> listaDatos = new List<RespuestaGeneral>();
-            try
-            {
-                var _IdRuta = new SqlParameter("@IdRuta", (object)IdRuta);
-                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)IdEmpresa);
 
-                object[] parametros = new object[] { _IdRuta, _IdEmpresa };
+            using var connection = _connectionFactory.CreateConnection();
 
-                listaDatos = _context.Set<RespuestaGeneral>()
-                             .FromSqlRaw("EXEC sp_Ruta_Desactivar @IdRuta, @IdEmpresa", parametros)
-                             .AsNoTracking()
-                             .ToList();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return listaDatos;
+            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_Ruta_Desactivar",
+                new
+                {
+                    IdRuta = IdRuta,
+                    IdEmpresa = IdEmpresa
+                },
+                commandType: CommandType.StoredProcedure
+            );
         }
-        public List<RespuestaGeneral> Dal_Ruta_Guardar(int IdRuta, int IdEmpresa, int IdSucursal, string Nombre, string Origen, string Destino, decimal DistanciaKm, int TiempoEstimadoMin, byte Activo)
+        public async Task<Entity_RespuestaGeneral?> Dal_Ruta_Guardar(int IdRuta, int IdEmpresa, int IdSucursal, string Nombre, string Origen, string Destino, decimal DistanciaKm, int TiempoEstimadoMin, byte Activo)
         {
-            List<RespuestaGeneral> listaDatos = new List<RespuestaGeneral>();
-            try
-            {
-                var _IdRuta = new SqlParameter("@IdRuta", (object)IdRuta);
-                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)IdEmpresa);
-                var _IdSucursal = new SqlParameter("@IdSucursal", (object)IdSucursal);
-                var _Nombre = new SqlParameter("@Nombre", (object)Nombre);
-                var _Origen = new SqlParameter("@Origen", (object)Origen);
-                var _Destino = new SqlParameter("@Destino", (object)Destino);
-                var _DistanciaKm = new SqlParameter("@DistanciaKm", (object)DistanciaKm);
-                var _TiempoEstimadoMin = new SqlParameter("@TiempoEstimadoMin", (object)TiempoEstimadoMin);
-                var _Activo = new SqlParameter("@Activo", (object)Activo);
 
-                object[] parametros = new object[] { _IdRuta, _IdEmpresa, _IdSucursal, _Nombre, _Origen, _Destino, _DistanciaKm, _TiempoEstimadoMin, _Activo };
+            using var connection = _connectionFactory.CreateConnection();
 
-                listaDatos = _context.Set<RespuestaGeneral>()
-                             .FromSqlRaw("EXEC sp_Ruta_Guardar @IdRuta, @IdEmpresa, @IdSucursal, @Nombre, @Origen, @Destino, @DistanciaKm, @TiempoEstimadoMin, @Activo", parametros)
-                             .AsNoTracking()
-                             .ToList();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return listaDatos;
+            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_Ruta_Guardar",
+                new
+                {
+                    IdRuta = IdRuta,
+                    IdEmpresa = IdEmpresa,
+                    IdSucursal = IdSucursal,
+                    Nombre = Nombre,
+                    Origen = Origen,
+                    Destino = Destino,
+                    DistanciaKm = DistanciaKm,
+                    TiempoEstimadoMin = TiempoEstimadoMin,
+                    Activo = Activo
+                },
+                commandType: CommandType.StoredProcedure
+            );
         }
-        public List<Ent_Ruta_Listar> Dal_Ruta_Listar(int IdEmpresa, int IdSucursal, byte SoloActivos, string TextoBusqueda)
+        public async Task<Entity_Ruta_Listar?> Dal_Ruta_Listar(int IdEmpresa, int IdSucursal, byte SoloActivos, string TextoBusqueda)
         {
-            List<Ent_Ruta_Listar> listaDatos = new List<Ent_Ruta_Listar>();
-            try
-            {
-                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)IdEmpresa);
-                var _IdSucursal = new SqlParameter("@IdSucursal", (object)IdSucursal);
-                var _SoloActivos = new SqlParameter("@SoloActivos", (object)SoloActivos);
-                var _TextoBusqueda = new SqlParameter("@TextoBusqueda", (object)TextoBusqueda);
 
-                object[] parametros = new object[] { _IdEmpresa, _IdSucursal, _SoloActivos, _TextoBusqueda };
+            using var connection = _connectionFactory.CreateConnection();
 
-                listaDatos = _context.Set<Ent_Ruta_Listar>()
-                             .FromSqlRaw("EXEC sp_Ruta_Listar @IdEmpresa, @IdSucursal, @SoloActivos, @TextoBusqueda", parametros)
-                             .AsNoTracking()
-                             .ToList();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return listaDatos;
+            return await connection.QueryFirstOrDefaultAsync<Entity_Ruta_Listar>("dbo.sp_Ruta_Listar",
+                new
+                {
+                    IdEmpresa = IdEmpresa,
+                    IdSucursal = IdSucursal,
+                    SoloActivos = SoloActivos,
+                    TextoBusqueda = TextoBusqueda
+                },
+                commandType: CommandType.StoredProcedure
+            );
         }
-        public List<Ent_Ruta_Listar> Dal_Ruta_ObtenerPorId(int IdRuta, int IdEmpresa)
+        public async Task<Entity_Ruta_Listar?> Dal_Ruta_ObtenerPorId(int IdRuta, int IdEmpresa)
         {
-            List<Ent_Ruta_Listar> listaDatos = new List<Ent_Ruta_Listar>();
-            try
-            {
-                var _IdRuta = new SqlParameter("@IdRuta", (object)IdRuta);
-                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)IdEmpresa);
 
-                object[] parametros = new object[] { _IdRuta, _IdEmpresa };
+            using var connection = _connectionFactory.CreateConnection();
 
-                listaDatos = _context.Set<Ent_Ruta_Listar>()
-                             .FromSqlRaw("EXEC sp_Ruta_ObtenerPorId @IdRuta, @IdEmpresa ", parametros)
-                             .AsNoTracking()
-                             .ToList();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return listaDatos;
+            return await connection.QueryFirstOrDefaultAsync<Entity_Ruta_Listar>("dbo.sp_Ruta_ObtenerPorId",
+                new
+                {
+                    IdRuta = IdRuta,
+                    IdEmpresa = IdEmpresa
+                },
+                commandType: CommandType.StoredProcedure
+            );
         }
-        public List<RespuestaGeneral> Dal_RutaDetalle_Eliminar(int IdRutaDetalle, int IdRuta)
+        public async Task<Entity_RespuestaGeneral?> Dal_RutaDetalle_Eliminar(int IdRutaDetalle, int IdRuta)
         {
-            List<RespuestaGeneral> listaDatos = new List<RespuestaGeneral>();
-            try
-            {
-                var _IdRutaDetalle = new SqlParameter("@IdRutaDetalle", (object)IdRutaDetalle);
-                var _IdRuta = new SqlParameter("@IdRuta", (object)IdRuta);
 
-                object[] parametros = new object[] { _IdRutaDetalle, _IdRuta };
+            using var connection = _connectionFactory.CreateConnection();
 
-                listaDatos = _context.Set<RespuestaGeneral>()
-                             .FromSqlRaw("EXEC sp_RutaDetalle_Eliminar @IdRutaDetalle, @IdRuta", parametros)
-                             .AsNoTracking()
-                             .ToList();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return listaDatos;
+            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_RutaDetalle_Eliminar",
+                new
+                {
+                    IdRutaDetalle = IdRutaDetalle,
+                    IdRuta = IdRuta
+                },
+                commandType: CommandType.StoredProcedure
+            );
         }
-        public List<RespuestaGeneral> Dal_RutaDetalle_Guardar(int IdRutaDetalle, int IdRuta, int Orden, string Punto, decimal Latitud, decimal Longitud, string Tipo)
+        public async Task<Entity_RespuestaGeneral?> Dal_RutaDetalle_Guardar(int IdRutaDetalle, int IdRuta, int Orden, string Punto, decimal Latitud, decimal Longitud, string Tipo)
         {
-            List<RespuestaGeneral> listaDatos = new List<RespuestaGeneral>();
-            try
-            {
-                var _IdRutaDetalle = new SqlParameter("@IdRutaDetalle", (object)IdRutaDetalle);
-                var _IdRuta = new SqlParameter("@IdRuta", (object)IdRuta);
-                var _Orden = new SqlParameter("@Orden", (object)Orden);
-                var _Punto = new SqlParameter("@Punto", (object)Punto);
-                var _Latitud = new SqlParameter("@Latitud", (object)Latitud);
-                var _Longitud = new SqlParameter("@Longitud", (object)Longitud);
-                var _Tipo = new SqlParameter("@Tipo", (object)Tipo);
 
-                object[] parametros = new object[] { _IdRutaDetalle, _IdRuta, _Orden, _Punto, _Latitud, _Longitud, _Tipo };
+            using var connection = _connectionFactory.CreateConnection();
 
-                listaDatos = _context.Set<RespuestaGeneral>()
-                             .FromSqlRaw("EXEC sp_RutaDetalle_Guardar @IdRutaDetalle, @IdRuta, @Orden, @Punto, @Latitud, @Longitud, @Tipo", parametros)
-                             .AsNoTracking()
-                             .ToList();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return listaDatos;
+            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_RutaDetalle_Guardar",
+                new
+                {
+                    IdRutaDetalle = IdRutaDetalle,
+                    IdRuta = IdRuta,
+                    Orden = Orden,
+                    Punto = Punto,
+                    Latitud = Latitud,
+                    Longitud = Longitud,
+                    Tipo = Tipo
+                },
+                commandType: CommandType.StoredProcedure
+            );
         }
-        public List<Ent_RutaDetalle_Listar> Dal_RutaDetalle_Listar(int IdRuta)
+        public async Task<Entity_RutaDetalle_Listar?> Dal_RutaDetalle_Listar(int IdRuta)
         {
-            List<Ent_RutaDetalle_Listar> listaDatos = new List<Ent_RutaDetalle_Listar>();
-            try
-            {
-                var _IdRuta = new SqlParameter("@IdRuta", (object)IdRuta);
 
-                object[] parametros = new object[] { _IdRuta };
+            using var connection = _connectionFactory.CreateConnection();
 
-                listaDatos = _context.Set<Ent_RutaDetalle_Listar>()
-                             .FromSqlRaw("EXEC sp_RutaDetalle_Listar @IdRuta ", parametros)
-                             .AsNoTracking()
-                             .ToList();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return listaDatos;
+            return await connection.QueryFirstOrDefaultAsync<Entity_RutaDetalle_Listar>("dbo.sp_RutaDetalle_Listar",
+                new
+                {
+                    IdRuta = IdRuta
+                },
+                commandType: CommandType.StoredProcedure
+            );
         }
-        public List<Ent_RutaDetalle_Listar> Dal_RutaDetalle_ObtenerPorId(int IdRutaDetalle, int IdRuta)
+        public async Task<Entity_RutaDetalle_Listar?> Dal_RutaDetalle_ObtenerPorId(int IdRutaDetalle, int IdRuta)
         {
-            List<Ent_RutaDetalle_Listar> listaDatos = new List<Ent_RutaDetalle_Listar>();
-            try
-            {
-                var _IdRutaDetalle = new SqlParameter("@IdRutaDetalle", (object)IdRutaDetalle);
-                var _IdRuta = new SqlParameter("@IdRuta", (object)IdRuta);
 
-                object[] parametros = new object[] { _IdRuta };
+            using var connection = _connectionFactory.CreateConnection();
 
-                listaDatos = _context.Set<Ent_RutaDetalle_Listar>()
-                             .FromSqlRaw("EXEC sp_RutaDetalle_ObtenerPorId @IdRutaDetalle, @IdRuta ", parametros)
-                             .AsNoTracking()
-                             .ToList();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return listaDatos;
+            return await connection.QueryFirstOrDefaultAsync<Entity_RutaDetalle_Listar>("dbo.sp_RutaDetalle_ObtenerPorId",
+                new
+                {
+                    IdRutaDetalle = IdRutaDetalle,
+                    IdRuta = IdRuta
+                },
+                commandType: CommandType.StoredProcedure
+            );
         }
     }
 }

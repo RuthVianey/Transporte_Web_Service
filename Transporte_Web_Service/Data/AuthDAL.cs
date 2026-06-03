@@ -1,62 +1,57 @@
-﻿using System;
+﻿using Dapper;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
-using Microsoft.Data.SqlClient;
-using Transporte_Web_Service.Entity;
-using System.Data;
-using Microsoft.EntityFrameworkCore;
 using Transporte_Web_Service.Controllers;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Transporte_Web_Service.Data.Database;
+using Transporte_Web_Service.Entity;
 
 namespace Transporte_Web_Service.Data
 {
     public class AuthDAL
     {
-        private readonly MiDbContext _context;
+        //private readonly MiDbContext _context;
+        private readonly IDbConnectionFactory _connectionFactory;
 
-        public AuthDAL(MiDbContext context)
+        public AuthDAL(DbConnectionFactory connectionFactory)
         {
-            _context = context;
+            _connectionFactory = connectionFactory;
+
         }
 
-        public int? Usuario_Valida(int iIdEmpresa, string sEmail, string sPasswordIngresado)
+        public async Task<int?> Usuario_Valida(int IdEmpresa, string Email, string PasswordIngresado)
         {
-            int? dato = 0;
-            try
-            {
-                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)iIdEmpresa);
-                var _Email = new SqlParameter("@Email", (object)sEmail);
-                var _PasswordIngresado = new SqlParameter("@PasswordIngresado", (object)sPasswordIngresado);
 
-                object[] parametros = new object[] { _IdEmpresa, _Email, _PasswordIngresado };
+            using var connection = _connectionFactory.CreateConnection();
 
-                var resultado = _context.Set<Respuesta.ResultadoSP>().FromSqlRaw("EXEC sp_Usuario_Valida @IdEmpresa, @Email, @PasswordIngresado ", parametros).AsEnumerable().FirstOrDefault();
-                dato = resultado?.Resultado;
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return dato;
-
+            return await connection.QueryFirstOrDefaultAsync<int?>("dbo.sp_Usuario_Valida",
+                new
+                {
+                    IdEmpresa = IdEmpresa,
+                    Email = Email,
+                    PasswordIngresado = PasswordIngresado
+                },
+                commandType: CommandType.StoredProcedure
+            );
         }
-        public List<RespuestaGeneral> Usuarios_Empresa(int iIdEmpresa)
+
+        public async Task<Entity_RespuestaGeneral?> Usuarios_Empresa(string Email)
         {
-            List<RespuestaGeneral> listaDatos = new List<RespuestaGeneral>();
-            try
-            {
-                var _IdEmpresa = new SqlParameter("@Email", (object)iIdEmpresa);
 
-                object[] parametros = new object[] { _IdEmpresa };
+            using var connection = _connectionFactory.CreateConnection();
 
-                listaDatos = _context.Set<RespuestaGeneral>().FromSqlRaw("EXEC sp_Usuarios_Empresa @Email ", parametros).ToList();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return listaDatos;
+            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_Usuarios_Empresa",
+                new
+                {
+                    Email = Email
+                },
+                commandType: CommandType.StoredProcedure
+            );
         }
     }
 }

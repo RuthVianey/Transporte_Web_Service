@@ -1,6 +1,6 @@
 ﻿namespace Transporte_Web_Service.Entity
 {
-    public class Ent_CargaCombustible_ListarPorViaje
+    public class Entity_CargaCombustible_ListarPorViaje
     {
         public int IdCarga {  get; set; }
         public int IdEmpresa { get; set; }
@@ -16,11 +16,11 @@
         public decimal Importe { get; set; }
         public decimal Km { get; set; }
         public string Odometro { get; set; }
-        public decimal RendimientoKmPorLitro { get; set; }
+        public decimal RendimiEntityoKmPorLitro { get; set; }
         public string Referencia { get; set; }
     }
 
-    public class Ent_CargaCombustible_ObtenerPorId
+    public class Entity_CargaCombustible_ObtenerPorId
     {
         public int IdCarga { get; set; }
         public int IdEmpresa { get; set; }

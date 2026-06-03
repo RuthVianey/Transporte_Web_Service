@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Dapper;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
@@ -8,200 +9,149 @@ using System.Linq;
 using System.Security.Cryptography.Xml;
 using System.Text;
 using Transporte_Web_Service.Controllers;
+using Transporte_Web_Service.Data.Database;
 using Transporte_Web_Service.Entity;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Transporte_Web_Service.Data
 {
     public class GastosDAL
     {
-        private readonly MiDbContext _context;
+        //private readonly MiDbContext _context;
+        private readonly IDbConnectionFactory _connectionFactory;
 
-        public GastosDAL(MiDbContext context)
+        public GastosDAL(DbConnectionFactory connectionFactory)
         {
-            _context = context;
+            _connectionFactory = connectionFactory;
+
         }
-        public List<RespuestaGeneral> Dal_Gasto_Eliminar(int IdGasto, int IdEmpresa)
+        public async Task<Entity_RespuestaGeneral?> Dal_Gasto_Eliminar(int IdGasto, int IdEmpresa)
         {
-            List<RespuestaGeneral> listaDatos = new List<RespuestaGeneral>();
-            try
-            {
-                var _IdGasto = new SqlParameter("@IdGasto", (object)IdGasto);
-                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)IdEmpresa);
 
-                object[] parametros = new object[] { _IdGasto, _IdEmpresa };
+            using var connection = _connectionFactory.CreateConnection();
 
-                listaDatos = _context.Set<RespuestaGeneral>()
-                             .FromSqlRaw("EXEC sp_Gasto_Eliminar @IdGasto, @IdEmpresa ", parametros)
-                             .AsNoTracking()
-                             .ToList();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return listaDatos;
+            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_Gasto_Eliminar",
+                new
+                {
+                    IdGasto = IdGasto,
+                    IdEmpresa = IdEmpresa
+                },
+                commandType: CommandType.StoredProcedure
+            );
         }
-        public List<RespuestaGeneral> Dal_Gasto_Guardar(int IdGasto, int IdEmpresa, int IdSucursal, int IdTipoGasto, int IdViaje, int IdUnidad, string Fecha, decimal Monto, string Referencia, string Descripcion, byte EsFacturable)
+        public async Task<Entity_RespuestaGeneral?> Dal_Gasto_Guardar(int IdGasto, int IdEmpresa, int IdSucursal, int IdTipoGasto, int IdViaje, int IdUnidad, string Fecha, decimal Monto, string Referencia, string Descripcion, byte EsFacturable)
         {
-            List<RespuestaGeneral> listaDatos = new List<RespuestaGeneral>();
-            try
-            {
-                var _IdGasto = new SqlParameter("@IdGasto", (object)IdGasto);
-                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)IdEmpresa);
-                var _IdSucursal = new SqlParameter("@IdSucursal", (object)IdSucursal);
-                var _IdTipoGasto = new SqlParameter("@IdTipoGasto", (object)IdTipoGasto);
-                var _IdViaje = new SqlParameter("@IdViaje", (object)IdViaje);
-                var _IdUnidad = new SqlParameter("@IdUnidad", (object)IdUnidad);
-                var _Fecha = new SqlParameter("@Fecha", (object)Fecha);
-                var _Monto = new SqlParameter("@Monto", (object)Monto);
-                var _Referencia = new SqlParameter("@Referencia", (object)Referencia);
-                var _Descripcion = new SqlParameter("@Descripcion", (object)Descripcion);
-                var _EsFacturable = new SqlParameter("@EsFacturable", (object)EsFacturable);
 
-                object[] parametros = new object[] { _IdGasto, _IdEmpresa, _IdSucursal, _IdTipoGasto, _IdViaje, _IdUnidad, _Fecha, _Monto, _Referencia, _Descripcion, _EsFacturable };
+            using var connection = _connectionFactory.CreateConnection();
 
-                listaDatos = _context.Set<RespuestaGeneral>()
-                             .FromSqlRaw("EXEC sp_Gasto_Guardar @IdGasto, @IdEmpresa, @IdSucursal, @IdTipoGasto, @IdViaje, @IdUnidad, @Fecha, @Monto, @Referencia, @Descripcion, @EsFacturable ", parametros)
-                             .AsNoTracking()
-                             .ToList();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return listaDatos;
+            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_Gasto_Guardar",
+                new
+                {
+                    IdGasto = IdGasto,
+                    IdEmpresa = IdEmpresa,
+                    IdSucursal = IdSucursal,
+                    IdTipoGasto = IdTipoGasto,
+                    IdViaje = IdViaje,
+                    IdUnidad = IdUnidad,
+                    Fecha = Fecha,
+                    Monto = Monto,
+                    Referencia = Referencia,
+                    Descripcion = Descripcion,
+                    EsFacturable = EsFacturable
+                },
+                commandType: CommandType.StoredProcedure
+            );
         }
-        public List<Ent_Gasto_ListarPorViaje> Dal_Gasto_ListarPorViaje(int IdViaje, int IdEmpresa)
+
+        public async Task<Entity_Gasto_ListarPorViaje?> Dal_Gasto_ListarPorViaje(int IdViaje, int IdEmpresa)
         {
-            List<Ent_Gasto_ListarPorViaje> listaDatos = new List<Ent_Gasto_ListarPorViaje>();
-            try
-            {
-                var _IdViaje = new SqlParameter("@IdViaje", (object)IdViaje);
-                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)IdEmpresa);
 
-                object[] parametros = new object[] { _IdViaje, _IdEmpresa };
+            using var connection = _connectionFactory.CreateConnection();
 
-                listaDatos = _context.Set<Ent_Gasto_ListarPorViaje>()
-                             .FromSqlRaw("EXEC sp_Gasto_ListarPorViaje @IdViaje, @IdEmpresa ", parametros)
-                             .AsNoTracking()
-                             .ToList();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return listaDatos;
+            return await connection.QueryFirstOrDefaultAsync<Entity_Gasto_ListarPorViaje>("dbo.sp_Gasto_ListarPorViaje",
+                new
+                {
+                    IdViaje = IdViaje,
+                    IdEmpresa = IdEmpresa
+                },
+                commandType: CommandType.StoredProcedure
+            );
         }
-        public List<Ent_Gasto_ObtenerPorId> Dal_Gasto_ObtenerPorId(int IdGasto, int IdEmpresa)
+        public async Task<Entity_Gasto_ObtenerPorId?> Dal_Gasto_ObtenerPorId(int IdGasto, int IdEmpresa)
         {
-            List<Ent_Gasto_ObtenerPorId> listaDatos = new List<Ent_Gasto_ObtenerPorId>();
-            try
-            {
-                var _IdGasto = new SqlParameter("@IdGasto", (object)IdGasto);
-                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)IdEmpresa);
 
-                object[] parametros = new object[] { _IdGasto, _IdEmpresa };
+            using var connection = _connectionFactory.CreateConnection();
 
-                listaDatos = _context.Set<Ent_Gasto_ObtenerPorId>()
-                             .FromSqlRaw("EXEC sp_Gasto_ObtenerPorId @IdGasto, @IdEmpresa ", parametros)
-                             .AsNoTracking()
-                             .ToList();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return listaDatos;
+            return await connection.QueryFirstOrDefaultAsync<Entity_Gasto_ObtenerPorId>("dbo.sp_Gasto_ObtenerPorId",
+                new
+                {
+                    IdGasto = IdGasto,
+                    IdEmpresa = IdEmpresa
+                },
+                commandType: CommandType.StoredProcedure
+            );
         }
-        public List<RespuestaGeneral> Dal_TipoGasto_Desactivar(int IdTipoGasto, int IdEmpresa)
+        public async Task<Entity_RespuestaGeneral?> Dal_TipoGasto_Desactivar(int IdTipoGasto, int IdEmpresa)
         {
-            List<RespuestaGeneral> listaDatos = new List<RespuestaGeneral>();
-            try
-            {
-                var _IdTipoGasto = new SqlParameter("@IdTipoGasto", (object)IdTipoGasto);
-                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)IdEmpresa);
 
-                object[] parametros = new object[] { _IdTipoGasto, _IdEmpresa };
+            using var connection = _connectionFactory.CreateConnection();
 
-                listaDatos = _context.Set<RespuestaGeneral>()
-                             .FromSqlRaw("EXEC sp_TipoGasto_Desactivar @IdTipoGasto, @IdEmpresa ", parametros)
-                             .AsNoTracking()
-                             .ToList();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return listaDatos;
+            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_TipoGasto_Desactivar",
+                new
+                {
+                    IdTipoGasto = IdTipoGasto,
+                    IdEmpresa = IdEmpresa
+                },
+                commandType: CommandType.StoredProcedure
+            );
         }
-        public List<RespuestaGeneral> Dal_TipoGasto_Guardar(int IdTipoGasto, int IdEmpresa, string Descripcion, byte EsCostoDirecto, byte EsMantenimiento, byte EsCombustible, byte Activo)
+        public async Task<Entity_RespuestaGeneral?> Dal_TipoGasto_Guardar(int IdTipoGasto, int IdEmpresa, string Descripcion, byte EsCostoDirecto, byte EsMantenimiento, byte EsCombustible, byte Activo)
         {
-            List<RespuestaGeneral> listaDatos = new List<RespuestaGeneral>();
-            try
-            {
-                var _IdTipoGasto = new SqlParameter("@IdTipoGasto", (object)IdTipoGasto);
-                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)IdEmpresa);
-                var _Descripcion = new SqlParameter("@Descripcion", (object)Descripcion);
-                var _EsCostoDirecto = new SqlParameter("@EsCostoDirecto", (object)EsCostoDirecto);
-                var _EsMantenimiento = new SqlParameter("@EsMantenimiento", (object)EsMantenimiento);
-                var _EsCombustible = new SqlParameter("@EsCombustible", (object)EsCombustible);
-                var _Activo = new SqlParameter("@Activo", (object)Activo);
 
-                object[] parametros = new object[] { _IdTipoGasto, _IdEmpresa, _Descripcion, _EsCostoDirecto, _EsMantenimiento, _EsCombustible, _Activo };
+            using var connection = _connectionFactory.CreateConnection();
 
-                listaDatos = _context.Set<RespuestaGeneral>()
-                             .FromSqlRaw("EXEC sp_TipoGasto_Guardar @IdTipoGasto, @IdEmpresa, @Descripcion, @EsCostoDirecto, @EsMantenimiento, @EsCombustible, @Activo ", parametros)
-                             .AsNoTracking()
-                             .ToList();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return listaDatos;
+            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_TipoGasto_Guardar",
+                new
+                {
+                    IdTipoGasto = IdTipoGasto,
+                    IdEmpresa = IdEmpresa,
+                    Descripcion = Descripcion,
+                    EsCostoDirecto = EsCostoDirecto,
+                    EsMantenimiento = EsMantenimiento,
+                    EsCombustible = EsCombustible,
+                    Activo = Activo
+                },
+                commandType: CommandType.StoredProcedure
+            );
         }
-        public List<Ent_TipoGasto_Listar> Dal_TipoGasto_Listar(int IdEmpresa, byte SoloActivos, string TextoBusqueda)
+        public async Task<Entity_TipoGasto_Listar?> Dal_TipoGasto_Listar(int IdEmpresa, byte SoloActivos, string TextoBusqueda)
         {
-            List<Ent_TipoGasto_Listar> listaDatos = new List<Ent_TipoGasto_Listar>();
-            try
-            {
-                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)IdEmpresa);
-                var _SoloActivos = new SqlParameter("@SoloActivos", (object)SoloActivos);
-                var _TextoBusqueda = new SqlParameter("@TextoBusqueda", (object)TextoBusqueda);
 
-                object[] parametros = new object[] { _IdEmpresa, _SoloActivos, _TextoBusqueda };
+            using var connection = _connectionFactory.CreateConnection();
 
-                listaDatos = _context.Set<Ent_TipoGasto_Listar>()
-                             .FromSqlRaw("EXEC sp_TipoGasto_Listar @IdEmpresa, @SoloActivos, @TextoBusqueda ", parametros)
-                             .AsNoTracking()
-                             .ToList();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return listaDatos;
+            return await connection.QueryFirstOrDefaultAsync<Entity_TipoGasto_Listar>("dbo.sp_TipoGasto_Listar",
+                new
+                {
+                    IdEmpresa = IdEmpresa,
+                    SoloActivos = SoloActivos,
+                    TextoBusqueda = TextoBusqueda
+                },
+                commandType: CommandType.StoredProcedure
+            );
         }
-        public List<Ent_TipoGasto_Listar> Dal_TipoGasto_ObtenerPorId(int IdTipoGasto, int IdEmpresa)
+        public async Task<Entity_TipoGasto_Listar?> Dal_TipoGasto_ObtenerPorId(int IdTipoGasto, int IdEmpresa)
         {
-            List<Ent_TipoGasto_Listar> listaDatos = new List<Ent_TipoGasto_Listar>();
-            try
-            {
-                var _IdTipoGasto = new SqlParameter("@IdTipoGasto", (object)IdTipoGasto);
-                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)IdEmpresa);
 
-                object[] parametros = new object[] { _IdTipoGasto, _IdEmpresa };
+            using var connection = _connectionFactory.CreateConnection();
 
-                listaDatos = _context.Set<Ent_TipoGasto_Listar>()
-                             .FromSqlRaw("EXEC sp_TipoGasto_ObtenerPorId @IdTipoGasto, @IdEmpresa ", parametros)
-                             .AsNoTracking()
-                             .ToList();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return listaDatos;
+            return await connection.QueryFirstOrDefaultAsync<Entity_TipoGasto_Listar>("dbo.sp_TipoGasto_ObtenerPorId",
+                new
+                {
+                    IdTipoGasto = IdTipoGasto,
+                    IdEmpresa = IdEmpresa
+                },
+                commandType: CommandType.StoredProcedure
+            );
         }
     }
 }

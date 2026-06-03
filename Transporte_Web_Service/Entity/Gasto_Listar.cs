@@ -1,6 +1,6 @@
 ﻿namespace Transporte_Web_Service.Entity
 {
-    public class Ent_Gasto_ListarPorViaje
+    public class Entity_Gasto_ListarPorViaje
     {
         public int IdGasto {  get; set; }
         public int IdEmpresa { get; set; }
@@ -22,7 +22,7 @@
         public byte EsFacturable { get; set; }
     }
 
-    public class Ent_Gasto_ObtenerPorId
+    public class Entity_Gasto_ObtenerPorId
     {
         public int IdGasto { get; set; }
         public int IdEmpresa { get; set; }
@@ -44,7 +44,7 @@
         public byte EsFacturable { get; set; }
     }
 
-    public class Ent_TipoGasto_Listar
+    public class Entity_TipoGasto_Listar
     {
         public int IdTipoGasto { get; set; }
         public int IdEmpresa { get; set; }

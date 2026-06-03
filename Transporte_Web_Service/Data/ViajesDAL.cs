@@ -1,85 +1,68 @@
-﻿using System;
+﻿using Dapper;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
-using Microsoft.Data.SqlClient;
-using Transporte_Web_Service.Entity;
-using System.Data;
-using Microsoft.EntityFrameworkCore;
 using Transporte_Web_Service.Controllers;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Transporte_Web_Service.Data.Database;
+using Transporte_Web_Service.Entity;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Transporte_Web_Service.Data
 {
     public class ViajesDAL
     {
-        private readonly MiDbContext _context;
+        //private readonly MiDbContext _context;
+        private readonly IDbConnectionFactory _connectionFactory;
 
-        public ViajesDAL(MiDbContext context)
+        public ViajesDAL(DbConnectionFactory connectionFactory)
         {
-            _context = context;
+            _connectionFactory = connectionFactory;
+
         }
-
-        public List<RespuestaGeneral> Dal_EstadoViaje_Guardar(int IdEstadoViaje, string Descripcion)
+        public async Task<Entity_RespuestaGeneral?> Dal_EstadoViaje_Guardar(int IdEstadoViaje, string Descripcion)
         {
-            List<RespuestaGeneral> listaDatos = new List<RespuestaGeneral>();
-            try
-            {
-                var _IdEstadoViaje = new SqlParameter("@IdEstadoViaje", (object)IdEstadoViaje);
-                var _Descripcion = new SqlParameter("@Descripcion", (object)Descripcion);
 
-                object[] parametros = new object[] { _IdEstadoViaje, _Descripcion };
+            using var connection = _connectionFactory.CreateConnection();
 
-                listaDatos = _context.Set<RespuestaGeneral>()
-                             .FromSqlRaw("EXEC sp_EstadoViaje_Guardar @IdEstadoViaje, @Descripcion", parametros)
-                             .AsNoTracking()
-                             .ToList();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return listaDatos;
+            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_EstadoViaje_Guardar",
+                new
+                {
+                    IdEstadoViaje = IdEstadoViaje,
+                    Descripcion = Descripcion
+                },
+                commandType: CommandType.StoredProcedure
+            );
         }
-
-        public List<Ent_EstadoViaje_Listar> Dal_EstadoViaje_Listar()
+        public async Task<Entity_EstadoViaje_Listar?> Dal_EstadoViaje_Listar()
         {
-            List<Ent_EstadoViaje_Listar> listaDatos = new List<Ent_EstadoViaje_Listar>();
-            try
-            {
-                object[] parametros = new object[] {  };
 
-                listaDatos = _context.Set<Ent_EstadoViaje_Listar>()
-                             .FromSqlRaw("EXEC sp_EstadoViaje_Listar ", parametros)
-                             .AsNoTracking()
-                             .ToList();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return listaDatos;
+            using var connection = _connectionFactory.CreateConnection();
+
+            return await connection.QueryFirstOrDefaultAsync<Entity_EstadoViaje_Listar>("dbo.sp_EstadoViaje_Listar",
+                new
+                {
+                     
+                },
+                commandType: CommandType.StoredProcedure
+            );
         }
-
-        public List<Ent_EstadoViaje_Listar> Dal_EstadoViaje_ObtenerPorId(int IdEstadoViaje)
+        public async Task<Entity_EstadoViaje_Listar?> Dal_EstadoViaje_ObtenerPorId(int IdEstadoViaje)
         {
-            List<Ent_EstadoViaje_Listar> listaDatos = new List<Ent_EstadoViaje_Listar>();
-            try
-            {
-                var _IdEstadoViaje = new SqlParameter("@IdEstadoViaje", (object)IdEstadoViaje);
 
-                object[] parametros = new object[] { _IdEstadoViaje };
+            using var connection = _connectionFactory.CreateConnection();
 
-                listaDatos = _context.Set<Ent_EstadoViaje_Listar>()
-                             .FromSqlRaw("EXEC sp_EstadoViaje_ObtenerPorId @IdEstadoViaje ", parametros)
-                             .AsNoTracking()
-                             .ToList();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return listaDatos;
+            return await connection.QueryFirstOrDefaultAsync<Entity_EstadoViaje_Listar>("dbo.sp_EstadoViaje_ObtenerPorId",
+                new
+                {
+                    IdEstadoViaje = IdEstadoViaje
+                },
+                commandType: CommandType.StoredProcedure
+            );
         }
     }
 }

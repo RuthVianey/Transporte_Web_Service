@@ -1,6 +1,6 @@
 ﻿namespace Transporte_Web_Service.Entity
 {
-    public class Sucursal_Listar
+    public class Entity_Sucursal_Listar
     {
         public int IdSucursal { set; get; }
         public int IdEmpresa { set; get; }

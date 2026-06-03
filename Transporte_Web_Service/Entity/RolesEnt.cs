@@ -1,6 +1,6 @@
 ﻿namespace Transporte_Web_Service.Entity
 {
-    public class Ent_Listar_Roles
+    public class Entity_Listar_Roles
     {
         public int IdRol { set; get; }
         public int IdEmpresa { set; get; }
@@ -8,7 +8,7 @@
         public byte Activo { set; get; }
     }
 
-    public class Ent_RolPrograma_ListarPorRol
+    public class Entity_RolPrograma_ListarPorRol
     {
         public int IdRolPrograma { set; get; }
         public int IdRol { set; get; }
