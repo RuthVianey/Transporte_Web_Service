@@ -1,4 +1,6 @@
-﻿using Humanizer;
+﻿using Dapper;
+using Humanizer;
+using Microsoft.AspNetCore.Connections;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -9,160 +11,122 @@ using System.Linq;
 using System.Runtime.InteropServices.ObjectiveC;
 using System.Text;
 using Transporte_Web_Service.Controllers;
+using Transporte_Web_Service.Data.Database;
 using Transporte_Web_Service.Entity;
 
 namespace Transporte_Web_Service.Data
 {
     public class DashboardDAL
     {
-        private readonly MiDbContext _context;
+        //private readonly MiDbContext _context;
+        private readonly IDbConnectionFactory _connectionFactory;   
 
-        public DashboardDAL(MiDbContext context)
+        public DashboardDAL(DbConnectionFactory connectionFactory)
         {
-            _context = context;
+            _connectionFactory = connectionFactory;
 
         }
 
-        public List<Entity_Dashboard_CostosPorTipo> Dal_dashObtenCostoTipo(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
+        public async Task<Entity_Dashboard_CostosPorTipo?> Dal_dashObtenCostoTipo(int IdEmpresa, int? IdSucursal, string? FechaInicio, string? FechaFin)
         {
-            List<Entity_Dashboard_CostosPorTipo> listaDatos = new List<Entity_Dashboard_CostosPorTipo>();
 
-            try
-            {
-                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)IdEmpresa);
-                var _IdSucursal = new SqlParameter("@IdSucursal", (object)IdSucursal);
-                var _FechaInicio = new SqlParameter("@FechaInicio", (object)FechaInicio);
-                var _FechaFin = new SqlParameter("@FechaFin", (object)FechaFin);
+            using var connection = _connectionFactory.CreateConnection();
 
-                object[] parametros = new object[] { _IdEmpresa, _IdSucursal, _FechaInicio, _FechaFin };
-
-                listaDatos = _context.Set<Entity_Dashboard_CostosPorTipo>()
-                            .FromSqlRaw("EXEC sp_Dashboard_CostosPorTipo @IdEmpresa, @IdSucursal, @FechaInicio, @FechaFin", parametros)
-                            .AsNoTracking() // Agrega esto para consultas de solo lectura
-                            .ToList();
-            }    
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return listaDatos;
+            return await connection.QueryFirstOrDefaultAsync<Entity_Dashboard_CostosPorTipo>("dbo.sp_Dashboard_CostosPorTipo",
+                new
+                {
+                    IdEmpresa = IdEmpresa,
+                    IdSucursal = IdSucursal,
+                    FechaInicio = FechaInicio,
+                    FechaFin = FechaFin
+                },
+                commandType: CommandType.StoredProcedure
+            );
         }
 
-        public List<Entity_Dashboard_ResumenOperativo> Dal_Dashboard_ResumenOperativo_TraeDatos(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
-        { 
-            List<Entity_Dashboard_ResumenOperativo> listaDatos = new List<Entity_Dashboard_ResumenOperativo>();
 
-            try
-            {
-                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)IdEmpresa);
-                var _IdSucursal = new SqlParameter("@IdSucursal", (object)IdSucursal);
-                var _FechaInicio = new SqlParameter("@FechaInicio", (object)FechaInicio);
-                var _FechaFin = new SqlParameter("@FechaFin", (object)FechaFin);
-                object[] parametros = new object[] { _IdEmpresa, _IdSucursal, _FechaInicio, _FechaFin };
-                listaDatos = _context.Set<Entity_Dashboard_ResumenOperativo>()
-                                .FromSqlRaw("EXEC sp_Dashboard_ResumenOperativo @IdEmpresa, @IdSucursal,@FechaInicio, @FechaFin ", parametros)
-                                .AsNoTracking() // Agrega esto para consultas de solo lectura
-                                .ToList();
-            }
-            catch(Exception ex)
-            {
-                throw;
-            }
-            return listaDatos;
-        }
-
-        public List<Entity_Dashboard_RentabilidadMensual> Dal_dashRentaBilidadMensual(int IdEmpresa, int IdSucursal, int Anio)
-        {   
-            List<Entity_Dashboard_RentabilidadMensual> listaDatos = new List<Entity_Dashboard_RentabilidadMensual>();
-
-            try
-            {
-                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)IdEmpresa);
-                var _IdSucursal = new SqlParameter("@IdSucursal", (object)IdSucursal);
-                var _Anio = new SqlParameter("@Anio", (object)Anio);
-
-                object[] parametros = new object[] { _IdEmpresa, _IdSucursal, _Anio };
-
-                listaDatos = _context.Set<Entity_Dashboard_RentabilidadMensual>()
-                                .FromSqlRaw("EXEC sp_Dashboard_RentabilidadMensual  @IdEmpresa, @IdSucursal,@Anio ", parametros)
-                                .AsNoTracking() // Agrega esto para consultas de solo lectura
-                                .ToList();  
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return listaDatos;
-        }
-
-        public List<Entity_Dashboard_TopClientes> Dal_dashDashboardTopClientes(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
+        public async Task<Entity_Dashboard_ResumenOperativo?> Dal_Dashboard_ResumenOperativo_TraeDatos(int IdEmpresa, int? IdSucursal, string? FechaInicio, string? FechaFin)
         {
-            List<Entity_Dashboard_TopClientes> listaDatos = new List<Entity_Dashboard_TopClientes>();
-            try
-            {
-                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)IdEmpresa);
-                var _IdSucursal = new SqlParameter("@IdSucursal", (object)IdSucursal);
-                var _FechaInicio = new SqlParameter("@FechaInicio", (object)FechaInicio);
-                var _FechaFin = new SqlParameter("@FechaFin", (object)FechaFin);
-                object[] parametros = new object[] { _IdEmpresa, _IdSucursal, _FechaInicio, _FechaFin };
-                listaDatos = _context.Set<Entity_Dashboard_TopClientes>()
-                                .FromSqlRaw("EXEC sp_Dashboard_TopClientes  @IdEmpresa, @IdSucursal,@FechaInicio, @FechaFin ", parametros)
-                                .AsNoTracking() // Agrega esto para consultas de solo lectura
-                                .ToList();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return listaDatos;
+            using var connection = _connectionFactory.CreateConnection();
+
+            return await connection.QueryFirstOrDefaultAsync<Entity_Dashboard_ResumenOperativo>("dbo.sp_Dashboard_ResumenOperativo",
+                new
+                {
+                    IdEmpresa = IdEmpresa,
+                    IdSucursal = IdSucursal,
+                    FechaInicio = FechaInicio,
+                    FechaFin = FechaFin
+                },
+                commandType: CommandType.StoredProcedure
+            );
+
+            
         }
 
-        public List<Entity_Dashboard_TopUnidades> Dal_dashDashboardTopUnidades(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
+        public async Task<Entity_Dashboard_RentabilidadMensual?> Dal_dashRentaBilidadMensual(int IdEmpresa, int? IdSucursal, int Anio)
         {
-            List<Entity_Dashboard_TopUnidades> listaDatos = new List<Entity_Dashboard_TopUnidades>();
-            try
-            {
-                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)IdEmpresa);
-                var _IdSucursal = new SqlParameter("@IdSucursal", (object)IdSucursal);
-                var _FechaInicio = new SqlParameter("@FechaInicio", (object)FechaInicio);
-                var _FechaFin = new SqlParameter("@FechaFin", (object)FechaFin);
-                object[] parametros = new object[] { _IdEmpresa, _IdSucursal, _FechaInicio, _FechaFin };
-                listaDatos = _context.Set<Entity_Dashboard_TopUnidades>()
-                                .FromSqlRaw("EXEC sp_Dashboard_TopUnidades  @IdEmpresa, @IdSucursal,@FechaInicio, @FechaFin ", parametros)
-                                .AsNoTracking() // Agrega esto para consultas de solo lectura
-                                .ToList();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return listaDatos;
+            using var connection = _connectionFactory.CreateConnection();
+
+            return await connection.QueryFirstOrDefaultAsync<Entity_Dashboard_RentabilidadMensual>("dbo.sp_Dashboard_RentabilidadMensual",
+                new
+                {
+                    IdEmpresa = IdEmpresa,
+                    IdSucursal = IdSucursal,
+                    Anio = Anio
+                    
+                },
+                commandType: CommandType.StoredProcedure
+            );
         }
 
-        public List<Entity_Dashboard_ViajesPorEstado> Dal_dashObtenViajeEstado(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
+        public async Task<Entity_Dashboard_TopClientes?> Dal_dashDashboardTopClientes(int IdEmpresa, int? IdSucursal, string? FechaInicio, string? FechaFin)
         {
-            List<Entity_Dashboard_ViajesPorEstado> listaDatos = new List<Entity_Dashboard_ViajesPorEstado>();
+            using var connection = _connectionFactory.CreateConnection();
 
-            try
-            {
-                var _IdEmpresa = new SqlParameter("@IdEmpresa", (object)IdEmpresa);
-                var _IdSucursal = new SqlParameter("@IdSucursal", (object)IdSucursal);
-                var _FechaInicio = new SqlParameter("@FechaInicio", (object)FechaInicio);
-                var _FechaFin = new SqlParameter("@FechaFin", (object)FechaFin);
-
-                object[] parametros = new object[] { _IdEmpresa, _IdSucursal, _FechaInicio, _FechaFin };
-
-                listaDatos = _context.Set<Entity_Dashboard_ViajesPorEstado>()
-                                .FromSqlRaw("EXEC sp_Dashboard_ViajesPorEstado  @IdEmpresa, @IdSucursal,@FechaInicio, @FechaFin ", parametros)
-                                .AsNoTracking() // Agrega esto para consultas de solo lectura
-                                .ToList();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return listaDatos;
+            return await connection.QueryFirstOrDefaultAsync<Entity_Dashboard_TopClientes>("dbo.sp_Dashboard_TopClientes",
+               new
+               {
+                   IdEmpresa = IdEmpresa,
+                   IdSucursal = IdSucursal,
+                   FechaInicio = FechaInicio,
+                   FechaFin = FechaFin
+               },
+               commandType: CommandType.StoredProcedure
+           );
         }
+
+        public async Task<Entity_Dashboard_TopUnidades?> Dal_dashDashboardTopUnidades(int IdEmpresa, int? IdSucursal, string? FechaInicio, string? FechaFin)
+        {
+            using var connection = _connectionFactory.CreateConnection();
+
+            return await connection.QueryFirstOrDefaultAsync<Entity_Dashboard_TopUnidades>("dbo.sp_Dashboard_TopUnidades",
+               new
+               {
+                   IdEmpresa = IdEmpresa,
+                   IdSucursal = IdSucursal,
+                   FechaInicio = FechaInicio,
+                   FechaFin = FechaFin
+               },
+               commandType: CommandType.StoredProcedure
+           );
+        }
+
+        public async Task<Entity_Dashboard_ViajesPorEstado?> Dal_dashObtenViajeEstado(int IdEmpresa, int? IdSucursal, string? FechaInicio, string? FechaFin)
+        {
+            using var connection = _connectionFactory.CreateConnection();
+
+            return await connection.QueryFirstOrDefaultAsync<Entity_Dashboard_ViajesPorEstado>("dbo.sp_Dashboard_ViajesPorEstado",
+               new
+               {
+                   IdEmpresa = IdEmpresa,
+                   IdSucursal = IdSucursal,
+                   FechaInicio = FechaInicio,
+                   FechaFin = FechaFin
+               },
+               commandType: CommandType.StoredProcedure
+           );
+        }
+         
     }
 }
     

@@ -21,7 +21,7 @@ namespace Transporte_Web_Service.Bussines
         }
 
         // Cambiamos el tipo de retorno de 'object' a nuestra clase de respuesta estructurada
-        public RespuestaApi Bs_Dashboard_CostosPorTipo(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
+        public RespuestaApi Bs_Dashboard_CostosPorTipo(int IdEmpresa, int? IdSucursal, string? FechaInicio, string? FechaFin)
         {
             var resp = new RespuestaApi();
 
@@ -49,7 +49,7 @@ namespace Transporte_Web_Service.Bussines
             return resp; // Regresamos el objeto C# limpio
         }
 
-        public RespuestaApi Bs_Dashboard_ResumenOperativo(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
+        public RespuestaApi Bs_Dashboard_ResumenOperativo(int IdEmpresa, int? IdSucursal, string? FechaInicio, string? FechaFin)
         {
             var resp = new RespuestaApi();
 
@@ -77,7 +77,7 @@ namespace Transporte_Web_Service.Bussines
             return resp; // Regresamos el objeto C# limpio
         }
 
-        public RespuestaApi Bs_Dashboard_RentabilidadMensual(int IdEmpresa, int IdSucursal, int Anio)
+        public RespuestaApi Bs_Dashboard_RentabilidadMensual(int IdEmpresa, int? IdSucursal, int Anio)
         {
             var resp = new RespuestaApi();
             try
@@ -102,7 +102,7 @@ namespace Transporte_Web_Service.Bussines
             return resp; // Regresamos el objeto C# limpio
         }
 
-        public RespuestaApi Bs_DashBoard_TopClientes(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
+        public RespuestaApi Bs_DashBoard_TopClientes(int IdEmpresa, int? IdSucursal, string? FechaInicio, string? FechaFin)
         {
             var resp = new RespuestaApi();
 
@@ -127,7 +127,7 @@ namespace Transporte_Web_Service.Bussines
             return resp; // Regresamos el objeto C# limpio
         }
 
-        public RespuestaApi Bs_Dashboard_TopUnidades(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
+        public RespuestaApi Bs_Dashboard_TopUnidades(int IdEmpresa, int? IdSucursal, string? FechaInicio, string? FechaFin)
         { 
             var resp = new RespuestaApi();
 
@@ -153,7 +153,7 @@ namespace Transporte_Web_Service.Bussines
             return resp; // Regresamos el objeto C# limpio
         }
 
-        public RespuestaApi Bs_Dashboard_ViajesPorEstado(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
+        public RespuestaApi Bs_Dashboard_ViajesPorEstado(int IdEmpresa, int? IdSucursal, string? FechaInicio, string? FechaFin)
         {
             var resp = new RespuestaApi();
 
