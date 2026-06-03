@@ -43,29 +43,21 @@ namespace Transporte_Web_Service.Bussines
             return resp;
         }
 
-        public RespuestaApi Usuarios_Empresa(int iIdEmpresa)
+        public async Task<ApiResponse<Entity_RespuestaGeneral>> Usuarios_Empresa(string IdEmpresa)
         {
-            var resp = new RespuestaApi();
-            try
+            if (IdEmpresa == "")
             {
-                var listaDatos = _dal.Usuarios_Empresa(iIdEmpresa);
+                return ApiResponse<Entity_RespuestaGeneral>.Fail("La empresa es obligatoria.");
+            }
 
-                if (listaDatos.Count > 0)
-                {
-                    resp.Datos = listaDatos;
-                }
-                else
-                {
-                    resp.Estatus = 0;
-                    resp.Mensaje = "No se encontraron datos.";
-                }
-            }
-            catch (Exception ex)
+            var resumen = await _dal.Usuarios_Empresa(IdEmpresa);
+
+            if (resumen == null)
             {
-                resp.Estatus = -1;
-                resp.Mensaje = ex.Message;
+                return ApiResponse<Entity_RespuestaGeneral>.Fail("No se encontró información del dashboard.");
             }
-            return resp;
+            return ApiResponse<Entity_RespuestaGeneral>.Success(resumen);
         }
+
     }
 }

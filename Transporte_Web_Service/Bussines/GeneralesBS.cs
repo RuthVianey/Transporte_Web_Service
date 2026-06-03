@@ -22,134 +22,80 @@ namespace Transporte_Web_Service.Bussines
             _dac = dac;
         }
 
-        public RespuestaApi Empresa_Guardar(int iIdEmpresa, string sNombre, string sNombre_Corto, string sRFC, string sCalle, string sColonia, string sMunicipio, string sEstado, string sCodigo_Postal, string sTelefono, string sRutaLogo, byte bActivo, string sTipoImagen)
+
+        public async Task<ApiResponse<Entity_RespuestaGeneral>> Empresa_Guardar(int iIdEmpresa, string sNombre, string sNombre_Corto, string sRFC, string sCalle, string sColonia, string sMunicipio, string sEstado, string sCodigo_Postal, string sTelefono, string sRutaLogo, byte bActivo, string sTipoImagen)
         {
-            var resp = new RespuestaApi();
-            try
+            if (iIdEmpresa <= 0)
             {
-                sPathSubida += "\\" + iIdEmpresa.ToString() + "." + sTipoImagen;
-                byte[] imageBytes = Convert.FromBase64String(sRutaLogo);
-                File.WriteAllBytes(sPathSubida, imageBytes);
-                Console.WriteLine("Imagen guardada en: " + sPathSubida);
-
-                var listaDatos = _dac.Empresa_Guardar(iIdEmpresa, sNombre, sNombre_Corto, sRFC, sCalle, sColonia, sMunicipio, sEstado, sCodigo_Postal, sTelefono, sRutaLogo, bActivo);
-
-                if (listaDatos.Count > 0)
-                {
-                    resp.Datos = listaDatos;
-                }
-                else
-                {
-                    resp.Estatus = 0;
-                    resp.Mensaje = "No se encontraron datos.";
-                }
+                return ApiResponse<Entity_RespuestaGeneral>.Fail("La empresa es obligatoria.");
             }
-            catch (Exception ex)
+
+            sPathSubida += "\\" + iIdEmpresa.ToString() + "." + sTipoImagen;
+            byte[] imageBytes = Convert.FromBase64String(sRutaLogo);
+            File.WriteAllBytes(sPathSubida, imageBytes);
+            Console.WriteLine("Imagen guardada en: " + sPathSubida);
+
+            var resumen = await _dac.Empresa_Guardar(iIdEmpresa, sNombre, sNombre_Corto, sRFC, sCalle, sColonia, sMunicipio, sEstado, sCodigo_Postal, sTelefono, sRutaLogo, bActivo);
+
+            if (resumen == null)
             {
-                resp.Estatus = -1;
-                resp.Mensaje = ex.Message;
+                return ApiResponse<Entity_RespuestaGeneral>.Fail("No se encontró información.");
             }
-            return resp;
+            return ApiResponse<Entity_RespuestaGeneral>.Success(resumen);
         }
 
-        public RespuestaApi Empresa_Desactivar(int iIdEmpresa)
+        public async Task<ApiResponse<Entity_RespuestaGeneral>> Empresa_Desactivar(int iIdEmpresa)
         {
-            var resp = new RespuestaApi();
-            try
+            if (iIdEmpresa <= 0)
             {
-                var listaDatos = _dac.Empresa_Desactivar(iIdEmpresa);
+                return ApiResponse<Entity_RespuestaGeneral>.Fail("La empresa es obligatoria.");
+            }
 
-                if (listaDatos.Count > 0)
-                {
-                    resp.Datos = listaDatos;
-                }
-                else
-                {
-                    resp.Estatus = 0;
-                    resp.Mensaje = "No se encontraron datos.";
-                }
-            }
-            catch (Exception ex)
+            var resumen = await _dal.Empresa_Desactivar(iIdEmpresa);
+
+            if (resumen == null)
             {
-                resp.Estatus = -1;
-                resp.Mensaje = ex.Message;
+                return ApiResponse<Entity_RespuestaGeneral>.Fail("No se encontró información.");
             }
-            return resp;
+            return ApiResponse<Entity_RespuestaGeneral>.Success(resumen);
         }
 
-        public RespuestaApi Empresa_Listar(byte bSoloActivos, string sTextoBusqueda)
+        public async Task<ApiResponse<Entity_Empresa_Listar>> Empresa_Listar(byte bSoloActivos, string sTextoBusqueda)
         {
-            var resp = new RespuestaApi();
-            try
-            {
-                var listaDatos = _dac.Empresa_Listar(bSoloActivos, sTextoBusqueda);
+            var resumen = await _dac.Empresa_Listar(bSoloActivos, sTextoBusqueda);
 
-                if (listaDatos.Count > 0)
-                {
-                    resp.Datos = listaDatos;
-                }
-                else
-                {
-                    resp.Estatus = 0;
-                    resp.Mensaje = "No se encontraron datos.";
-                }
-            }
-            catch (Exception ex)
+            if (resumen == null)
             {
-                resp.Estatus = -1;
-                resp.Mensaje = ex.Message;
+                return ApiResponse<Entity_Empresa_Listar>.Fail("No se encontró información.");
             }
-            return resp;
+            return ApiResponse<Entity_Empresa_Listar>.Success(resumen);
         }
 
-        public RespuestaApi Empresa_ObtenerPorId(int iIdEmpresa)
+        public async Task<ApiResponse<Entity_Empresa_Listar>> Empresa_ObtenerPorId(int iIdEmpresa)
         {
-            var resp = new RespuestaApi();
-            try
+            if (iIdEmpresa <= 0)
             {
-                var listaDatos = _dac.Empresa_ObtenerPorId(iIdEmpresa);
+                return ApiResponse<Entity_Empresa_Listar>.Fail("La empresa es obligatoria.");
+            }
 
-                if (listaDatos.Count > 0)
-                {
-                    resp.Datos = listaDatos ;
-                }
-                else
-                {
-                    resp.Estatus = 0;
-                    resp.Mensaje = "No se encontraron datos.";
-                }
-            }
-            catch (Exception ex)
+            var resumen = await _dac.Empresa_ObtenerPorId(iIdEmpresa);
+
+            if (resumen == null)
             {
-                resp.Estatus = -1;
-                resp.Mensaje = ex.Message;
+                return ApiResponse<Entity_Empresa_Listar>.Fail("No se encontró información.");
             }
-            return resp;
+            return ApiResponse<Entity_Empresa_Listar>.Success(resumen);
         }
 
-        public RespuestaApi Bs_Programa_Listar()
+        public async Task<ApiResponse<Entity_Programa_Listar>> Bs_Programa_Listar()
         {
-            var resp = new RespuestaApi();
-            try
-            {
-                var listaDatos = _dac.Dal_Programa_Listar();
+            var resumen = await _dac.Dal_Programa_Listar();
 
-                if (listaDatos.Count > 0)
-                {
-                    resp.Datos = listaDatos ;
-                }
-                else
-                {
-                    resp.Estatus = 0;
-                    resp.Mensaje = "No se encontraron datos.";
-                }
-            }
-            catch (Exception ex)
+            if (resumen == null)
             {
-                resp.Estatus = -1;
-                resp.Mensaje = ex.Message;
+                return ApiResponse<Entity_Programa_Listar>.Fail("No se encontró información.");
             }
-            return resp;
+            return ApiResponse<Entity_Programa_Listar>.Success(resumen);
         }
 
 

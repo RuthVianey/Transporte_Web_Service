@@ -20,166 +20,100 @@ namespace Transporte_Web_Service.Bussines
             _dal = dal;
         }
 
-        public RespuestaApi Bs_Rol_Desactivar(int IdRol, int IdEmpresa)
+        public async Task<ApiResponse<Entity_RespuestaGeneral>> Bs_Rol_Desactivar(int IdRol, int IdEmpresa)
         {
-            var resp = new RespuestaApi();
-
-            try
+            if (IdEmpresa <= 0)
             {
-                var listaDatos = _dal.Dal_Rol_Desactivar(IdRol, IdEmpresa);
-
-                if (listaDatos != null && listaDatos.Count > 0)
-                {
-                    resp.Datos = new { listaDatos };
-                }
-                else
-                {
-                    resp.Estatus = 0;
-                    resp.Mensaje = "No se encontraron datos.";
-                }
-            }
-            catch (Exception ex)
-            {
-                resp.Estatus = -1;
-                resp.Mensaje = ex.Message;
+                return ApiResponse<Entity_RespuestaGeneral>.Fail("La empresa es obligatoria.");
             }
 
-            return resp;
+            var resumen = await _dal.Dal_Rol_Desactivar(IdRol, IdEmpresa);
+
+            if (resumen == null)
+            {
+                return ApiResponse<Entity_RespuestaGeneral>.Fail("No se encontró información.");
+            }
+            return ApiResponse<Entity_RespuestaGeneral>.Success(resumen);
         }
 
-        public RespuestaApi Bs_Rol_Guardar(int IdRol, int IdEmpresa, string Nombre, byte Activo)
+        public async Task<ApiResponse<Entity_RespuestaGeneral>> Bs_Rol_Guardar(int IdRol, int IdEmpresa, string Nombre, byte Activo)
         {
-            var resp = new RespuestaApi();
-
-            try
+            if (IdEmpresa <= 0)
             {
-                var listaDatos = _dal.Dal_Rol_Guardar(IdRol, IdEmpresa, Nombre, Activo);
-
-                if (listaDatos != null && listaDatos.Count > 0)
-                {
-                    resp.Datos = new { listaDatos };
-                }
-                else
-                {
-                    resp.Estatus = 0;
-                    resp.Mensaje = "No se guardaros los datos.";
-                }
-            }
-            catch (Exception ex)
-            {
-                resp.Estatus = -1;
-                resp.Mensaje = ex.Message;
+                return ApiResponse<Entity_RespuestaGeneral>.Fail("La empresa es obligatoria.");
             }
 
-            return resp;
+            var resumen = await _dal.Dal_Rol_Guardar(IdRol, IdEmpresa, Nombre, Activo);
+
+            if (resumen == null)
+            {
+                return ApiResponse<Entity_RespuestaGeneral>.Fail("No se encontró información.");
+            }
+            return ApiResponse<Entity_RespuestaGeneral>.Success(resumen);
         }
 
-        public RespuestaApi Bs_Rol_Listar(int IdEmpresa, byte SoloActivos)
+        public async Task<ApiResponse<Entity_Listar_Roles>> Bs_Rol_Listar(int IdEmpresa, byte SoloActivos)
         {
-            var resp = new RespuestaApi();
-
-            try
+            if (IdEmpresa <= 0)
             {
-                var listaDatos = _dal.Dal_Rol_Listar(IdEmpresa, SoloActivos);
-
-                if (listaDatos != null && listaDatos.Count > 0)
-                {
-                    resp.Datos = new { listaDatos };
-                }
-                else
-                {
-                    resp.Estatus = 0;
-                    resp.Mensaje = "No se encontraron datos.";
-                }
-            }
-            catch (Exception ex)
-            {
-                resp.Estatus = -1;
-                resp.Mensaje = ex.Message;
+                return ApiResponse<Entity_Listar_Roles>.Fail("La empresa es obligatoria.");
             }
 
-            return resp;
+            var resumen = await _dal.Dal_Rol_Listar(IdEmpresa, SoloActivos);
+
+            if (resumen == null)
+            {
+                return ApiResponse<Entity_Listar_Roles>.Fail("No se encontró información.");
+            }
+            return ApiResponse<Entity_Listar_Roles>.Success(resumen);
         }
 
-        public RespuestaApi Bs_Rol_ObtenerPorId(int IdEmpresa, int IdRol)
+        public async Task<ApiResponse<Entity_Listar_Roles>> Bs_Rol_ObtenerPorId(int IdEmpresa, int IdRol)
         {
-            var resp = new RespuestaApi();
-
-            try
+            if (IdEmpresa <= 0)
             {
-                var listaDatos = _dal.Dal_Rol_ObtenerPorId(IdEmpresa, IdRol);
-
-                if (listaDatos != null && listaDatos.Count > 0)
-                {
-                    resp.Datos = new { listaDatos };
-                }
-                else
-                {
-                    resp.Estatus = 0;
-                    resp.Mensaje = "No se encontraron datos.";
-                }
-            }
-            catch (Exception ex)
-            {
-                resp.Estatus = -1;
-                resp.Mensaje = ex.Message;
+                return ApiResponse<Entity_Listar_Roles>.Fail("La empresa es obligatoria.");
             }
 
-            return resp;
+            var resumen = await _dal.Dal_Rol_ObtenerPorId(IdEmpresa, IdRol);
+
+            if (resumen == null)
+            {
+                return ApiResponse<Entity_Listar_Roles>.Fail("No se encontró información.");
+            }
+            return ApiResponse<Entity_Listar_Roles>.Success(resumen);
         }
 
-        public RespuestaApi Bs_RolPrograma_GuardarPermiso(int IdRol, int IdEmpresa, int IdPrograma, byte PuedeLeer, byte PuedeEscribir, byte PuedeEliminar)
+        public async Task<ApiResponse<Entity_RespuestaGeneral>> Bs_RolPrograma_GuardarPermiso(int IdRol, int IdEmpresa, int IdPrograma, byte PuedeLeer, byte PuedeEscribir, byte PuedeEliminar)
         {
-            var resp = new RespuestaApi();
-
-            try
+            if (IdEmpresa <= 0)
             {
-                var listaDatos = _dal.Dal_RolPrograma_GuardarPermiso(IdRol, IdEmpresa, IdPrograma, PuedeLeer, PuedeEscribir, PuedeEliminar);
-
-                if (listaDatos != null && listaDatos.Count > 0)
-                {
-                    resp.Datos = new { listaDatos };
-                }
-                else
-                {
-                    resp.Estatus = 0;
-                    resp.Mensaje = "No se guardaron los datos.";
-                }
-            }
-            catch (Exception ex)
-            {
-                resp.Estatus = -1;
-                resp.Mensaje = ex.Message;
+                return ApiResponse<Entity_RespuestaGeneral>.Fail("La empresa es obligatoria.");
             }
 
-            return resp;
+            var resumen = await _dal.Dal_RolPrograma_GuardarPermiso(IdRol, IdEmpresa, IdPrograma, PuedeLeer, PuedeEscribir, PuedeEliminar);
+
+            if (resumen == null)
+            {
+                return ApiResponse<Entity_RespuestaGeneral>.Fail("No se encontró información.");
+            }
+            return ApiResponse<Entity_RespuestaGeneral>.Success(resumen);
         }
 
-        public RespuestaApi Bs_RolPrograma_ListarPorRol(int IdEmpresa, int IdRol)
+        public async Task<ApiResponse<Entity_RolPrograma_ListarPorRol>> Bs_RolPrograma_ListarPorRol(int IdEmpresa, int IdRol)
         {
-            var resp = new RespuestaApi();
-
-            try
+            if (IdEmpresa <= 0)
             {
-                var listaDatos = _dal.Dal_RolPrograma_ListarPorRol(IdEmpresa, IdRol);
-
-                if (listaDatos != null && listaDatos.Count > 0)
-                {
-                    resp.Datos = new { listaDatos };
-                }
-                else
-                {
-                    resp.Estatus = 0;
-                    resp.Mensaje = "No se encontraron datos.";
-                }
-            }
-            catch (Exception ex)
-            {
-                resp.Estatus = -1;
-                resp.Mensaje = ex.Message;
+                return ApiResponse<Entity_RolPrograma_ListarPorRol>.Fail("La empresa es obligatoria.");
             }
 
-            return resp;
+            var resumen = await _dal.Dal_RolPrograma_ListarPorRol(IdEmpresa, IdRol);
+
+            if (resumen == null)
+            {
+                return ApiResponse<Entity_RolPrograma_ListarPorRol>.Fail("No se encontró información.");
+            }
+            return ApiResponse<Entity_RolPrograma_ListarPorRol>.Success(resumen);
         }
     }
 }

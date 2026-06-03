@@ -19,112 +19,68 @@ namespace Transporte_Web_Service.Bussines
             _dal = dal;
         }
 
-        public RespuestaApi Bs_TipoUnidad_Desactivar(int IdTipoUnidad, int IdEmpresa)
+        public async Task<ApiResponse<Entity_RespuestaGeneral>> Bs_TipoUnidad_Desactivar(int IdTipoUnidad, int IdEmpresa)
         {
-            var resp = new RespuestaApi();
-
-            try
+            if (IdEmpresa <= 0)
             {
-                var listaDatos = _dal.Dal_TipoUnidad_Desactivar(IdTipoUnidad, IdEmpresa);
-
-                if (listaDatos != null && listaDatos.Count > 0)
-                {
-                    resp.Datos = new { listaDatos };
-                }
-                else
-                {
-                    resp.Estatus = 0;
-                    resp.Mensaje = "No se desactivo los datos.";
-                }
-            }
-            catch (Exception ex)
-            {
-                resp.Estatus = -1;
-                resp.Mensaje = ex.Message;
+                return ApiResponse<Entity_RespuestaGeneral>.Fail("La empresa es obligatoria.");
             }
 
-            return resp;
+            var resumen = await _dal.Dal_TipoUnidad_Desactivar(IdTipoUnidad, IdEmpresa);
+
+            if (resumen == null)
+            {
+                return ApiResponse<Entity_RespuestaGeneral>.Fail("No se encontró información.");
+            }
+            return ApiResponse<Entity_RespuestaGeneral>.Success(resumen);
         }
 
-        public RespuestaApi Bs_TipoUnidad_Guardar(int IdTipoUnidad, int IdEmpresa, string Descripcion, byte Activo)
+        public async Task<ApiResponse<Entity_RespuestaGeneral>> Bs_TipoUnidad_Guardar(int IdTipoUnidad, int IdEmpresa, string Descripcion, byte Activo)
         {
-            var resp = new RespuestaApi();
-
-            try
+            if (IdEmpresa <= 0)
             {
-                var listaDatos = _dal.Dal_TipoUnidad_Guardar(IdTipoUnidad, IdEmpresa, Descripcion, Activo);
-
-                if (listaDatos != null && listaDatos.Count > 0)
-                {
-                    resp.Datos = new { listaDatos };
-                }
-                else
-                {
-                    resp.Estatus = 0;
-                    resp.Mensaje = "No se guardaron los datos.";
-                }
-            }
-            catch (Exception ex)
-            {
-                resp.Estatus = -1;
-                resp.Mensaje = ex.Message;
+                return ApiResponse<Entity_RespuestaGeneral>.Fail("La empresa es obligatoria.");
             }
 
-            return resp;
+            var resumen = await _dal.Dal_TipoUnidad_Guardar(IdTipoUnidad, IdEmpresa, Descripcion, Activo);
+
+            if (resumen == null)
+            {
+                return ApiResponse<Entity_RespuestaGeneral>.Fail("No se encontró información.");
+            }
+            return ApiResponse<Entity_RespuestaGeneral>.Success(resumen);
         }
 
-        public RespuestaApi Bs_TipoUnidad_Listar(int IdEmpresa, byte SoloActivos, string TextoBusqueda)
+        public async Task<ApiResponse<Entity_TipoUnidad_Listar>> Bs_TipoUnidad_Listar(int IdEmpresa, byte SoloActivos, string TextoBusqueda)
         {
-            var resp = new RespuestaApi();
-
-            try
+            if (IdEmpresa <= 0)
             {
-                var listaDatos = _dal.Dal_TipoUnidad_Listar(IdEmpresa, SoloActivos, TextoBusqueda);
-
-                if (listaDatos != null && listaDatos.Count > 0)
-                {
-                    resp.Datos = new { listaDatos };
-                }
-                else
-                {
-                    resp.Estatus = 0;
-                    resp.Mensaje = "No se encontraron datos.";
-                }
-            }
-            catch (Exception ex)
-            {
-                resp.Estatus = -1;
-                resp.Mensaje = ex.Message;
+                return ApiResponse<Entity_TipoUnidad_Listar>.Fail("La empresa es obligatoria.");
             }
 
-            return resp;
+            var resumen = await _dal.Dal_TipoUnidad_Listar(IdEmpresa, SoloActivos, TextoBusqueda);
+
+            if (resumen == null)
+            {
+                return ApiResponse<Entity_TipoUnidad_Listar>.Fail("No se encontró información.");
+            }
+            return ApiResponse<Entity_TipoUnidad_Listar>.Success(resumen);
         }
 
-        public RespuestaApi Bs_TipoUnidad_ObtenerPorId(int IdTipoUnidad, int IdEmpresa)
+        public async Task<ApiResponse<Entity_RespuestaGeneral>> Bs_TipoUnidad_ObtenerPorId(int IdTipoUnidad, int IdEmpresa)
         {
-            var resp = new RespuestaApi();
-
-            try
+            if (IdEmpresa <= 0)
             {
-                var listaDatos = _dal.Dal_TipoUnidad_ObtenerPorId(IdTipoUnidad, IdEmpresa);
-
-                if (listaDatos != null && listaDatos.Count > 0)
-                {
-                    resp.Datos = new { listaDatos };
-                }
-                else
-                {
-                    resp.Estatus = 0;
-                    resp.Mensaje = "No se encontraron datos.";
-                }
-            }
-            catch (Exception ex)
-            {
-                resp.Estatus = -1;
-                resp.Mensaje = ex.Message;
+                return ApiResponse<Entity_RespuestaGeneral>.Fail("La empresa es obligatoria.");
             }
 
-            return resp;
+            var resumen = await _dal.Dal_TipoUnidad_ObtenerPorId(IdTipoUnidad, IdEmpresa);
+
+            if (resumen == null)
+            {
+                return ApiResponse<Entity_RespuestaGeneral>.Fail("No se encontró información.");
+            }
+            return ApiResponse<Entity_RespuestaGeneral>.Success(resumen);
         }
     }
 }

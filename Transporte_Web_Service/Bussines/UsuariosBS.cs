@@ -18,29 +18,21 @@ namespace Transporte_Web_Service.Bussines
         }
 
         /*COMIENZA USUARIO*/
-        public RespuestaApi Usuario_Guardar(int iIdUsuario, int iIdEmpresa, string sNombre, string sEmail, string sContrasenia, int iIdSucursal)
-        {
-            var resp = new RespuestaApi();
-            try
-            {
-                var listaDatos = _dac.Usuario_Guardar(iIdUsuario, iIdEmpresa, sNombre, sEmail, sContrasenia, iIdSucursal);
 
-                if (listaDatos.Count > 0)
-                {
-                    resp.Datos = listaDatos;
-                }
-                else
-                {
-                    resp.Estatus = 0;
-                    resp.Mensaje = "No se encontraron datos.";
-                }
-            }
-            catch (Exception ex)
+        public async Task<ApiResponse<Entity_RespuestaGeneral>> Usuario_Guardar(int iIdUsuario, int iIdEmpresa, string sNombre, string sEmail, string sContrasenia, int iIdSucursal)
+        {
+            if (iIdEmpresa <= 0)
             {
-                resp.Estatus = -1;
-                resp.Mensaje = ex.Message;
+                return ApiResponse<Entity_RespuestaGeneral>.Fail("La empresa es obligatoria.");
             }
-            return resp;
+
+            var resumen = await _dac.Usuario_Guardar(iIdUsuario, iIdEmpresa, sNombre, sEmail, sContrasenia, iIdSucursal);
+
+            if (resumen == null)
+            {
+                return ApiResponse<Entity_RespuestaGeneral>.Fail("No se encontró información.");
+            }
+            return ApiResponse<Entity_RespuestaGeneral>.Success(resumen);
         }
     }
 }

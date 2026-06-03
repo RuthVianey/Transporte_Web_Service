@@ -19,116 +19,72 @@ namespace Transporte_Web_Service.Bussines
             _dal = dal;
         }
 
-        public RespuestaApi Bs_CargaCombustible_Eliminar(int IdCarga, int IdEmpresa)
+        public async Task<ApiResponse<Entity_RespuestaGeneral>> Bs_CargaCombustible_Eliminar(int IdCarga, int IdEmpresa)
         {
-            var resp = new RespuestaApi();
-
-            try
+            if (IdEmpresa <= 0)
             {
-                var listaDatos = _dal.Dal_CargaCombustible_Eliminar(IdCarga, IdEmpresa);
-                
-                if (listaDatos != null && listaDatos.Count > 0)
-                {
-                    // Pasamos el objeto anónimo directamente, sin serializar a texto todavía
-                    resp.Datos = new { listaDatos };
-                }
-                else
-                {
-                    resp.Estatus = 0;
-                    resp.Mensaje = "No se eliminaron los datos.";
-                }
-            }
-            catch (Exception ex)
-            {
-                resp.Estatus = -1;
-                resp.Mensaje = ex.Message;
+                return ApiResponse<Entity_RespuestaGeneral>.Fail("La empresa es obligatoria.");
             }
 
-            return resp; // Regresamos el objeto C# limpio
+
+            var resumen = await _dal.Dal_CargaCombustible_Eliminar(IdCarga, IdEmpresa);
+
+            if (resumen == null)
+            {
+                return ApiResponse<Entity_RespuestaGeneral>.Fail("No se encontró información.");
+            }
+            return ApiResponse<Entity_RespuestaGeneral>.Success(resumen);
         }
 
-        public RespuestaApi Bs_CargaCombustible_Guardar(int IdCarga, int IdEmpresa, int IdSucursal, int IdUnidad, int IdViaje, string Fecha, decimal Litros, decimal PrecioLitro, decimal Km, decimal Odometro, decimal RendimientoKmPorLitro, string Referencia)
+        public async Task<ApiResponse<Entity_RespuestaGeneral>> Bs_CargaCombustible_Guardar(int IdCarga, int IdEmpresa, int IdSucursal, int IdUnidad, int IdViaje, string Fecha, decimal Litros, decimal PrecioLitro, decimal Km, decimal Odometro, decimal RendimientoKmPorLitro, string Referencia)
         {
-            var resp = new RespuestaApi();
-
-            try
+            if (IdEmpresa <= 0)
             {
-                var listaDatos = _dal.Dal_CargaCombustible_Guardar(IdCarga, IdEmpresa, IdSucursal, IdUnidad, IdViaje, Fecha, Litros, PrecioLitro, Km, Odometro, RendimientoKmPorLitro, Referencia);
-                
-                if (listaDatos != null && listaDatos.Count > 0)
-                {
-                    // Pasamos el objeto anónimo directamente, sin serializar a texto todavía
-                    resp.Datos = new { listaDatos };
-                }
-                else
-                {
-                    resp.Estatus = 0;
-                    resp.Mensaje = "No se guardaron los datos.";
-                }
-            }
-            catch (Exception ex)
-            {
-                resp.Estatus = -1;
-                resp.Mensaje = ex.Message;
+                return ApiResponse<Entity_RespuestaGeneral>.Fail("La empresa es obligatoria.");
             }
 
-            return resp; // Regresamos el objeto C# limpio
+
+            var resumen = await _dal.Dal_CargaCombustible_Guardar(IdCarga, IdEmpresa, IdSucursal, IdUnidad, IdViaje, Fecha, Litros, PrecioLitro, Km, Odometro, RendimientoKmPorLitro, Referencia);
+
+            if (resumen == null)
+            {
+                return ApiResponse<Entity_RespuestaGeneral>.Fail("No se guardo la información.");
+            }
+            return ApiResponse<Entity_RespuestaGeneral>.Success(resumen);
         }
 
-        public RespuestaApi Bs_CargaCombustible_ListarPorViaje(int IdEmpresa, int IdViaje)
+        public async Task<ApiResponse<Entity_CargaCombustible_ListarPorViaje>> Bs_CargaCombustible_ListarPorViaje(int IdEmpresa, int IdViaje)
         {
-            var resp = new RespuestaApi();
-
-            try
+            if (IdEmpresa <= 0)
             {
-                var listaDatos = _dal.Dal_CargaCombustible_ListarPorViaje(IdEmpresa, IdViaje);
-                
-                if (listaDatos != null && listaDatos.Count > 0)
-                {
-                    // Pasamos el objeto anónimo directamente, sin serializar a texto todavía
-                    resp.Datos = new { listaDatos };
-                }
-                else
-                {
-                    resp.Estatus = 0;
-                    resp.Mensaje = "No se encontraron datos.";
-                }
-            }
-            catch (Exception ex)
-            {
-                resp.Estatus = -1;
-                resp.Mensaje = ex.Message;
+                return ApiResponse<Entity_CargaCombustible_ListarPorViaje>.Fail("La empresa es obligatoria.");
             }
 
-            return resp; // Regresamos el objeto C# limpio
+
+            var resumen = await _dal.Dal_CargaCombustible_ListarPorViaje(IdEmpresa, IdViaje);
+
+            if (resumen == null)
+            {
+                return ApiResponse<Entity_CargaCombustible_ListarPorViaje>.Fail("No se guardo la información.");
+            }
+            return ApiResponse<Entity_CargaCombustible_ListarPorViaje>.Success(resumen);
         }
 
-        public RespuestaApi Bs_CargaCombustible_ObtenerPorId(int IdEmpresa, int IdCarga)
+        public async Task<ApiResponse<Entity_CargaCombustible_ObtenerPorId>> Bs_CargaCombustible_ObtenerPorId(int IdEmpresa, int IdCarga)
         {
-            var resp = new RespuestaApi();
-
-            try
+            if (IdEmpresa <= 0)
             {
-                var listaDatos = _dal.Dal_CargaCombustible_ObtenerPorId(IdEmpresa, IdCarga);
-                
-                if (listaDatos != null && listaDatos.Count > 0)
-                {
-                    // Pasamos el objeto anónimo directamente, sin serializar a texto todavía
-                    resp.Datos = new { listaDatos };
-                }
-                else
-                {
-                    resp.Estatus = 0;
-                    resp.Mensaje = "No se encontraron datos.";
-                }
-            }
-            catch (Exception ex)
-            {
-                resp.Estatus = -1;
-                resp.Mensaje = ex.Message;
+                return ApiResponse<Entity_CargaCombustible_ObtenerPorId>.Fail("La empresa es obligatoria.");
             }
 
-            return resp; // Regresamos el objeto C# limpio
+
+            var resumen = await _dal.Dal_CargaCombustible_ObtenerPorId(IdEmpresa, IdCarga);
+
+            if (resumen == null)
+            {
+                return ApiResponse<Entity_CargaCombustible_ObtenerPorId>.Fail("No se guardo la información.");
+            }
+            return ApiResponse<Entity_CargaCombustible_ObtenerPorId>.Success(resumen);
         }
     }
 }

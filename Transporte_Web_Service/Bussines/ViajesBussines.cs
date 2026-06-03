@@ -18,85 +18,38 @@ namespace Transporte_Web_Service.Bussines
             _dal = dal;
         }
 
-        public RespuestaApi Bs_EstadoViaje_Guardar(int IdEstadoViaje, string Descripcion)
+        public async Task<ApiResponse<Entity_RespuestaGeneral>> Bs_EstadoViaje_Guardar(int IdEstadoViaje, string Descripcion)
         {
-            var resp = new RespuestaApi();
+            var resumen = await _dal.Dal_EstadoViaje_Guardar(IdEstadoViaje, Descripcion);
 
-            try
+            if (resumen == null)
             {
-                var listaDatos = _dal.Dal_EstadoViaje_Guardar(IdEstadoViaje, Descripcion);
-
-                if (listaDatos != null && listaDatos.Count > 0)
-                {
-                    resp.Datos = new { listaDatos };
-                }
-                else
-                {
-                    resp.Estatus = 0;
-                    resp.Mensaje = "No se guardaron los datos.";
-                }
+                return ApiResponse<Entity_RespuestaGeneral>.Fail("No se encontró información.");
             }
-            catch (Exception ex)
-            {
-                resp.Estatus = -1;
-                resp.Mensaje = ex.Message;
-            }
-
-            return resp;
+            return ApiResponse<Entity_RespuestaGeneral>.Success(resumen);
         }
 
-        public RespuestaApi Bs_EstadoViaje_Listar()
+        public async Task<ApiResponse<Entity_EstadoViaje_Listar>> Bs_EstadoViaje_Listar()
         {
-            var resp = new RespuestaApi();
+            var resumen = await _dal.Dal_EstadoViaje_Listar();
 
-            try
+            if (resumen == null)
             {
-                var listaDatos = _dal.Dal_EstadoViaje_Listar();
-
-                if (listaDatos != null && listaDatos.Count > 0)
-                {
-                    resp.Datos = new { listaDatos };
-                }
-                else
-                {
-                    resp.Estatus = 0;
-                    resp.Mensaje = "No se encontraron datos.";
-                }
+                return ApiResponse<Entity_EstadoViaje_Listar>.Fail("No se encontró información.");
             }
-            catch (Exception ex)
-            {
-                resp.Estatus = -1;
-                resp.Mensaje = ex.Message;
-            }
-
-            return resp;
+            return ApiResponse<Entity_EstadoViaje_Listar>.Success(resumen);
         }
+        
 
-        public RespuestaApi Bs_EstadoViaje_ObtenerPorId(int IdEstadoViaje)
+        public async Task<ApiResponse<Entity_EstadoViaje_Listar>> Bs_EstadoViaje_ObtenerPorId(int IdEstadoViaje)
         {
-            var resp = new RespuestaApi();
+            var resumen = await _dal.Dal_EstadoViaje_ObtenerPorId(IdEstadoViaje);
 
-            try
+            if (resumen == null)
             {
-                var listaDatos = _dal.Dal_EstadoViaje_ObtenerPorId(IdEstadoViaje);
-
-                if (listaDatos != null && listaDatos.Count > 0)
-                {
-                    resp.Datos = new { listaDatos };
-                }
-                else
-                {
-                    resp.Estatus = 0;
-                    resp.Mensaje = "No se encontraron datos.";
-                }
+                return ApiResponse<Entity_EstadoViaje_Listar>.Fail("No se encontró información.");
             }
-            catch (Exception ex)
-            {
-                resp.Estatus = -1;
-                resp.Mensaje = ex.Message;
-            }
-
-            return resp;
+            return ApiResponse<Entity_EstadoViaje_Listar>.Success(resumen);
         }
 
     }
