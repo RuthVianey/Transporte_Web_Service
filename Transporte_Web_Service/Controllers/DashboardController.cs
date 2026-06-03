@@ -17,20 +17,16 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpGet("CostosPorTipo")]
-        public IActionResult Dashboard_CostosPorTipo(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
+        public async Task<IActionResult> Dashboard_CostosPorTipo([FromQuery] int idEmpresa, [FromQuery] int? idSucursal, 
+                                                                [FromQuery] DateTime? fechaInicio, [FromQuery] DateTime? fechaFin)
         {
-            // Ejecuta la lógica de negocio
-            RespuestaApi resultado = _bs.Bs_Dashboard_CostosPorTipo(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
+            var response = await _bs.Bs_Dashboard_CostosPorTipo( idEmpresa, idSucursal, fechaInicio, fechaFin );
 
-            // Manejo de códigos de estado HTTP correctos según tu estatus interno
-            if (resultado.Estatus == -1)
-            {
-                return StatusCode(500, resultado); // Error de servidor, .NET lo vuelve JSON automáticamente
-            }
+            if (!response.Ok)
+                return BadRequest(response);
 
-            return Ok(resultado); // Retorna un HTTP 200 con el objeto convertido a JSON nativamente
+            return Ok(response);
         }
-
 
         [HttpGet("RentabilidadMensual")]
         public IActionResult Dashboard_RentabilidadMensual(int IdEmpresa, int IdSucursal, int Anio)
