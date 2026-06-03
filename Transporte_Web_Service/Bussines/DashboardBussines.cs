@@ -42,6 +42,12 @@ namespace Transporte_Web_Service.Bussines
             return ApiResponse<Entity_Dashboard_CostosPorTipo>.Success(resumen);
         }
 
+
+
+
+
+
+
         public RespuestaApi Bs_Dashboard_ResumenOperativo(int IdEmpresa, int? IdSucursal, string? FechaInicio, string? FechaFin)
         {
             var resp = new RespuestaApi();

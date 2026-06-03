@@ -30,6 +30,18 @@ namespace Transporte_Web_Service.Controllers
             return Ok(response);
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
         [HttpGet("RentabilidadMensual")]
         public IActionResult Dashboard_RentabilidadMensual(int IdEmpresa, int IdSucursal, int Anio)
         {
