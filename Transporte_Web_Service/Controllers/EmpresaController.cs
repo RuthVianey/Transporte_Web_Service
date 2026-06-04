@@ -19,55 +19,55 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpGet("listaDatos_Empresa_Desactivar")]
-        public IActionResult Empresa_Desactivar(int IdEmpresa)
+        public async Task<IActionResult> Empresa_Desactivar([FromQuery] int IdEmpresa)
         {
-            RespuestaApi resultado = _bs.Bs_Empresa_Desactivar(IdEmpresa);
+            var response = await _bs.Bs_Empresa_Desactivar(IdEmpresa);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_Empresa_Guardar")]
-        public IActionResult Empresa_Guardar(int iIdEmpresa, string sNombre, string sNombre_Corto, string sRFC, string sCalle, string sColonia, string sMunicipio, string sEstado, string sCodigo_Postal, string sTelefono, string sRutaLogo, byte bActivo)
+        public async Task<IActionResult> Empresa_Guardar([FromQuery] int iIdEmpresa, [FromQuery] string sNombre, [FromQuery] string sNombre_Corto, [FromQuery] string sRFC, [FromQuery] string sCalle, [FromQuery] string sColonia, [FromQuery] string sMunicipio, [FromQuery] string sEstado, [FromQuery] string sCodigo_Postal, [FromQuery] string sTelefono, [FromQuery] string sRutaLogo, [FromQuery] byte bActivo)
         {
-            RespuestaApi resultado = _bs.Bs_Empresa_Guardar(iIdEmpresa, sNombre, sNombre_Corto, sRFC, sCalle, sColonia, sMunicipio, sEstado, sCodigo_Postal, sTelefono, sRutaLogo, bActivo);
+            var response = await _bs.Bs_Empresa_Guardar(iIdEmpresa, sNombre, sNombre_Corto, sRFC, sCalle, sColonia, sMunicipio, sEstado, sCodigo_Postal, sTelefono, sRutaLogo, bActivo);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_Empresa_Listar")]
-        public IActionResult Empresa_Listar(byte bSoloActivos, string sTextoBusqueda)
+        public async Task<IActionResult> Empresa_Listar([FromQuery] byte bSoloActivos, [FromQuery] string sTextoBusqueda)
         {
-            RespuestaApi resultado = _bs.Bs_Empresa_Listar(bSoloActivos, sTextoBusqueda);
+            var response = await _bs.Bs_Empresa_Listar(bSoloActivos, sTextoBusqueda);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_Empresa_ObtenerPorId")]
-        public IActionResult Empresa_ObtenerPorId(int iIdEmpresa)
+        public async Task<IActionResult> Empresa_ObtenerPorId([FromQuery] int iIdEmpresa)
         {
-            RespuestaApi resultado = _bs.Bs_Empresa_ObtenerPorId(iIdEmpresa);
+            var response = await _bs.Bs_Empresa_ObtenerPorId(iIdEmpresa);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
     }
 }

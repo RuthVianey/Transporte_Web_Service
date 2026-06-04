@@ -17,55 +17,55 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpGet("listaDatos_Operador_Desactivar")]
-        public IActionResult Operador_Desactivar(int iIdOperador, int iIdEmpresa)
+        public async Task<IActionResult> Operador_Desactivar([FromQuery] int iIdOperador, [FromQuery] int iIdEmpresa)
         {
-            RespuestaApi resultado = _bs.Operador_Desactivar(iIdOperador, iIdEmpresa);
+            var response = await _bs.Operador_Desactivar(iIdOperador, iIdEmpresa);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_Operador_Guardar")]
-        public IActionResult Operador_Guardar(int iIdOperador, int iIdEmpresa, int iIdSucursal, string sNombre, string sLicencia, string sTipoLicencia, string sFechaVencimientoLicencia, string sCURP, string sTelefono, byte bActivo)
+        public async Task<IActionResult> Operador_Guardar([FromQuery] int iIdOperador, [FromQuery] int iIdEmpresa, [FromQuery] int iIdSucursal, [FromQuery] string sNombre, [FromQuery] string sLicencia, [FromQuery] string sTipoLicencia, [FromQuery] string sFechaVencimientoLicencia, [FromQuery] string sCURP, [FromQuery] string sTelefono, [FromQuery] byte bActivo)
         {
-            RespuestaApi resultado = _bs.Operador_Guardar(iIdOperador, iIdEmpresa, iIdSucursal, sNombre, sLicencia, sTipoLicencia, sFechaVencimientoLicencia, sCURP, sTelefono, bActivo);
+            var response = await _bs.Operador_Guardar(iIdOperador, iIdEmpresa, iIdSucursal, sNombre, sLicencia, sTipoLicencia, sFechaVencimientoLicencia, sCURP, sTelefono, bActivo);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_Operador_Listar")]
-        public IActionResult Operador_Listar(int iIdEmpresa, int iIdSucursal, byte bSoloActivos, string sTextoBusqueda)
+        public async Task<IActionResult> Operador_Listar([FromQuery] int iIdEmpresa, [FromQuery] int iIdSucursal, [FromQuery] byte bSoloActivos, [FromQuery] string sTextoBusqueda)
         {
-            RespuestaApi resultado = _bs.Operador_Listar(iIdEmpresa, iIdSucursal, bSoloActivos, sTextoBusqueda);
+            var response = await _bs.Operador_Listar(iIdEmpresa, iIdSucursal, bSoloActivos, sTextoBusqueda);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_Operador_ObtenerPorId")]
-        public IActionResult Operador_ObtenerPorId(int iIdEmpresa, int iIdOperador)
+        public async Task<IActionResult> Operador_ObtenerPorId([FromQuery] int iIdEmpresa, [FromQuery] int iIdOperador)
         {
-            RespuestaApi resultado = _bs.Operador_ObtenerPorId(iIdEmpresa, iIdOperador);
+            var response = await _bs.Operador_ObtenerPorId(iIdEmpresa, iIdOperador);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
     }
 }

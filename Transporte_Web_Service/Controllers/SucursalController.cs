@@ -21,55 +21,55 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpGet("listaDatos_Sucursal_Desactivar")]
-        public IActionResult Sucursal_Desactivar(int IdSucursal, int IdEmpresa)
+        public async Task<IActionResult> Sucursal_Desactivar([FromQuery] int IdSucursal, [FromQuery] int IdEmpresa)
         {
-            RespuestaApi resultado = _bs.Bs_Sucursal_Desactivar(IdSucursal, IdEmpresa);
+            var response = await _bs.Bs_Sucursal_Desactivar(IdSucursal, IdEmpresa);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_Sucursal_Guardar")]
-        public IActionResult Sucursal_Guardar(int IdSucursal, int IdEmpresa, string Nombre, string NombreCorto, string Codigo, string Calle, string Colonia, string Municipio, string Estado, string CodigoPostal, string Telefono, byte Activo)
+        public async Task<IActionResult> Sucursal_Guardar([FromQuery] int IdSucursal, [FromQuery] int IdEmpresa, [FromQuery] string Nombre, [FromQuery] string NombreCorto, [FromQuery] string Codigo, [FromQuery] string Calle, [FromQuery] string Colonia, [FromQuery] string Municipio, [FromQuery] string Estado, [FromQuery] string CodigoPostal, [FromQuery] string Telefono, [FromQuery] byte Activo)
         {
-            RespuestaApi resultado = _bs.Bs_Sucursal_Guardar(IdSucursal, IdEmpresa, Nombre, NombreCorto, Codigo, Calle, Colonia, Municipio, Estado, CodigoPostal, Telefono, Activo);
-
-            if (resultado.Estatus == -1)
+            var response = await _bs.Bs_Sucursal_Guardar(IdSucursal, IdEmpresa, Nombre, NombreCorto, Codigo, Calle, Colonia, Municipio, Estado, CodigoPostal, Telefono, Activo);
+            
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_Sucursal_Listar")]
-        public IActionResult Sucursal_Listar(int IdEmpresa, byte SoloActivos, string TextoBusqueda)
+        public async Task<IActionResult> Sucursal_Listar([FromQuery] int IdEmpresa, [FromQuery] byte SoloActivos, [FromQuery] string TextoBusqueda)
         {
-            RespuestaApi resultado = _bs.Bs_Sucursal_Listar(IdEmpresa, SoloActivos, TextoBusqueda);
+            var response = await _bs.Bs_Sucursal_Listar(IdEmpresa, SoloActivos, TextoBusqueda);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_Sucursal_ObtenerPorId")]
-        public IActionResult Sucursal_ObtenerPorId(int IdSucursal, int IdEmpresa)
+        public async Task<IActionResult> Sucursal_ObtenerPorId([FromQuery] int IdSucursal, [FromQuery] int IdEmpresa)
         {
-            RespuestaApi resultado = _bs.Bs_Sucursal_ObtenerPorId(IdSucursal, IdEmpresa);
+            var response = await _bs.Bs_Sucursal_ObtenerPorId(IdSucursal, IdEmpresa);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
     }
 }

@@ -18,107 +18,107 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpGet("listaDatos_Gasto_Eliminar")]
-        public IActionResult Gasto_Eliminar(int IdGasto, int IdEmpresa)
+        public async Task<IActionResult> Gasto_Eliminar([FromQuery] int IdGasto, [FromQuery] int IdEmpresa)
         {
-            RespuestaApi resultado = _bs.Bs_Gasto_Eliminar(IdGasto, IdEmpresa);
+            var response = await _bs.Bs_Gasto_Eliminar(IdGasto, IdEmpresa);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_Gasto_Guardar")]
-        public IActionResult Gasto_Guardar(int IdGasto, int IdEmpresa, int IdSucursal, int IdTipoGasto, int IdViaje, int IdUnidad, string Fecha, decimal Monto, string Referencia, string Descripcion, byte EsFacturable)
+        public async Task<IActionResult> Gasto_Guardar([FromQuery] int IdGasto, [FromQuery] int IdEmpresa, [FromQuery] int IdSucursal, [FromQuery] int IdTipoGasto, [FromQuery] int IdViaje, [FromQuery] int IdUnidad, [FromQuery] string Fecha, [FromQuery] decimal Monto, [FromQuery] string Referencia, [FromQuery] string Descripcion, [FromQuery] byte EsFacturable)
         {
-            RespuestaApi resultado = _bs.Bs_Gasto_Guardar(IdGasto, IdEmpresa, IdSucursal, IdTipoGasto, IdViaje, IdUnidad, Fecha, Monto, Referencia, Descripcion, EsFacturable);
+            var response = await _bs.Bs_Gasto_Guardar(IdGasto, IdEmpresa, IdSucursal, IdTipoGasto, IdViaje, IdUnidad, Fecha, Monto, Referencia, Descripcion, EsFacturable);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_Gasto_ListarPorViaje")]
-        public IActionResult Gasto_ListarPorViaje(int IdViaje, int IdEmpresa)
+        public async Task<IActionResult> Gasto_ListarPorViaje([FromQuery] int IdViaje, [FromQuery] int IdEmpresa)
         {
-            RespuestaApi resultado = _bs.Bs_Gasto_ListarPorViaje(IdViaje, IdEmpresa);
+            var response = await _bs.Bs_Gasto_ListarPorViaje(IdViaje, IdEmpresa);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_Gasto_ObtenerPorId")]
-        public IActionResult Gasto_ObtenerPorId(int IdGasto, int IdEmpresa)
+        public async Task<IActionResult> Gasto_ObtenerPorId([FromQuery] int IdGasto, [FromQuery] int IdEmpresa)
         {
-            RespuestaApi resultado = _bs.Bs_Gasto_ObtenerPorId(IdGasto, IdEmpresa);
+            var response = await _bs.Bs_Gasto_ObtenerPorId(IdGasto, IdEmpresa);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_TipoGasto_Desactivar")]
-        public IActionResult TipoGasto_Desactivar(int IdTipoGasto, int IdEmpresa)
+        public async Task<IActionResult> TipoGasto_Desactivar([FromQuery] int IdTipoGasto, [FromQuery] int IdEmpresa)
         {
-            RespuestaApi resultado = _bs.Bs_TipoGasto_Desactivar(IdTipoGasto, IdEmpresa);
+            var response = await _bs.Bs_TipoGasto_Desactivar(IdTipoGasto, IdEmpresa);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_TipoGasto_Guardar")]
-        public IActionResult TipoGasto_Guardar(int IdTipoGasto, int IdEmpresa, string Descripcion, byte EsCostoDirecto, byte EsMantenimiento, byte EsCombustible, byte Activo)
+        public async Task<IActionResult> TipoGasto_Guardar([FromQuery] int IdTipoGasto, [FromQuery] int IdEmpresa, [FromQuery] string Descripcion, [FromQuery] byte EsCostoDirecto, [FromQuery] byte EsMantenimiento, [FromQuery] byte EsCombustible, [FromQuery] byte Activo)
         {
-            RespuestaApi resultado = _bs.Bs_TipoGasto_Guardar(IdTipoGasto, IdEmpresa, Descripcion, EsCostoDirecto, EsMantenimiento, EsCombustible, Activo);
+            var response = await _bs.Bs_TipoGasto_Guardar(IdTipoGasto, IdEmpresa, Descripcion, EsCostoDirecto, EsMantenimiento, EsCombustible, Activo);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_TipoGasto_Listar")]
-        public IActionResult TipoGasto_Listar(int IdEmpresa, byte SoloActivos, string TextoBusqueda)
+        public async Task<IActionResult> TipoGasto_Listar([FromQuery] int IdEmpresa, [FromQuery] byte SoloActivos, [FromQuery] string TextoBusqueda)
         {
-            RespuestaApi resultado = _bs.Bs_TipoGasto_Listar(IdEmpresa, SoloActivos, TextoBusqueda);
+            var response = await _bs.Bs_TipoGasto_Listar(IdEmpresa, SoloActivos, TextoBusqueda);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_TipoGasto_ObtenerPorId")]
-        public IActionResult TipoGasto_ObtenerPorId(int IdTipoGasto, int IdEmpresa)
+        public async Task<IActionResult> TipoGasto_ObtenerPorId([FromQuery] int IdTipoGasto, [FromQuery] int IdEmpresa)
         {
-            RespuestaApi resultado = _bs.Bs_TipoGasto_ObtenerPorId(IdTipoGasto, IdEmpresa);
+            var response = await _bs.Bs_TipoGasto_ObtenerPorId(IdTipoGasto, IdEmpresa);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
     }

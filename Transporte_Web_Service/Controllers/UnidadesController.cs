@@ -18,55 +18,55 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpGet("listaDatos_TipoUnidad_Desactivar")]
-        public IActionResult TipoUnidad_Desactivar(int IdTipoUnidad, int IdEmpresa)
+        public async Task<IActionResult> TipoUnidad_Desactivar([FromQuery] int IdTipoUnidad, [FromQuery] int IdEmpresa)
         {
-            RespuestaApi resultado = _bs.Bs_TipoUnidad_Desactivar(IdTipoUnidad, IdEmpresa);
+            var response = await _bs.Bs_TipoUnidad_Desactivar(IdTipoUnidad, IdEmpresa);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_TipoUnidad_Guardar")]
-        public IActionResult TipoUnidad_Guardar(int IdTipoUnidad, int IdEmpresa, string Descripcion, byte Activo)
+        public async Task<IActionResult> TipoUnidad_Guardar([FromQuery] int IdTipoUnidad, [FromQuery] int IdEmpresa, [FromQuery] string Descripcion, [FromQuery] byte Activo)
         {
-            RespuestaApi resultado = _bs.Bs_TipoUnidad_Guardar(IdTipoUnidad, IdEmpresa, Descripcion, Activo);
+            var response = await _bs.Bs_TipoUnidad_Guardar(IdTipoUnidad, IdEmpresa, Descripcion, Activo);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_TipoUnidad_Listar")]
-        public IActionResult TipoUnidad_Listar(int IdEmpresa, byte SoloActivos, string TextoBusqueda)
+        public async Task<IActionResult> TipoUnidad_Listar([FromQuery] int IdEmpresa, [FromQuery] byte SoloActivos, [FromQuery] string TextoBusqueda)
         {
-            RespuestaApi resultado = _bs.Bs_TipoUnidad_Listar(IdEmpresa, SoloActivos, TextoBusqueda);
+            var response = await _bs.Bs_TipoUnidad_Listar(IdEmpresa, SoloActivos, TextoBusqueda);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_TipoUnidad_ObtenerPorId")]
-        public IActionResult TipoUnidad_ObtenerPorId(int IdTipoUnidad, int IdEmpresa)
+        public async Task<IActionResult> TipoUnidad_ObtenerPorId([FromQuery] int IdTipoUnidad, [FromQuery] int IdEmpresa)
         {
-            RespuestaApi resultado = _bs.Bs_TipoUnidad_ObtenerPorId(IdTipoUnidad, IdEmpresa);
+            var response = await _bs.Bs_TipoUnidad_ObtenerPorId(IdTipoUnidad, IdEmpresa);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
     }
