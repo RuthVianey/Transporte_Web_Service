@@ -25,12 +25,12 @@ namespace Transporte_Web_Service.Data
 
         }
 
-        public async Task<Entity_RespuestaGeneral?> Dal_Ruta_Desactivar(int IdRuta, int IdEmpresa)
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_Ruta_Desactivar(int IdRuta, int IdEmpresa)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_Ruta_Desactivar",
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_Ruta_Desactivar",
                 new
                 {
                     IdRuta = IdRuta,
@@ -39,12 +39,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_RespuestaGeneral?> Dal_Ruta_Guardar(int IdRuta, int IdEmpresa, int IdSucursal, string Nombre, string Origen, string Destino, decimal DistanciaKm, int TiempoEstimadoMin, byte Activo)
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_Ruta_Guardar(int IdRuta, int IdEmpresa, int IdSucursal, string Nombre, string Origen, string Destino, decimal DistanciaKm, int TiempoEstimadoMin, byte Activo)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_Ruta_Guardar",
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_Ruta_Guardar",
                 new
                 {
                     IdRuta = IdRuta,
@@ -60,12 +60,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_Ruta_Listar?> Dal_Ruta_Listar(int IdEmpresa, int IdSucursal, byte SoloActivos, string TextoBusqueda)
+        public async Task<IEnumerable<Entity_Ruta_Listar?>> Dal_Ruta_Listar(int IdEmpresa, int IdSucursal, byte SoloActivos, string TextoBusqueda)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_Ruta_Listar>("dbo.sp_Ruta_Listar",
+            return await connection.QueryAsync<Entity_Ruta_Listar?>("dbo.sp_Ruta_Listar",
                 new
                 {
                     IdEmpresa = IdEmpresa,
@@ -76,12 +76,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_Ruta_Listar?> Dal_Ruta_ObtenerPorId(int IdRuta, int IdEmpresa)
+        public async Task<IEnumerable<Entity_Ruta_Listar?>> Dal_Ruta_ObtenerPorId(int IdRuta, int IdEmpresa)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_Ruta_Listar>("dbo.sp_Ruta_ObtenerPorId",
+            return await connection.QueryAsync<Entity_Ruta_Listar?>("dbo.sp_Ruta_ObtenerPorId",
                 new
                 {
                     IdRuta = IdRuta,
@@ -90,12 +90,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_RespuestaGeneral?> Dal_RutaDetalle_Eliminar(int IdRutaDetalle, int IdRuta)
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_RutaDetalle_Eliminar(int IdRutaDetalle, int IdRuta)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_RutaDetalle_Eliminar",
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_RutaDetalle_Eliminar",
                 new
                 {
                     IdRutaDetalle = IdRutaDetalle,
@@ -104,12 +104,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_RespuestaGeneral?> Dal_RutaDetalle_Guardar(int IdRutaDetalle, int IdRuta, int Orden, string Punto, decimal Latitud, decimal Longitud, string Tipo)
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_RutaDetalle_Guardar(int IdRutaDetalle, int IdRuta, int Orden, string Punto, decimal Latitud, decimal Longitud, string Tipo)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_RutaDetalle_Guardar",
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_RutaDetalle_Guardar",
                 new
                 {
                     IdRutaDetalle = IdRutaDetalle,
@@ -123,12 +123,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_RutaDetalle_Listar?> Dal_RutaDetalle_Listar(int IdRuta)
+        public async Task<IEnumerable<Entity_RutaDetalle_Listar?>> Dal_RutaDetalle_Listar(int IdRuta)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_RutaDetalle_Listar>("dbo.sp_RutaDetalle_Listar",
+            return await connection.QueryAsync<Entity_RutaDetalle_Listar?>("dbo.sp_RutaDetalle_Listar",
                 new
                 {
                     IdRuta = IdRuta
@@ -136,12 +136,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_RutaDetalle_Listar?> Dal_RutaDetalle_ObtenerPorId(int IdRutaDetalle, int IdRuta)
+        public async Task<IEnumerable<Entity_RutaDetalle_Listar?>> Dal_RutaDetalle_ObtenerPorId(int IdRutaDetalle, int IdRuta)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_RutaDetalle_Listar>("dbo.sp_RutaDetalle_ObtenerPorId",
+            return await connection.QueryAsync<Entity_RutaDetalle_Listar?>("dbo.sp_RutaDetalle_ObtenerPorId",
                 new
                 {
                     IdRutaDetalle = IdRutaDetalle,

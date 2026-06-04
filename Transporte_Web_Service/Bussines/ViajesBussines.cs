@@ -18,38 +18,38 @@ namespace Transporte_Web_Service.Bussines
             _dal = dal;
         }
 
-        public async Task<ApiResponse<Entity_RespuestaGeneral>> Bs_EstadoViaje_Guardar(int IdEstadoViaje, string Descripcion)
+        public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Bs_EstadoViaje_Guardar(int IdEstadoViaje, string Descripcion)
         {
             var resumen = await _dal.Dal_EstadoViaje_Guardar(IdEstadoViaje, Descripcion);
 
             if (resumen == null)
             {
-                return ApiResponse<Entity_RespuestaGeneral>.Fail("No se encontró información.");
+                return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("No se encontró información.");
             }
-            return ApiResponse<Entity_RespuestaGeneral>.Success(resumen);
+            return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(resumen);
         }
 
-        public async Task<ApiResponse<Entity_EstadoViaje_Listar>> Bs_EstadoViaje_Listar()
+        public async Task<ApiResponse<IEnumerable<Entity_EstadoViaje_Listar?>>> Bs_EstadoViaje_Listar()
         {
             var resumen = await _dal.Dal_EstadoViaje_Listar();
 
             if (resumen == null)
             {
-                return ApiResponse<Entity_EstadoViaje_Listar>.Fail("No se encontró información.");
+                return ApiResponse<IEnumerable<Entity_EstadoViaje_Listar?>>.Fail("No se encontró información.");
             }
-            return ApiResponse<Entity_EstadoViaje_Listar>.Success(resumen);
+            return ApiResponse<IEnumerable<Entity_EstadoViaje_Listar?>>.Success(resumen);
         }
         
 
-        public async Task<ApiResponse<Entity_EstadoViaje_Listar>> Bs_EstadoViaje_ObtenerPorId(int IdEstadoViaje)
+        public async Task<ApiResponse<IEnumerable<Entity_EstadoViaje_Listar?>>> Bs_EstadoViaje_ObtenerPorId(int IdEstadoViaje)
         {
             var resumen = await _dal.Dal_EstadoViaje_ObtenerPorId(IdEstadoViaje);
 
             if (resumen == null)
             {
-                return ApiResponse<Entity_EstadoViaje_Listar>.Fail("No se encontró información.");
+                return ApiResponse<IEnumerable<Entity_EstadoViaje_Listar?>>.Fail("No se encontró información.");
             }
-            return ApiResponse<Entity_EstadoViaje_Listar>.Success(resumen);
+            return ApiResponse<IEnumerable<Entity_EstadoViaje_Listar?>>.Success(resumen);
         }
 
     }

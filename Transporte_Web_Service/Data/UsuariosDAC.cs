@@ -26,12 +26,12 @@ namespace Transporte_Web_Service.Data
         }
 
         /*COMIENZA USUARIO*/
-        public async Task<Entity_RespuestaGeneral?> Usuario_Guardar(int iIdUsuario, int iIdEmpresa, string sNombre, string sEmail, string sContrasenia, int iIdSucursal)
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Usuario_Guardar(int iIdUsuario, int iIdEmpresa, string sNombre, string sEmail, string sContrasenia, int iIdSucursal)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_Usuario_Guardar",
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_Usuario_Guardar",
                 new
                 {
                     iIdUsuario = iIdUsuario,

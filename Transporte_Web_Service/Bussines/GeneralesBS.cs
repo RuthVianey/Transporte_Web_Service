@@ -23,11 +23,11 @@ namespace Transporte_Web_Service.Bussines
         }
 
 
-        public async Task<ApiResponse<Entity_RespuestaGeneral>> Empresa_Guardar(int iIdEmpresa, string sNombre, string sNombre_Corto, string sRFC, string sCalle, string sColonia, string sMunicipio, string sEstado, string sCodigo_Postal, string sTelefono, string sRutaLogo, byte bActivo, string sTipoImagen)
+        public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Empresa_Guardar(int iIdEmpresa, string sNombre, string sNombre_Corto, string sRFC, string sCalle, string sColonia, string sMunicipio, string sEstado, string sCodigo_Postal, string sTelefono, string sRutaLogo, byte bActivo, string sTipoImagen)
         {
             if (iIdEmpresa <= 0)
             {
-                return ApiResponse<Entity_RespuestaGeneral>.Fail("La empresa es obligatoria.");
+                return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("La empresa es obligatoria.");
             }
 
             sPathSubida += "\\" + iIdEmpresa.ToString() + "." + sTipoImagen;
@@ -39,63 +39,63 @@ namespace Transporte_Web_Service.Bussines
 
             if (resumen == null)
             {
-                return ApiResponse<Entity_RespuestaGeneral>.Fail("No se encontró información.");
+                return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("No se encontró información.");
             }
-            return ApiResponse<Entity_RespuestaGeneral>.Success(resumen);
+            return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(resumen);
         }
 
-        public async Task<ApiResponse<Entity_RespuestaGeneral>> Empresa_Desactivar(int iIdEmpresa)
+        public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Empresa_Desactivar(int iIdEmpresa)
         {
             if (iIdEmpresa <= 0)
             {
-                return ApiResponse<Entity_RespuestaGeneral>.Fail("La empresa es obligatoria.");
+                return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("La empresa es obligatoria.");
             }
 
             var resumen = await _dac.Empresa_Desactivar(iIdEmpresa);
 
             if (resumen == null)
             {
-                return ApiResponse<Entity_RespuestaGeneral>.Fail("No se encontró información.");
+                return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("No se encontró información.");
             }
-            return ApiResponse<Entity_RespuestaGeneral>.Success(resumen);
+            return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(resumen);
         }
 
-        public async Task<ApiResponse<Entity_Empresa_Listar>> Empresa_Listar(byte bSoloActivos, string sTextoBusqueda)
+        public async Task<ApiResponse<IEnumerable<Entity_Empresa_Listar?>>> Empresa_Listar(byte bSoloActivos, string sTextoBusqueda)
         {
             var resumen = await _dac.Empresa_Listar(bSoloActivos, sTextoBusqueda);
 
             if (resumen == null)
             {
-                return ApiResponse<Entity_Empresa_Listar>.Fail("No se encontró información.");
+                return ApiResponse<IEnumerable<Entity_Empresa_Listar?>>.Fail("No se encontró información.");
             }
-            return ApiResponse<Entity_Empresa_Listar>.Success(resumen);
+            return ApiResponse<IEnumerable<Entity_Empresa_Listar?>>.Success(resumen);
         }
 
-        public async Task<ApiResponse<Entity_Empresa_Listar>> Empresa_ObtenerPorId(int iIdEmpresa)
+        public async Task<ApiResponse<IEnumerable<Entity_Empresa_Listar?>>> Empresa_ObtenerPorId(int iIdEmpresa)
         {
             if (iIdEmpresa <= 0)
             {
-                return ApiResponse<Entity_Empresa_Listar>.Fail("La empresa es obligatoria.");
+                return ApiResponse<IEnumerable<Entity_Empresa_Listar?>>.Fail("La empresa es obligatoria.");
             }
 
             var resumen = await _dac.Empresa_ObtenerPorId(iIdEmpresa);
 
             if (resumen == null)
             {
-                return ApiResponse<Entity_Empresa_Listar>.Fail("No se encontró información.");
+                return ApiResponse<IEnumerable<Entity_Empresa_Listar?>>.Fail("No se encontró información.");
             }
-            return ApiResponse<Entity_Empresa_Listar>.Success(resumen);
+            return ApiResponse<IEnumerable<Entity_Empresa_Listar?>>.Success(resumen);
         }
 
-        public async Task<ApiResponse<Entity_Programa_Listar>> Bs_Programa_Listar()
+        public async Task<ApiResponse<IEnumerable<Entity_Programa_Listar?>>> Bs_Programa_Listar()
         {
             var resumen = await _dac.Dal_Programa_Listar();
 
             if (resumen == null)
             {
-                return ApiResponse<Entity_Programa_Listar>.Fail("No se encontró información.");
+                return ApiResponse<IEnumerable<Entity_Programa_Listar?>>.Fail("No se encontró información.");
             }
-            return ApiResponse<Entity_Programa_Listar>.Success(resumen);
+            return ApiResponse<IEnumerable<Entity_Programa_Listar?>>.Success(resumen);
         }
 
 

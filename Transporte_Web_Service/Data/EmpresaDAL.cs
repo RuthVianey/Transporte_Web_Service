@@ -26,12 +26,12 @@ namespace Transporte_Web_Service.Data
             _connectionFactory = connectionFactory;
 
         }
-        public async Task<Entity_RespuestaGeneral?> Dal_Empresa_Desactivar(int IdEmpresa)
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_Empresa_Desactivar(int IdEmpresa)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_Empresa_Desactivar",
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_Empresa_Desactivar",
                 new
                 {
                     IdEmpresa = IdEmpresa
@@ -40,12 +40,12 @@ namespace Transporte_Web_Service.Data
             );
         }
 
-        public async Task<Entity_RespuestaGeneral?> Dal_Empresa_Guardar(int iIdEmpresa, string sNombre, string sNombre_Corto, string sRFC, string sCalle, string sColonia, string sMunicipio, string sEstado, string sCodigo_Postal, string sTelefono, string sRutaLogo, byte bActivo)
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_Empresa_Guardar(int iIdEmpresa, string sNombre, string sNombre_Corto, string sRFC, string sCalle, string sColonia, string sMunicipio, string sEstado, string sCodigo_Postal, string sTelefono, string sRutaLogo, byte bActivo)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_Empresa_Guardar",
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_Empresa_Guardar",
                 new
                 {
                     iIdEmpresa = iIdEmpresa ,
@@ -65,12 +65,12 @@ namespace Transporte_Web_Service.Data
             );
         }
 
-        public async Task<Entity_Empresa_Listar?> Dal_Empresa_Listar(byte bSoloActivos, string sTextoBusqueda)
+        public async Task<IEnumerable<Entity_Empresa_Listar?>> Dal_Empresa_Listar(byte bSoloActivos, string sTextoBusqueda)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_Empresa_Listar>("dbo.sp_Empresa_Listar",
+            return await connection.QueryAsync<Entity_Empresa_Listar?>("dbo.sp_Empresa_Listar",
                 new
                 {
                     bSoloActivos = bSoloActivos,
@@ -80,12 +80,12 @@ namespace Transporte_Web_Service.Data
             );
         }
 
-        public async Task<Entity_Empresa_Listar?> Dal_Empresa_ObtenerPorId(int iIdEmpresa)
+        public async Task<IEnumerable<Entity_Empresa_Listar?>> Dal_Empresa_ObtenerPorId(int iIdEmpresa)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_Empresa_Listar>("dbo.sp_Empresa_ObtenerPorId",
+            return await connection.QueryAsync<Entity_Empresa_Listar?>("dbo.sp_Empresa_ObtenerPorId",
                 new
                 {
                     iIdEmpresa = iIdEmpresa
