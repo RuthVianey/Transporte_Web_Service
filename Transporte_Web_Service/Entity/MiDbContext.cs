@@ -31,8 +31,6 @@ namespace Transporte_Web_Service.Entity
 
 
 
-
-
         //Lista de lo que regresara las base
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<ResultadoSP> ResultadoSP { get; set; }

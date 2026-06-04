@@ -7,16 +7,6 @@
         public decimal Monto { get; set; }
     }
   
-    public class Entity_Dashboard_RentabilidadMensual
-    {
-        public int Mes { get; set; }
-        public string? NombreMes { get; set; }
-        public int TotalViajes { get; set; }
-        public decimal IngresoTotal { get; set; }
-        public decimal CostoTotal { get; set; }
-        public decimal UtilidadTotal { get; set; }
-    }
-
     public class Entity_Dashboard_ResumenOperativo
     {
         public int TotalViajes { get; set; }
@@ -35,6 +25,16 @@
         public decimal LitrosCombustible { get; set; }
         public decimal RendimientoKmPorLitro { get; set; }
 }
+
+    public class Entity_Dashboard_RentabilidadMensual
+    {
+        public int Mes { get; set; }
+        public string? NombreMes { get; set; }
+        public int TotalViajes { get; set; }
+        public decimal IngresoTotal { get; set; }
+        public decimal CostoTotal { get; set; }
+        public decimal UtilidadTotal { get; set; }
+    }
 
     public class Entity_Dashboard_TopClientes
     {
