@@ -33,7 +33,7 @@ namespace Transporte_Web_Service.Bussines
                 return ApiResponse<Entity_Dashboard_CostosPorTipo>.Fail("La fecha final no puede ser menor a la fecha inicial.");
             }
 
-            var resumen = await _dal.Dal_dashObtenCostoTipo(idEmpresa, idSucursal, fechaInicio, fechaFin);
+            var resumen = await _dal.Dal_DashObtenCostoTipo(idEmpresa, idSucursal, fechaInicio, fechaFin);
 
             if (resumen == null)
             { 
@@ -42,142 +42,105 @@ namespace Transporte_Web_Service.Bussines
             return ApiResponse<Entity_Dashboard_CostosPorTipo>.Success(resumen);
         }
 
-
-
-
-
-
-
-        public RespuestaApi Bs_Dashboard_ResumenOperativo(int IdEmpresa, int? IdSucursal, string? FechaInicio, string? FechaFin)
+        public async Task<ApiResponse<Entity_Dashboard_ResumenOperativo>> Bs_Dashboard_ResumenOperativo(int idEmpresa, int? idSucursal, DateTime? fechaInicio, DateTime? fechaFin)
         {
-            var resp = new RespuestaApi();
-
-            try
+            if (idEmpresa <= 0)
             {
-                var listaDatos = _dal.Dal_Dashboard_ResumenOperativo_TraeDatos(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
-
-                if (listaDatos != null && listaDatos.Count > 0)
-                {
-                    // Pasamos el objeto anónimo directamente, sin serializar a texto todavía
-                    resp.Datos = new { listaDatos };
-                }
-                else
-                {
-                    resp.Estatus = 0;
-                    resp.Mensaje = "No se encontraron datos.";
-                }
-            }
-            catch (Exception ex)
-            {
-                resp.Estatus = -1;
-                resp.Mensaje = ex.Message;
+                return ApiResponse<Entity_Dashboard_ResumenOperativo>.Fail("La empresa es obligatoria.");
             }
 
-            return resp; // Regresamos el objeto C# limpio
+            if (fechaInicio.HasValue && fechaFin.HasValue && fechaFin < fechaInicio)
+            {
+                return ApiResponse<Entity_Dashboard_ResumenOperativo>.Fail("La fecha final no puede ser menor a la fecha inicial.");
+            }
+
+            var resumen = await _dal.Dal_Dashboard_ResumenOperativo(idEmpresa, idSucursal, fechaInicio, fechaFin);
+
+            if (resumen == null)
+            {
+                return ApiResponse<Entity_Dashboard_ResumenOperativo>.Fail("No se encontró información del dashboard.");
+            }
+            return ApiResponse<Entity_Dashboard_ResumenOperativo>.Success(resumen);
         }
 
-        public RespuestaApi Bs_Dashboard_RentabilidadMensual(int IdEmpresa, int? IdSucursal, int Anio)
+        public async Task<ApiResponse<Entity_Dashboard_RentabilidadMensual>> Bs_Dashboard_RentabilidadMensual(int idEmpresa, int? idSucursal, int anio)
         {
-            var resp = new RespuestaApi();
-            try
-            {
-                var listaDatos = _dal.Dal_dashRentaBilidadMensual(IdEmpresa, IdSucursal, Anio);
-                if (listaDatos != null && listaDatos.Count > 0)
-                {
-                    resp.Datos = new { listaDatos } ;
-                }
-                else
-                {
-                    resp.Estatus = 0;
-                    resp.Mensaje = "No se encontraron datos.";
-                }
-            }
-            catch (Exception ex)
-            {
-                resp.Estatus = -1;
-                resp.Mensaje = ex.Message;
-            }
+           
+            var resumen = await _dal.Dal_Dashboard_RentabilidadMensual(idEmpresa, idSucursal, anio);
 
-            return resp; // Regresamos el objeto C# limpio
+            if (resumen == null)
+            {
+                return ApiResponse<Entity_Dashboard_RentabilidadMensual>.Fail("No se encontró información del dashboard.");
+            }
+            return ApiResponse<Entity_Dashboard_RentabilidadMensual>.Success(resumen);
         }
 
-        public RespuestaApi Bs_DashBoard_TopClientes(int IdEmpresa, int? IdSucursal, string? FechaInicio, string? FechaFin)
+
+        public async Task<ApiResponse<Entity_Dashboard_TopClientes>> Bs_DashBoard_TopClientes(int idEmpresa, int? idSucursal, DateTime? fechaInicio, DateTime? fechaFin)
         {
-            var resp = new RespuestaApi();
+            if (idEmpresa <= 0)
+            {
+                return ApiResponse<Entity_Dashboard_TopClientes>.Fail("La empresa es obligatoria.");
+            }
 
-            try
+            if (fechaInicio.HasValue && fechaFin.HasValue && fechaFin < fechaInicio)
             {
-                var listaDatos = _dal.Dal_dashDashboardTopClientes(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
-                if (listaDatos != null && listaDatos.Count > 0)
-                {
-                    resp.Datos = new { listaDatos };
-                }
-                else
-                {
-                    resp.Estatus = 0;
-                    resp.Mensaje = "No se encontraron datos.";
-                }
+                return ApiResponse<Entity_Dashboard_TopClientes>.Fail("La fecha final no puede ser menor a la fecha inicial.");
             }
-            catch (Exception ex)
+
+            var resumen = await _dal.Dal_Dashboard_TopClientes(idEmpresa, idSucursal, fechaInicio, fechaFin);
+
+            if (resumen == null)
             {
-                resp.Estatus = -1;
-                resp.Mensaje = ex.Message;
+                return ApiResponse<Entity_Dashboard_TopClientes>.Fail("No se encontró información del dashboard.");
             }
-            return resp; // Regresamos el objeto C# limpio
+            return ApiResponse<Entity_Dashboard_TopClientes>.Success(resumen);
         }
 
-        public RespuestaApi Bs_Dashboard_TopUnidades(int IdEmpresa, int? IdSucursal, string? FechaInicio, string? FechaFin)
-        { 
-            var resp = new RespuestaApi();
 
-            try
-            { 
-                var listaDatos = _dal.Dal_dashDashboardTopUnidades(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
-                if (listaDatos != null && listaDatos.Count > 0)
-                {
-                    resp.Datos = new { listaDatos };
-                }
-                else
-                {
-                    resp.Estatus = 0;
-                    resp.Mensaje = "No se encontraron datos.";
-                }
-            }
-            catch(Exception ex)
-            {
-                resp.Estatus = -1;
-                resp.Mensaje = ex.Message;
-            }
-            
-            return resp; // Regresamos el objeto C# limpio
-        }
-
-        public RespuestaApi Bs_Dashboard_ViajesPorEstado(int IdEmpresa, int? IdSucursal, string? FechaInicio, string? FechaFin)
+        public async Task<ApiResponse<Entity_Dashboard_TopUnidades>> Dal_dashDashboardTopUnidades(int idEmpresa, int? idSucursal, DateTime? fechaInicio, DateTime? fechaFin)
         {
-            var resp = new RespuestaApi();
-
-            try
+            if (idEmpresa <= 0)
             {
-                var listaDatos = _dal.Dal_dashObtenViajeEstado(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
-
-                if (listaDatos != null && listaDatos.Count > 0)
-                {
-                    resp.Datos = new { listaDatos };
-                }
-                else
-                {
-                    resp.Estatus = 0;
-                    resp.Mensaje = "No se encontraron datos.";
-                }
-            }
-            catch (Exception ex)
-            {
-                resp.Estatus = -1;
-                resp.Mensaje = ex.Message;
+                return ApiResponse<Entity_Dashboard_TopUnidades>.Fail("La empresa es obligatoria.");
             }
 
-            return resp; // Regresamos el objeto C# limpio
+            if (fechaInicio.HasValue && fechaFin.HasValue && fechaFin < fechaInicio)
+            {
+                return ApiResponse<Entity_Dashboard_TopUnidades>.Fail("La fecha final no puede ser menor a la fecha inicial.");
+            }
+
+            var resumen = await _dal.Dal_dashDashboardTopUnidades(idEmpresa, idSucursal, fechaInicio, fechaFin);
+
+            if (resumen == null)
+            {
+                return ApiResponse<Entity_Dashboard_TopUnidades>.Fail("No se encontró información del dashboard.");
+            }
+            return ApiResponse<Entity_Dashboard_TopUnidades>.Success(resumen);
         }
+
+
+        public async Task<ApiResponse<Entity_Dashboard_ViajesPorEstado>> Bs_Dashboard_ViajesPorEstado(int idEmpresa, int? idSucursal, DateTime? fechaInicio, DateTime? fechaFin)
+        {
+            if (idEmpresa <= 0)
+            {
+                return ApiResponse<Entity_Dashboard_ViajesPorEstado>.Fail("La empresa es obligatoria.");
+            }
+
+            if (fechaInicio.HasValue && fechaFin.HasValue && fechaFin < fechaInicio)
+            {
+                return ApiResponse<Entity_Dashboard_ViajesPorEstado>.Fail("La fecha final no puede ser menor a la fecha inicial.");
+            }
+
+            var resumen = await _dal.Dal_dashObtenViajeEstado(idEmpresa, idSucursal, fechaInicio, fechaFin);
+
+            if (resumen == null)
+            {
+                return ApiResponse<Entity_Dashboard_ViajesPorEstado>.Fail("No se encontró información del dashboard.");
+            }
+            return ApiResponse<Entity_Dashboard_ViajesPorEstado>.Success(resumen);
+        }
+
     }
 }
 

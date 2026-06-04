@@ -31,79 +31,74 @@ namespace Transporte_Web_Service.Controllers
         }
 
 
+        [HttpGet("ResumenOperativo")]
+        public async Task<IActionResult> Dashboard_ResumenOperativo([FromQuery] int idEmpresa, [FromQuery] int? idSucursal,
+                                                                [FromQuery] DateTime? fechaInicio, [FromQuery] DateTime? fechaFin)
+        {
+            var response = await _bs.Bs_Dashboard_ResumenOperativo(idEmpresa, idSucursal, fechaInicio, fechaFin);
 
+            if (!response.Ok)
+            {
+                return StatusCode(500, response);
+            }
 
-
-
-
-
-
-
-
-
+            return Ok(response);
+        }
 
         [HttpGet("RentabilidadMensual")]
-        public IActionResult Dashboard_RentabilidadMensual(int IdEmpresa, int IdSucursal, int Anio)
+        public async Task<IActionResult>Dashboard_RentabilidadMensual([FromQuery] int idEmpresa, [FromQuery] int? idSucursal,
+                                                                [FromQuery] int anio)
         {
-            RespuestaApi resultado = _bs.Bs_Dashboard_RentabilidadMensual(IdEmpresa, IdSucursal, Anio);
+            var response = await _bs.Bs_Dashboard_RentabilidadMensual(idEmpresa, idSucursal, anio);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return StatusCode(500, response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
-
-        [HttpGet("ResumenOperativo")]
-        public IActionResult Dashboard_ResumenOperativo(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
-        {
-            RespuestaApi resultado = _bs.Bs_Dashboard_ResumenOperativo(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
-
-            if (resultado.Estatus == -1)
-            {
-                return StatusCode(500, resultado);
-            }
-
-            return Ok(resultado);
-        }
+       
 
         [HttpGet("TopClientes")]
 
-        public IActionResult Dashboard_TopClientes(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
+        public async Task<IActionResult> Dashboard_TopClientes([FromQuery] int idEmpresa, [FromQuery] int? idSucursal,
+                                                                [FromQuery] DateTime? fechaInicio, [FromQuery] DateTime? fechaFin)
         {
-            RespuestaApi resultado = _bs.Bs_DashBoard_TopClientes(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
-            if (resultado.Estatus == -1)
+            var response = await _bs.Bs_DashBoard_TopClientes(idEmpresa, idSucursal, fechaInicio, fechaFin);
+
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return StatusCode(500, response);
             }
-            return Ok(resultado);
+            return Ok(response);
         }
 
 
         [HttpGet("TopUnidades")]
-
-        public IActionResult Dashboard_TopUnidades(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
+        public async Task<IActionResult> Dashboard_TopUnidades([FromQuery] int idEmpresa, [FromQuery] int? idSucursal,
+                                                                [FromQuery] DateTime? fechaInicio, [FromQuery] DateTime? fechaFin)  
         {
-            RespuestaApi resultado = _bs.Bs_Dashboard_TopUnidades(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
-            if (resultado.Estatus == -1)
+            var response = await _bs.Dal_dashDashboardTopUnidades(idEmpresa, idSucursal, fechaInicio, fechaFin);
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return StatusCode(500, response);
             }
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("ViajesPorEstado")]
-        public IActionResult Dashboard_ViajesPorEstado(int IdEmpresa, int IdSucursal, string FechaInicio, string FechaFin)
+        public async Task<IActionResult> Dashboard_ViajesPorEstado([FromQuery] int idEmpresa, [FromQuery] int? idSucursal,
+                                                                  [FromQuery] DateTime? fechaInicio, [FromQuery] DateTime? fechaFin)
         {
-            RespuestaApi resultado = _bs.Bs_Dashboard_ViajesPorEstado(IdEmpresa, IdSucursal, FechaInicio, FechaFin);
+            var response = await _bs.Bs_Dashboard_ViajesPorEstado(idEmpresa, idSucursal, fechaInicio, fechaFin);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return StatusCode(500, response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
     }
 }

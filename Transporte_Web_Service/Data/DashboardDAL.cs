@@ -27,7 +27,7 @@ namespace Transporte_Web_Service.Data
 
         }
 
-        public async Task<Entity_Dashboard_CostosPorTipo?> Dal_dashObtenCostoTipo(int IdEmpresa, int? IdSucursal, DateTime? FechaInicio, DateTime? FechaFin)
+        public async Task<Entity_Dashboard_CostosPorTipo?> Dal_DashObtenCostoTipo(int IdEmpresa, int? IdSucursal, DateTime? FechaInicio, DateTime? FechaFin)
         {
 
             using var connection = _connectionFactory.CreateConnection();
@@ -45,7 +45,7 @@ namespace Transporte_Web_Service.Data
         }
 
 
-        public async Task<Entity_Dashboard_ResumenOperativo?> Dal_Dashboard_ResumenOperativo_TraeDatos(int IdEmpresa, int? IdSucursal, string? FechaInicio, string? FechaFin)
+        public async Task<Entity_Dashboard_ResumenOperativo?> Dal_Dashboard_ResumenOperativo(int IdEmpresa, int? IdSucursal, DateTime? FechaInicio, DateTime? FechaFin)
         {
             using var connection = _connectionFactory.CreateConnection();
 
@@ -61,7 +61,7 @@ namespace Transporte_Web_Service.Data
             );
         }
 
-        public async Task<Entity_Dashboard_RentabilidadMensual?> Dal_dashRentaBilidadMensual(int IdEmpresa, int? IdSucursal, int Anio)
+        public async Task<Entity_Dashboard_RentabilidadMensual?> Dal_Dashboard_RentabilidadMensual(int IdEmpresa, int? IdSucursal, int Anio)
         {
             using var connection = _connectionFactory.CreateConnection();
 
@@ -77,7 +77,7 @@ namespace Transporte_Web_Service.Data
             );
         }
 
-        public async Task<Entity_Dashboard_TopClientes?> Dal_dashDashboardTopClientes(int IdEmpresa, int? IdSucursal, string? FechaInicio, string? FechaFin)
+        public async Task<Entity_Dashboard_TopClientes?> Dal_Dashboard_TopClientes(int IdEmpresa, int? IdSucursal, DateTime? FechaInicio, DateTime? FechaFin)
         {
             using var connection = _connectionFactory.CreateConnection();
 
@@ -93,7 +93,7 @@ namespace Transporte_Web_Service.Data
            );
         }
 
-        public async Task<Entity_Dashboard_TopUnidades?> Dal_dashDashboardTopUnidades(int IdEmpresa, int? IdSucursal, string? FechaInicio, string? FechaFin)
+        public async Task<Entity_Dashboard_TopUnidades?> Dal_dashDashboardTopUnidades(int IdEmpresa, int? IdSucursal, DateTime? FechaInicio, DateTime? FechaFin)
         {
             using var connection = _connectionFactory.CreateConnection();
 
@@ -109,7 +109,7 @@ namespace Transporte_Web_Service.Data
            );
         }
 
-        public async Task<Entity_Dashboard_ViajesPorEstado?> Dal_dashObtenViajeEstado(int IdEmpresa, int? IdSucursal, string? FechaInicio, string? FechaFin)
+        public async Task<Entity_Dashboard_ViajesPorEstado?> Dal_dashObtenViajeEstado(int IdEmpresa, int? IdSucursal, DateTime? FechaInicio, DateTime? FechaFin)
         {
             using var connection = _connectionFactory.CreateConnection();
 
