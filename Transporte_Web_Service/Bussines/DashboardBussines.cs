@@ -33,7 +33,7 @@ namespace Transporte_Web_Service.Bussines
                 return ApiResponse<Entity_Dashboard_CostosPorTipo>.Fail("La fecha final no puede ser menor a la fecha inicial.");
             }
 
-            var resumen = await _dal.Dal_dashObtenCostoTipo(idEmpresa, idSucursal, fechaInicio, fechaFin);
+            var resumen = await _dal.Dal_DashObtenCostoTipo(idEmpresa, idSucursal, fechaInicio, fechaFin);
 
             if (resumen == null)
             { 

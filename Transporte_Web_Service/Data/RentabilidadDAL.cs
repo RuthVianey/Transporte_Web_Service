@@ -24,7 +24,7 @@ namespace Transporte_Web_Service.Data
             _connectionFactory = connectionFactory;
         }
 
-        public async Task<Entity_Rentabilidad_ListarViajes?> ObtenerResumenAsync(int IdEmpresa, int? IdSucursal, string? FechaInicio, string? FechaFin, int? IdCliente,
+        public async Task<Entity_Rentabilidad_ListarViajes?> Dal_Rentabilidad_ListarViajes(int IdEmpresa, int? IdSucursal, DateTime? FechaInicio, DateTime? FechaFin, int? IdCliente,
                                                                                 int? IdUnidad, int? IdRuta )  
         {
             using var connection = _connectionFactory.CreateConnection();
@@ -39,6 +39,22 @@ namespace Transporte_Web_Service.Data
                     IdCliente = IdCliente,
                     IdUnidad = IdUnidad,
                     IdRuta = IdRuta
+                },
+                commandType: CommandType.StoredProcedure
+            );
+        }
+
+        public async Task<Entity_Rentabilidad_PorCliente?> Dal_Rentabilidad_PorCliente(int IdEmpresa, int? IdSucursal, DateTime? FechaInicio, DateTime? FechaFin )
+        {
+            using var connection = _connectionFactory.CreateConnection();
+
+            return await connection.QueryFirstOrDefaultAsync<Entity_Rentabilidad_PorCliente>("dbo.sp_Rentabilidad_PorCliente",
+                new
+                {
+                    IdEmpresa = IdEmpresa,
+                    IdSucursal = IdSucursal,
+                    FechaInicio = FechaInicio,
+                    FechaFin = FechaFin
                 },
                 commandType: CommandType.StoredProcedure
             );

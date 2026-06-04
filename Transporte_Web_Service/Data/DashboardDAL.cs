@@ -27,7 +27,7 @@ namespace Transporte_Web_Service.Data
 
         }
 
-        public async Task<Entity_Dashboard_CostosPorTipo?> Dal_dashObtenCostoTipo(int IdEmpresa, int? IdSucursal, DateTime? FechaInicio, DateTime? FechaFin)
+        public async Task<Entity_Dashboard_CostosPorTipo?> Dal_DashObtenCostoTipo(int IdEmpresa, int? IdSucursal, DateTime? FechaInicio, DateTime? FechaFin)
         {
 
             using var connection = _connectionFactory.CreateConnection();
