@@ -21,7 +21,7 @@ namespace Transporte_Web_Service.Data
         //private readonly MiDbContext _context;
         private readonly IDbConnectionFactory _connectionFactory;
 
-        public RolesDAL(DbConnectionFactory connectionFactory)
+        public RolesDAL(IDbConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
 

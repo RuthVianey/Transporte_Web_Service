@@ -5,10 +5,9 @@ namespace Transporte_Web_Service.Bussines
 {
     public class AuthBussines
     {
-        private string sBaseDatos;
         private Respuesta resp = new Respuesta();
         private string sPathDescarga = "C:\\inetpub\\wwwroot\\file\\Servicio_Sistema_Gestion_Transporte";
-        private string sPathSubida = "C:\\Program Files\\Integra Empresarial\\Sistema_Gestion_Transporte";
+        private string sPathSubida = "C:\\Program Files\\Sistema_Gestion_Transporte";
 
         
         private readonly AuthDAL _dal;

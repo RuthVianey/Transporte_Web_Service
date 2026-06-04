@@ -18,70 +18,71 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
 
 
-
 //builder.Services.AddScoped<CatalogosBS>();
 //builder.Services.AddScoped<CatalogosDAC>();
-
-builder.Services.AddScoped<UsuariosBS>();
-builder.Services.AddScoped<UsuariosDAC>();
-
-builder.Services.AddScoped<GeneralesBS>();
-builder.Services.AddScoped<GeneralesDAC>();
 
 builder.Services.AddScoped<AuthBussines>();
 builder.Services.AddScoped<AuthDAL>();
 
-builder.Services.AddScoped<DashboardBussines>();
-builder.Services.AddScoped<DashboardDAL>();
-
 builder.Services.AddScoped<ClientesBussines>();
 builder.Services.AddScoped<ClientesDAL>();
-
-builder.Services.AddScoped<UnidadesBussines>();
-builder.Services.AddScoped<UnidadesDAL>();
-
-builder.Services.AddScoped<OperadoresBussines>();
-builder.Services.AddScoped<OperadoresDAL>();
-
-builder.Services.AddScoped<RutasBussines>();
-builder.Services.AddScoped<RutasDAL>();
-
-builder.Services.AddScoped<ViajesBussines>();
-builder.Services.AddScoped<ViajesDAL>();
-
-builder.Services.AddScoped<GastosBussines>();
-builder.Services.AddScoped<GastosDAL>();
 
 builder.Services.AddScoped<CombustibleBussines>();
 builder.Services.AddScoped<CombustibleDAL>();
 
-builder.Services.AddScoped<MantenimientoBussines>();
-builder.Services.AddScoped<MantenimientoDAL>();
-
-builder.Services.AddScoped<RentabilidadBussines>();
-builder.Services.AddScoped<RentabilidadDAL>();
-
-builder.Services.AddScoped<SeguridadBussines>();
-builder.Services.AddScoped<SeguridadDAL>();
+builder.Services.AddScoped<DashboardBussines>();
+builder.Services.AddScoped<DashboardDAL>();
 
 builder.Services.AddScoped<EmpresaBussines>();
 builder.Services.AddScoped<EmpresaDAL>();
 
+builder.Services.AddScoped<GastosBussines>();
+builder.Services.AddScoped<GastosDAL>();
+
+builder.Services.AddScoped<GeneralesBS>();
+builder.Services.AddScoped<GeneralesDAC>();
+
+builder.Services.AddScoped<MantenimientoBussines>();
+builder.Services.AddScoped<MantenimientoDAL>();
+
+builder.Services.AddScoped<OperadoresBussines>();
+builder.Services.AddScoped<OperadoresDAL>();
+
+builder.Services.AddScoped<RentabilidadBussines>();
+builder.Services.AddScoped<RentabilidadDAL>();
+
 builder.Services.AddScoped<RolesBussines>();
 builder.Services.AddScoped<RolesDAL>();
 
+builder.Services.AddScoped<RutasBussines>();
+builder.Services.AddScoped<RutasDAL>();
+
+builder.Services.AddScoped<SeguridadBussines>();
+builder.Services.AddScoped<SeguridadDAL>();
+
+builder.Services.AddScoped<UnidadesBussines>();
+builder.Services.AddScoped<UnidadesDAL>();
+
+builder.Services.AddScoped<UsuariosBS>();
+builder.Services.AddScoped<UsuariosDAC>();
+
+builder.Services.AddScoped<ViajesBussines>();
+builder.Services.AddScoped<ViajesDAL>();
 
 var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
 
-
+//------------------------------------------------------
+//Comentar esta parte para subirlo al servidor
+//------------------------------------------------------
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+//------------------------------------------------------
 
 app.MapGet("/prueba", () => "Swagger cargado");
 

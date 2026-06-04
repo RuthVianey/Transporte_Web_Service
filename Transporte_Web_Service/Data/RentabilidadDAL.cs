@@ -19,7 +19,7 @@ namespace Transporte_Web_Service.Data
     {
         private readonly IDbConnectionFactory _connectionFactory;
 
-        public RentabilidadDAL(DbConnectionFactory connectionFactory)
+        public RentabilidadDAL(IDbConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
         }

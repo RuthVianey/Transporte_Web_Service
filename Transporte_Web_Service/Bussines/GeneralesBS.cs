@@ -51,7 +51,7 @@ namespace Transporte_Web_Service.Bussines
                 return ApiResponse<Entity_RespuestaGeneral>.Fail("La empresa es obligatoria.");
             }
 
-            var resumen = await _dal.Empresa_Desactivar(iIdEmpresa);
+            var resumen = await _dac.Empresa_Desactivar(iIdEmpresa);
 
             if (resumen == null)
             {

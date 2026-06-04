@@ -19,7 +19,7 @@ namespace Transporte_Web_Service.Data
         //private readonly MiDbContext _context;
         private readonly IDbConnectionFactory _connectionFactory;
 
-        public OperadoresDAL(DbConnectionFactory connectionFactory)
+        public OperadoresDAL(IDbConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
 
