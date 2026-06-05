@@ -20,18 +20,18 @@ namespace Transporte_Web_Service.Data
         //private readonly MiDbContext _context;
         private readonly IDbConnectionFactory _connectionFactory;
 
-        public MantenimientoDAL(DbConnectionFactory connectionFactory)
+        public MantenimientoDAL(IDbConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
 
         }
 
-        public async Task<Entity_RespuestaGeneral?> Dal_Mantenimiento_Eliminar(int IdMantenimiento, int IdEmpresa)
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_Mantenimiento_Eliminar(int IdMantenimiento, int IdEmpresa)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_Mantenimiento_Eliminar",
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_Mantenimiento_Eliminar",
                 new
                 {
                     IdMantenimiento = IdMantenimiento,
@@ -40,12 +40,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_RespuestaGeneral?> Dal_Mantenimiento_Guardar(int IdMantenimiento, int IdEmpresa, int IdSucursal, int IdUnidad, int IdViaje, int IdTipoMantenimiento, string Fecha, decimal KmUnidad, string Descripcion, decimal Costo, byte EsAsignableAViaje)
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_Mantenimiento_Guardar(int IdMantenimiento, int IdEmpresa, int IdSucursal, int IdUnidad, int IdViaje, int IdTipoMantenimiento, string Fecha, decimal KmUnidad, string Descripcion, decimal Costo, byte EsAsignableAViaje)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_Mantenimiento_Guardar",
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_Mantenimiento_Guardar",
                 new
                 {
                     IdMantenimiento = IdMantenimiento,
@@ -63,12 +63,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_Mantenimiento_ListarPorViaje?> Dal_Mantenimiento_ListarPorViaje(int IdViaje, int IdEmpresa)
+        public async Task<IEnumerable<Entity_Mantenimiento_ListarPorViaje?>> Dal_Mantenimiento_ListarPorViaje(int IdViaje, int IdEmpresa)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_Mantenimiento_ListarPorViaje>("dbo.sp_Mantenimiento_ListarPorViaje",
+            return await connection.QueryAsync<Entity_Mantenimiento_ListarPorViaje?>("dbo.sp_Mantenimiento_ListarPorViaje",
                 new
                 {
                     IdViaje = IdViaje,
@@ -77,12 +77,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_Mantenimiento_ObtenerPorId?> Dal_Mantenimiento_ObtenerPorId(int IdMantenimiento, int IdEmpresa)
+        public async Task<IEnumerable<Entity_Mantenimiento_ObtenerPorId?>> Dal_Mantenimiento_ObtenerPorId(int IdMantenimiento, int IdEmpresa)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_Mantenimiento_ObtenerPorId>("dbo.sp_Mantenimiento_ObtenerPorId",
+            return await connection.QueryAsync<Entity_Mantenimiento_ObtenerPorId?>("dbo.sp_Mantenimiento_ObtenerPorId",
                 new
                 {
                     IdMantenimiento = IdMantenimiento,
@@ -91,12 +91,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_RespuestaGeneral?> Dal_MantenimientoConcepto_Desactivar(int IdConcepto, int IdEmpresa)
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_MantenimientoConcepto_Desactivar(int IdConcepto, int IdEmpresa)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_MantenimientoConcepto_Desactivar",
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_MantenimientoConcepto_Desactivar",
                 new
                 {
                     IdConcepto = IdConcepto,
@@ -105,12 +105,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_RespuestaGeneral?> Dal_MantenimientoConcepto_Guardar(int IdConcepto, int IdEmpresa, string Descripcion, byte Activo)
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_MantenimientoConcepto_Guardar(int IdConcepto, int IdEmpresa, string Descripcion, byte Activo)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_MantenimientoConcepto_Guardar",
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_MantenimientoConcepto_Guardar",
                 new
                 {
                     IdConcepto = IdConcepto,
@@ -121,12 +121,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_MantenimientoConcepto_ObtenerPorId?> Dal_MantenimientoConcepto_Listar(int IdEmpresa, byte SoloActivos, string TextoBusqueda)
+        public async Task<IEnumerable<Entity_MantenimientoConcepto_ObtenerPorId?>> Dal_MantenimientoConcepto_Listar(int IdEmpresa, byte SoloActivos, string TextoBusqueda)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_MantenimientoConcepto_ObtenerPorId>("dbo.sp_MantenimientoConcepto_Listar",
+            return await connection.QueryAsync<Entity_MantenimientoConcepto_ObtenerPorId?>("dbo.sp_MantenimientoConcepto_Listar",
                 new
                 {
                     IdEmpresa = IdEmpresa,
@@ -136,12 +136,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_MantenimientoConcepto_ObtenerPorId?> Dal_MantenimientoConcepto_ObtenerPorId(int IdConcepto, int IdEmpresa)
+        public async Task<IEnumerable<Entity_MantenimientoConcepto_ObtenerPorId?>> Dal_MantenimientoConcepto_ObtenerPorId(int IdConcepto, int IdEmpresa)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_MantenimientoConcepto_ObtenerPorId>("dbo.sp_MantenimientoConcepto_ObtenerPorId",
+            return await connection.QueryAsync<Entity_MantenimientoConcepto_ObtenerPorId?>("dbo.sp_MantenimientoConcepto_ObtenerPorId",
                 new
                 {
                     IdConcepto = IdConcepto,
@@ -150,12 +150,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_RespuestaGeneral?> Dal_MantenimientoDetalle_Eliminar(int IdDetalle, int IdMantenimiento)
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_MantenimientoDetalle_Eliminar(int IdDetalle, int IdMantenimiento)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_MantenimientoDetalle_Eliminar",
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_MantenimientoDetalle_Eliminar",
                 new
                 {
                     IdDetalle = IdDetalle,
@@ -164,12 +164,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_RespuestaGeneral?> Dal_MantenimientoDetalle_Guardar(int IdDetalle, int IdMantenimiento, int IdConcepto, decimal Cantidad, decimal CostoUnitario)
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_MantenimientoDetalle_Guardar(int IdDetalle, int IdMantenimiento, int IdConcepto, decimal Cantidad, decimal CostoUnitario)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_MantenimientoDetalle_Guardar",
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_MantenimientoDetalle_Guardar",
                 new
                 {
                     IdDetalle = IdDetalle,
@@ -181,12 +181,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_MantenimientoDetalle_Listar?> Dal_MantenimientoDetalle_Listar(int IdMantenimiento)
+        public async Task<IEnumerable<Entity_MantenimientoDetalle_Listar?>> Dal_MantenimientoDetalle_Listar(int IdMantenimiento)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_MantenimientoDetalle_Listar>("dbo.sp_MantenimientoDetalle_Listar",
+            return await connection.QueryAsync<Entity_MantenimientoDetalle_Listar?>("dbo.sp_MantenimientoDetalle_Listar",
                 new
                 {
                     IdMantenimiento = IdMantenimiento
@@ -194,12 +194,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_RespuestaGeneral?> Dal_TipoMantenimiento_Desactivar(int IdTipoMantenimiento, int IdEmpresa)
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_TipoMantenimiento_Desactivar(int IdTipoMantenimiento, int IdEmpresa)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_TipoMantenimiento_Desactivar",
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_TipoMantenimiento_Desactivar",
                 new
                 {
                     IdTipoMantenimiento = IdTipoMantenimiento,
@@ -208,12 +208,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_RespuestaGeneral?> Dal_TipoMantenimiento_Guardar(int IdTipoMantenimiento, int IdEmpresa, string Descripcion, byte EsPreventivo, byte EsCorrectivo, byte Activo)
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_TipoMantenimiento_Guardar(int IdTipoMantenimiento, int IdEmpresa, string Descripcion, byte EsPreventivo, byte EsCorrectivo, byte Activo)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_TipoMantenimiento_Guardar",
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_TipoMantenimiento_Guardar",
                 new
                 {
                     IdTipoMantenimiento = IdTipoMantenimiento,
@@ -226,12 +226,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_TipoMantenimiento_Listar?> Dal_TipoMantenimiento_Listar(int IdEmpresa, byte SoloActivos, string TextoBusqueda)
+        public async Task<IEnumerable<Entity_TipoMantenimiento_Listar?>> Dal_TipoMantenimiento_Listar(int IdEmpresa, byte SoloActivos, string TextoBusqueda)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_TipoMantenimiento_Listar>("dbo.sp_TipoMantenimiento_Listar",
+            return await connection.QueryAsync<Entity_TipoMantenimiento_Listar?>("dbo.sp_TipoMantenimiento_Listar",
                 new
                 {
                     IdEmpresa = IdEmpresa,
@@ -241,12 +241,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_TipoMantenimiento_Listar?> Dal_TipoMantenimiento_ObtenerPorId(int IdTipoMantenimiento, int IdEmpresa)
+        public async Task<IEnumerable<Entity_TipoMantenimiento_Listar?>> Dal_TipoMantenimiento_ObtenerPorId(int IdTipoMantenimiento, int IdEmpresa)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_TipoMantenimiento_Listar>("dbo.sp_TipoMantenimiento_ObtenerPorId",
+            return await connection.QueryAsync<Entity_TipoMantenimiento_Listar?>("dbo.sp_TipoMantenimiento_ObtenerPorId",
                 new
                 {
                     IdTipoMantenimiento = IdTipoMantenimiento,

@@ -15,37 +15,43 @@ namespace Transporte_Web_Service.Entity
         //Lista de lo que regresara las base conctado a la base
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ResultadoSP>().HasNoKey();
-            modelBuilder.Entity<Obtienen_Datos_Empresa>().HasNoKey();
-            modelBuilder.Entity<Usuarios_Empresa>().HasNoKey();
-            modelBuilder.Entity<Lista_Roles>().HasNoKey();
-            modelBuilder.Entity<Lista_Usuario>().HasNoKey();
-            modelBuilder.Entity<Lista_Programa>().HasNoKey();
+            modelBuilder.Entity<Entity_CargaCombustible_ListarPorViaje>().HasNoKey();
+            modelBuilder.Entity<Entity_CargaCombustible_ObtenerPorId>().HasNoKey();
             modelBuilder.Entity<Entity_Dashboard_CostosPorTipo>().HasNoKey();
             modelBuilder.Entity<Entity_Dashboard_RentabilidadMensual>().HasNoKey();
             modelBuilder.Entity<Entity_Dashboard_ResumenOperativo>().HasNoKey();
             modelBuilder.Entity<Entity_Dashboard_TopClientes>().HasNoKey();
             modelBuilder.Entity<Entity_Dashboard_TopUnidades>().HasNoKey();
             modelBuilder.Entity<Entity_Dashboard_ViajesPorEstado>().HasNoKey();
+            modelBuilder.Entity<Entity_Empresa_Listar>().HasNoKey();
+            modelBuilder.Entity<Entity_EstadoViaje_Listar>().HasNoKey();
+            modelBuilder.Entity<Entity_Gasto_ListarPorViaje>().HasNoKey();
+            modelBuilder.Entity<Entity_Gasto_ObtenerPorId>().HasNoKey();
+            modelBuilder.Entity<Entity_Listar_Roles>().HasNoKey();
+            modelBuilder.Entity<Entity_Lista_Programa>().HasNoKey();
+            modelBuilder.Entity<Entity_Lista_Roles>().HasNoKey();
+            modelBuilder.Entity<Entity_Lista_Usuario>().HasNoKey();
+            modelBuilder.Entity<Entity_MantenimientoConcepto_ObtenerPorId>().HasNoKey();
+            modelBuilder.Entity<Entity_MantenimientoDetalle_Listar>().HasNoKey();
+            modelBuilder.Entity<Entity_Mantenimiento_ListarPorViaje>().HasNoKey();
+            modelBuilder.Entity<Entity_Mantenimiento_ObtenerPorId>().HasNoKey();
+            modelBuilder.Entity<Entity_Obtener_Cliente_PorId>().HasNoKey();
+            modelBuilder.Entity<Entity_Obtienen_Datos_Empresa>().HasNoKey();
+            modelBuilder.Entity<Entity_Operador_ObtenerPorId>().HasNoKey();
+            modelBuilder.Entity<Entity_Programa_Listar>().HasNoKey();
+            modelBuilder.Entity<Entity_Rentabilidad_ListarViajes>().HasNoKey();
+            modelBuilder.Entity<Entity_RespuestaGeneral>().HasNoKey();
+            modelBuilder.Entity<Entity_RolPrograma_ListarPorRol>().HasNoKey();
+            modelBuilder.Entity<Entity_RutaDetalle_Listar>().HasNoKey();
+            modelBuilder.Entity<Entity_RutaDetalle_ObtenerPorId>().HasNoKey();
+            modelBuilder.Entity<Entity_Ruta_Listar>().HasNoKey();
+            modelBuilder.Entity<Entity_Ruta_ObtenerPorId>().HasNoKey();
+            modelBuilder.Entity<Entity_Sucursal_Listar>().HasNoKey();
+            modelBuilder.Entity<Entity_TipoGasto_Listar>().HasNoKey();
+            modelBuilder.Entity<Entity_TipoMantenimiento_Listar>().HasNoKey();
+            modelBuilder.Entity<Entity_TipoUnidad_Listar>().HasNoKey();
+            modelBuilder.Entity<Entity_Usuarios_Empresa>().HasNoKey();
+
         }
-
-
-
-        //Lista de lo que regresara las base
-        public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<ResultadoSP> ResultadoSP { get; set; }
-        public DbSet<Obtienen_Datos_Empresa> Obtienen_Datos_Empresa { get; set; }
-        public DbSet<Usuarios_Empresa> Usuarios_Empresa { get; set; }
-        public DbSet<Lista_Roles> Lista_Roles { get; set; }
-        public DbSet<Lista_Usuario> Lista_Usuario { get; set; }
-        public DbSet<Lista_Programa> Lista_Programa { get; set; }
     }
-    
-    public class Usuario
-    {
-        public int Id { get; set; }
-        public string Nombre { get; set; }
-    }
-
-
 }

@@ -19,200 +19,200 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpGet("listaDatos_Mantenimiento_Eliminar")]
-        public IActionResult Mantenimiento_Eliminar(int IdMantenimiento, int IdEmpresa)
+        public async Task<IActionResult> Mantenimiento_Eliminar([FromQuery] int IdMantenimiento, [FromQuery] int IdEmpresa)
         {
-            RespuestaApi resultado = _bs.Bs_Mantenimiento_Eliminar(IdMantenimiento, IdEmpresa);
+            var response = await _bs.Bs_Mantenimiento_Eliminar(IdMantenimiento, IdEmpresa);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_Mantenimiento_Guardar")]
-        public IActionResult Mantenimiento_Guardar(int IdMantenimiento, int IdEmpresa, int IdSucursal, int IdUnidad, int IdViaje, int IdTipoMantenimiento, string Fecha, decimal KmUnidad, string Descripcion, decimal Costo, byte EsAsignableAViaje)
+        public async Task<IActionResult> Mantenimiento_Guardar([FromQuery] int IdMantenimiento, [FromQuery] int IdEmpresa, [FromQuery] int IdSucursal, [FromQuery] int IdUnidad, [FromQuery] int IdViaje, [FromQuery] int IdTipoMantenimiento, [FromQuery] string Fecha, [FromQuery] decimal KmUnidad, [FromQuery] string Descripcion, [FromQuery] decimal Costo, [FromQuery] byte EsAsignableAViaje)
         {
-            RespuestaApi resultado = _bs.Bs_Mantenimiento_Guardar(IdMantenimiento, IdEmpresa, IdSucursal, IdUnidad, IdViaje, IdTipoMantenimiento, Fecha, KmUnidad, Descripcion, Costo, EsAsignableAViaje);
+            var response = await _bs.Bs_Mantenimiento_Guardar(IdMantenimiento, IdEmpresa, IdSucursal, IdUnidad, IdViaje, IdTipoMantenimiento, Fecha, KmUnidad, Descripcion, Costo, EsAsignableAViaje);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_Mantenimiento_ListarPorViaje")]
-        public IActionResult Mantenimiento_ListarPorViaje(int IdViaje, int IdEmpresa)
+        public async Task<IActionResult> Mantenimiento_ListarPorViaje([FromQuery] int IdViaje, [FromQuery] int IdEmpresa)
         {
-            RespuestaApi resultado = _bs.Bs_Mantenimiento_ListarPorViaje(IdViaje, IdEmpresa);
+            var response = await _bs.Bs_Mantenimiento_ListarPorViaje(IdViaje, IdEmpresa);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_Mantenimiento_ObtenerPorId")]
-        public IActionResult Mantenimiento_ObtenerPorId(int IdMantenimiento, int IdEmpresa)
+        public async Task<IActionResult> Mantenimiento_ObtenerPorId([FromQuery] int IdMantenimiento, [FromQuery] int IdEmpresa)
         {
-            RespuestaApi resultado = _bs.Bs_Mantenimiento_ObtenerPorId(IdMantenimiento, IdEmpresa);
+            var response = await _bs.Bs_Mantenimiento_ObtenerPorId(IdMantenimiento, IdEmpresa);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_MantenimientoConcepto_Desactivar")]
-        public IActionResult MantenimientoConcepto_Desactivar(int IdConcepto, int IdEmpresa)
+        public async Task<IActionResult> MantenimientoConcepto_Desactivar([FromQuery] int IdConcepto, [FromQuery] int IdEmpresa)
         {
-            RespuestaApi resultado = _bs.Bs_MantenimientoConcepto_Desactivar(IdConcepto, IdEmpresa);
+            var response = await _bs.Bs_MantenimientoConcepto_Desactivar(IdConcepto, IdEmpresa);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_MantenimientoConcepto_Guardar")]
-        public IActionResult MantenimientoConcepto_Guardar(int IdConcepto, int IdEmpresa, string Descripcion, byte Activo)
+        public async Task<IActionResult> MantenimientoConcepto_Guardar([FromQuery] int IdConcepto, [FromQuery] int IdEmpresa, [FromQuery] string Descripcion, [FromQuery] byte Activo)
         {
-            RespuestaApi resultado = _bs.Bs_MantenimientoConcepto_Guardar(IdConcepto, IdEmpresa, Descripcion, Activo);
+            var response = await _bs.Bs_MantenimientoConcepto_Guardar(IdConcepto, IdEmpresa, Descripcion, Activo);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_MantenimientoConcepto_Listar")]
-        public IActionResult MantenimientoConcepto_Listar(int IdEmpresa, byte SoloActivos, string TextoBusqueda)
+        public async Task<IActionResult> MantenimientoConcepto_Listar([FromQuery] int IdEmpresa, [FromQuery] byte SoloActivos, [FromQuery] string TextoBusqueda)
         {
-            RespuestaApi resultado = _bs.Bs_MantenimientoConcepto_Listar(IdEmpresa, SoloActivos, TextoBusqueda);
+            var response = await _bs.Bs_MantenimientoConcepto_Listar(IdEmpresa, SoloActivos, TextoBusqueda);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_MantenimientoConcepto_ObtenerPorId")]
-        public IActionResult MantenimientoConcepto_ObtenerPorId(int IdConcepto, int IdEmpresa)
+        public async Task<IActionResult> MantenimientoConcepto_ObtenerPorId([FromQuery] int IdConcepto, [FromQuery] int IdEmpresa)
         {
-            RespuestaApi resultado = _bs.Bs_MantenimientoConcepto_ObtenerPorId(IdConcepto, IdEmpresa);
+            var response = await _bs.Bs_MantenimientoConcepto_ObtenerPorId(IdConcepto, IdEmpresa);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_MantenimientoDetalle_Eliminar")]
-        public IActionResult MantenimientoDetalle_Eliminar(int IdDetalle, int IdMantenimiento)
+        public async Task<IActionResult> MantenimientoDetalle_Eliminar([FromQuery] int IdDetalle, [FromQuery] int IdMantenimiento)
         {
-            RespuestaApi resultado = _bs.Bs_MantenimientoDetalle_Eliminar(IdDetalle, IdMantenimiento);
+            var response = await _bs.Bs_MantenimientoDetalle_Eliminar(IdDetalle, IdMantenimiento);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_MantenimientoDetalle_Guardar")]
-        public IActionResult MantenimientoDetalle_Guardar(int IdDetalle, int IdMantenimiento, int IdConcepto, decimal Cantidad, decimal CostoUnitario)
+        public async Task<IActionResult> MantenimientoDetalle_Guardar([FromQuery] int IdDetalle, [FromQuery] int IdMantenimiento, [FromQuery] int IdConcepto, [FromQuery] decimal Cantidad, [FromQuery] decimal CostoUnitario)
         {
-            RespuestaApi resultado = _bs.Bs_MantenimientoDetalle_Guardar(IdDetalle, IdMantenimiento, IdConcepto, Cantidad, CostoUnitario);
+            var response = await _bs.Bs_MantenimientoDetalle_Guardar(IdDetalle, IdMantenimiento, IdConcepto, Cantidad, CostoUnitario);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_MantenimientoDetalle_Listar")]
-        public IActionResult MantenimientoDetalle_Listar(int IdMantenimiento)
+        public async Task<IActionResult> MantenimientoDetalle_Listar([FromQuery] int IdMantenimiento)
         {
-            RespuestaApi resultado = _bs.Bs_MantenimientoDetalle_Listar(IdMantenimiento);
+            var response = await _bs.Bs_MantenimientoDetalle_Listar(IdMantenimiento);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         // Nuevos 
 
         [HttpGet("listaDatos_TipoMantenimiento_Desactivar")]
-        public IActionResult TipoMantenimiento_Desactivar(int IdTipoMantenimiento, int IdEmpresa)
+        public async Task<IActionResult> TipoMantenimiento_Desactivar([FromQuery] int IdTipoMantenimiento, [FromQuery] int IdEmpresa)
         {
-            RespuestaApi resultado = _bs.Bs_TipoMantenimiento_Desactivar(IdTipoMantenimiento, IdEmpresa);
+            var response = await _bs.Bs_TipoMantenimiento_Desactivar(IdTipoMantenimiento, IdEmpresa);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_TipoMantenimiento_Guardar")]
-        public IActionResult TipoMantenimiento_Guardar(int IdTipoMantenimiento, int IdEmpresa, string Descripcion, byte EsPreventivo, byte EsCorrectivo, byte Activo)
+        public async Task<IActionResult> TipoMantenimiento_Guardar([FromQuery] int IdTipoMantenimiento, [FromQuery] int IdEmpresa, [FromQuery] string Descripcion, [FromQuery] byte EsPreventivo, [FromQuery] byte EsCorrectivo, [FromQuery] byte Activo)
         {
-            RespuestaApi resultado = _bs.Bs_TipoMantenimiento_Guardar(IdTipoMantenimiento, IdEmpresa, Descripcion, EsPreventivo, EsCorrectivo, Activo);
+            var response = await _bs.Bs_TipoMantenimiento_Guardar(IdTipoMantenimiento, IdEmpresa, Descripcion, EsPreventivo, EsCorrectivo, Activo);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_TipoMantenimiento_Listar")]
-        public IActionResult TipoMantenimiento_Listar(int IdEmpresa, byte SoloActivos, string TextoBusqueda)
+        public async Task<IActionResult> TipoMantenimiento_Listar([FromQuery] int IdEmpresa, [FromQuery] byte SoloActivos, [FromQuery] string TextoBusqueda)
         {
-            RespuestaApi resultado = _bs.Bs_TipoMantenimiento_Listar(IdEmpresa, SoloActivos, TextoBusqueda);
+            var response = await _bs.Bs_TipoMantenimiento_Listar(IdEmpresa, SoloActivos, TextoBusqueda);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_TipoMantenimiento_ObtenerPorId")]
-        public IActionResult TipoMantenimiento_ObtenerPorId(int IdTipoMantenimiento, int IdEmpresa)
+        public async Task<IActionResult> TipoMantenimiento_ObtenerPorId([FromQuery] int IdTipoMantenimiento, [FromQuery] int IdEmpresa)
         {
-            RespuestaApi resultado = _bs.Bs_TipoMantenimiento_ObtenerPorId(IdTipoMantenimiento, IdEmpresa);
+            var response = await _bs.Bs_TipoMantenimiento_ObtenerPorId(IdTipoMantenimiento, IdEmpresa);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
     }
 }

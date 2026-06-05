@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Azure;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Transporte_Web_Service.Bussines;
 using Transporte_Web_Service.Entity;
@@ -17,29 +18,29 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpGet("listaDatos_Usuario_Valida")]
-        public IActionResult Usuario_Valida(int iIdEmpresa, string sEmail, string sPasswordIngresado)
+        public async Task<IActionResult> Usuario_Valida([FromQuery] int iIdEmpresa, [FromQuery] string sEmail, [FromQuery] string sPasswordIngresado)
         {
-            RespuestaApi resultado = _bs.Usuario_Valida(iIdEmpresa, sEmail, sPasswordIngresado);
-            
-            if (resultado.Estatus == -1)
+            var response = await _bs.Usuario_Valida(iIdEmpresa, sEmail, sPasswordIngresado);
+
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_Usuarios_Empresa")]
-        public IActionResult Usuarios_Empresa(int iIdEmpresa)
+        public async Task<IActionResult> Usuarios_Empresa([FromQuery] string iIdEmpresa)
         {
-            RespuestaApi resultado = _bs.Usuarios_Empresa(iIdEmpresa);
-            
-            if (resultado.Estatus == -1)
+            var response = await _bs.Usuarios_Empresa(iIdEmpresa);
+
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
     }
 }

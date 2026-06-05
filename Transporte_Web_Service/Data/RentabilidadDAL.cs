@@ -19,17 +19,17 @@ namespace Transporte_Web_Service.Data
     {
         private readonly IDbConnectionFactory _connectionFactory;
 
-        public RentabilidadDAL(DbConnectionFactory connectionFactory)
+        public RentabilidadDAL(IDbConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
         }
 
-        public async Task<Entity_Rentabilidad_ListarViajes?> Dal_Rentabilidad_ListarViajes(int IdEmpresa, int? IdSucursal, DateTime? FechaInicio, DateTime? FechaFin, int? IdCliente,
+        public async Task<IEnumerable<Entity_Rentabilidad_ListarViajes?>> Dal_Rentabilidad_ListarViajes(int IdEmpresa, int? IdSucursal, DateTime? FechaInicio, DateTime? FechaFin, int? IdCliente,
                                                                                 int? IdUnidad, int? IdRuta )  
         {
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_Rentabilidad_ListarViajes>("dbo.sp_Rentabilidad_ListarViajes",
+            return await connection.QueryAsync<Entity_Rentabilidad_ListarViajes?>("dbo.sp_Rentabilidad_ListarViajes",
                 new
                 {
                     IdEmpresa = IdEmpresa,
@@ -44,11 +44,11 @@ namespace Transporte_Web_Service.Data
             );
         }
 
-        public async Task<Entity_Rentabilidad_PorCliente?> Dal_Rentabilidad_PorCliente(int IdEmpresa, int? IdSucursal, DateTime? FechaInicio, DateTime? FechaFin )
+        public async Task<IEnumerable<Entity_Rentabilidad_PorCliente?>> Dal_Rentabilidad_PorCliente(int IdEmpresa, int? IdSucursal, DateTime? FechaInicio, DateTime? FechaFin )
         {
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_Rentabilidad_PorCliente>("dbo.sp_Rentabilidad_PorCliente",
+            return await connection.QueryAsync<Entity_Rentabilidad_PorCliente?>("dbo.sp_Rentabilidad_PorCliente",
                 new
                 {
                     IdEmpresa = IdEmpresa,

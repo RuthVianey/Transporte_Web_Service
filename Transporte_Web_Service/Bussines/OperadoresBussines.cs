@@ -18,68 +18,68 @@ namespace Transporte_Web_Service.Bussines
             _dal = dal;
         }
 
-        public async Task<ApiResponse<Entity_RespuestaGeneral>> Operador_Desactivar(int iIdOperador, int iIdEmpresa)
+        public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Operador_Desactivar(int iIdOperador, int iIdEmpresa)
         {
             if (iIdEmpresa <= 0)
             {
-                return ApiResponse<Entity_RespuestaGeneral>.Fail("La empresa es obligatoria.");
+                return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("La empresa es obligatoria.");
             }
 
             var resumen = await _dal.Operador_Desactivar(iIdOperador, iIdEmpresa);
 
             if (resumen == null)
             {
-                return ApiResponse<Entity_RespuestaGeneral>.Fail("No se encontró información.");
+                return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("No se encontró información.");
             }
-            return ApiResponse<Entity_RespuestaGeneral>.Success(resumen);
+            return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(resumen);
         }
 
-        public async Task<ApiResponse<Entity_RespuestaGeneral>> Operador_Guardar(int iIdOperador, int iIdEmpresa, int iIdSucursal, string sNombre, string sLicencia, string sTipoLicencia, string sFechaVencimientoLicencia, string sCURP, string sTelefono, byte bActivo)
+        public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Operador_Guardar(int iIdOperador, int iIdEmpresa, int iIdSucursal, string sNombre, string sLicencia, string sTipoLicencia, string sFechaVencimientoLicencia, string sCURP, string sTelefono, byte bActivo)
         {
             if (iIdEmpresa <= 0)
             {
-                return ApiResponse<Entity_RespuestaGeneral>.Fail("La empresa es obligatoria.");
+                return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("La empresa es obligatoria.");
             }
 
             var resumen = await _dal.Operador_Guardar(iIdOperador, iIdEmpresa, iIdSucursal, sNombre, sLicencia, sTipoLicencia, sFechaVencimientoLicencia, sCURP, sTelefono, bActivo);
 
             if (resumen == null)
             {
-                return ApiResponse<Entity_RespuestaGeneral>.Fail("No se encontró información.");
+                return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("No se encontró información.");
             }
-            return ApiResponse<Entity_RespuestaGeneral>.Success(resumen);
+            return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(resumen);
         }
 
-        public async Task<ApiResponse<Entity_Operador_ObtenerPorId>> Operador_Listar(int iIdEmpresa, int iIdSucursal, byte bSoloActivos, string sTextoBusqueda)
+        public async Task<ApiResponse<IEnumerable<Entity_Operador_ObtenerPorId?>>> Operador_Listar(int iIdEmpresa, int iIdSucursal, byte bSoloActivos, string sTextoBusqueda)
         {
             if (iIdEmpresa <= 0)
             {
-                return ApiResponse<Entity_Operador_ObtenerPorId>.Fail("La empresa es obligatoria.");
+                return ApiResponse<IEnumerable<Entity_Operador_ObtenerPorId?>>.Fail("La empresa es obligatoria.");
             }
 
             var resumen = await _dal.Operador_Listar(iIdEmpresa, iIdSucursal, bSoloActivos, sTextoBusqueda);
 
             if (resumen == null)
             {
-                return ApiResponse<Entity_Operador_ObtenerPorId>.Fail("No se encontró información.");
+                return ApiResponse<IEnumerable<Entity_Operador_ObtenerPorId?>>.Fail("No se encontró información.");
             }
-            return ApiResponse<Entity_Operador_ObtenerPorId>.Success(resumen);
+            return ApiResponse<IEnumerable<Entity_Operador_ObtenerPorId?>>.Success(resumen);
         }
 
-        public async Task<ApiResponse<Entity_Operador_ObtenerPorId>> Operador_ObtenerPorId(int iIdEmpresa, int iIdOperador)
+        public async Task<ApiResponse<IEnumerable<Entity_Operador_ObtenerPorId?>>> Operador_ObtenerPorId(int iIdEmpresa, int iIdOperador)
         {
             if (iIdEmpresa <= 0)
             {
-                return ApiResponse<Entity_Operador_ObtenerPorId>.Fail("La empresa es obligatoria.");
+                return ApiResponse<IEnumerable<Entity_Operador_ObtenerPorId?>>.Fail("La empresa es obligatoria.");
             }
 
             var resumen = await _dal.Operador_ObtenerPorId(iIdEmpresa, iIdOperador);
 
             if (resumen == null)
             {
-                return ApiResponse<Entity_Operador_ObtenerPorId>.Fail("No se encontró información.");
+                return ApiResponse<IEnumerable<Entity_Operador_ObtenerPorId?>>.Fail("No se encontró información.");
             }
-            return ApiResponse<Entity_Operador_ObtenerPorId>.Success(resumen);
+            return ApiResponse<IEnumerable<Entity_Operador_ObtenerPorId?>>.Success(resumen);
         }
 
     }

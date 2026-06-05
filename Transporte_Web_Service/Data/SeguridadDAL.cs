@@ -20,18 +20,18 @@ namespace Transporte_Web_Service.Data
         //private readonly MiDbContext _context;
         private readonly IDbConnectionFactory _connectionFactory;
 
-        public SeguridadDAL(DbConnectionFactory connectionFactory)
+        public SeguridadDAL(IDbConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
 
         }
 
-        public async Task<Entity_RespuestaGeneral?> Dal_Sucursal_Desactivar(int IdSucursal, int IdEmpresa)
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_Sucursal_Desactivar(int IdSucursal, int IdEmpresa)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_Sucursal_Desactivar",
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_Sucursal_Desactivar",
                 new
                 {
                     IdSucursal = IdSucursal,
@@ -40,12 +40,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_RespuestaGeneral?> Dal_Sucursal_Guardar(int IdSucursal, int IdEmpresa, string Nombre, string NombreCorto, string Codigo, string Calle, string Colonia, string Municipio, string Estado, string CodigoPostal, string Telefono, byte Activo)
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_Sucursal_Guardar(int IdSucursal, int IdEmpresa, string Nombre, string NombreCorto, string Codigo, string Calle, string Colonia, string Municipio, string Estado, string CodigoPostal, string Telefono, byte Activo)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_Sucursal_Guardar",
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_Sucursal_Guardar",
                 new
                 {
                     IdSucursal = IdSucursal,
@@ -64,12 +64,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_Sucursal_Listar?> Dal_Sucursal_Listar(int IdEmpresa, byte SoloActivos, string TextoBusqueda)
+        public async Task<IEnumerable<Entity_Sucursal_Listar?>> Dal_Sucursal_Listar(int IdEmpresa, byte SoloActivos, string TextoBusqueda)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_Sucursal_Listar>("dbo.sp_Sucursal_Listar",
+            return await connection.QueryAsync<Entity_Sucursal_Listar?>("dbo.sp_Sucursal_Listar",
                 new
                 {
                     IdEmpresa = IdEmpresa,
@@ -79,12 +79,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_Sucursal_Listar?> Dal_Sucursal_ObtenerPorId(int IdSucursal, int IdEmpresa)
+        public async Task<IEnumerable<Entity_Sucursal_Listar?>> Dal_Sucursal_ObtenerPorId(int IdSucursal, int IdEmpresa)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_Sucursal_Listar>("dbo.sp_Sucursal_ObtenerPorId",
+            return await connection.QueryAsync<Entity_Sucursal_Listar?>("dbo.sp_Sucursal_ObtenerPorId",
                 new
                 {
                     IdSucursal = IdSucursal,

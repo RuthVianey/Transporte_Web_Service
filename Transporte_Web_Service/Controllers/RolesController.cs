@@ -19,81 +19,81 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpGet("listaDatos_Rol_Desactivar")]
-        public IActionResult Rol_Desactivar(int IdRol, int IdEmpresa)
+        public async Task<IActionResult> Rol_Desactivar([FromQuery] int IdRol, [FromQuery] int IdEmpresa)
         {
-            RespuestaApi resultado = _bs.Bs_Rol_Desactivar(IdRol, IdEmpresa);
+            var response = await _bs.Bs_Rol_Desactivar(IdRol, IdEmpresa);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_Rol_Guardar")]
-        public IActionResult Rol_Guardar(int IdRol, int IdEmpresa, string Nombre, byte Activo)
+        public async Task<IActionResult> Rol_Guardar([FromQuery] int IdRol, [FromQuery] int IdEmpresa, [FromQuery] string Nombre, [FromQuery] byte Activo)
         {
-            RespuestaApi resultado = _bs.Bs_Rol_Guardar(IdRol, IdEmpresa, Nombre, Activo);
+            var response = await _bs.Bs_Rol_Guardar(IdRol, IdEmpresa, Nombre, Activo);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_Rol_Listar")]
-        public IActionResult Rol_Listar(int IdEmpresa, byte SoloActivos)
+        public async Task<IActionResult> Rol_Listar([FromQuery] int IdEmpresa, [FromQuery] byte SoloActivos)
         {
-            RespuestaApi resultado = _bs.Bs_Rol_Listar(IdEmpresa, SoloActivos);
+            var response = await _bs.Bs_Rol_Listar(IdEmpresa, SoloActivos);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_Rol_ObtenerPorId")]
-        public IActionResult Rol_ObtenerPorId(int IdEmpresa, int IdRol)
+        public async Task<IActionResult> Rol_ObtenerPorId([FromQuery] int IdEmpresa, [FromQuery] int IdRol)
         {
-            RespuestaApi resultado = _bs.Bs_Rol_ObtenerPorId(IdEmpresa, IdRol);
+            var response = await _bs.Bs_Rol_ObtenerPorId(IdEmpresa, IdRol);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_RolPrograma_GuardarPermiso")]
-        public IActionResult RolPrograma_GuardarPermiso(int IdRol, int IdEmpresa, int IdPrograma, byte PuedeLeer, byte PuedeEscribir, byte PuedeEliminar)
+        public async Task<IActionResult> RolPrograma_GuardarPermiso([FromQuery] int IdRol, [FromQuery] int IdEmpresa, [FromQuery] int IdPrograma, [FromQuery] byte PuedeLeer, [FromQuery] byte PuedeEscribir, [FromQuery] byte PuedeEliminar)
         {
-            RespuestaApi resultado = _bs.Bs_RolPrograma_GuardarPermiso(IdRol, IdEmpresa, IdPrograma, PuedeLeer, PuedeEscribir, PuedeEliminar);
+            var response = await _bs.Bs_RolPrograma_GuardarPermiso(IdRol, IdEmpresa, IdPrograma, PuedeLeer, PuedeEscribir, PuedeEliminar);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_RolPrograma_ListarPorRol")]
-        public IActionResult RolPrograma_ListarPorRol(int IdEmpresa, int IdRol)
+        public async Task<IActionResult> RolPrograma_ListarPorRol([FromQuery] int IdEmpresa, [FromQuery] int IdRol)
         {
-            RespuestaApi resultado = _bs.Bs_RolPrograma_ListarPorRol(IdEmpresa, IdRol);
+            var response = await _bs.Bs_RolPrograma_ListarPorRol(IdEmpresa, IdRol);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
     }
 }

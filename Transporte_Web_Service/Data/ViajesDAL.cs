@@ -19,17 +19,18 @@ namespace Transporte_Web_Service.Data
         //private readonly MiDbContext _context;
         private readonly IDbConnectionFactory _connectionFactory;
 
-        public ViajesDAL(DbConnectionFactory connectionFactory)
+        //public ViajesDAL(DbConnectionFactory connectionFactory)
+        public ViajesDAL(IDbConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
 
         }
-        public async Task<Entity_RespuestaGeneral?> Dal_EstadoViaje_Guardar(int IdEstadoViaje, string Descripcion)
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_EstadoViaje_Guardar(int IdEstadoViaje, string Descripcion)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_EstadoViaje_Guardar",
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_EstadoViaje_Guardar",
                 new
                 {
                     IdEstadoViaje = IdEstadoViaje,
@@ -38,12 +39,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_EstadoViaje_Listar?> Dal_EstadoViaje_Listar()
+        public async Task<IEnumerable<Entity_EstadoViaje_Listar?>> Dal_EstadoViaje_Listar()
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_EstadoViaje_Listar>("dbo.sp_EstadoViaje_Listar",
+            return await connection.QueryAsync<Entity_EstadoViaje_Listar?>("dbo.sp_EstadoViaje_Listar",
                 new
                 {
                      
@@ -51,12 +52,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_EstadoViaje_Listar?> Dal_EstadoViaje_ObtenerPorId(int IdEstadoViaje)
+        public async Task<IEnumerable<Entity_EstadoViaje_Listar?>> Dal_EstadoViaje_ObtenerPorId(int IdEstadoViaje)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_EstadoViaje_Listar>("dbo.sp_EstadoViaje_ObtenerPorId",
+            return await connection.QueryAsync<Entity_EstadoViaje_Listar?>("dbo.sp_EstadoViaje_ObtenerPorId",
                 new
                 {
                     IdEstadoViaje = IdEstadoViaje

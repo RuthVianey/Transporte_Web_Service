@@ -16,12 +16,12 @@ namespace Transporte_Web_Service.Data
     public class AuthDAL
     {
         //private readonly MiDbContext _context;
+        //private readonly IDbConnectionFactory _connectionFactory;
         private readonly IDbConnectionFactory _connectionFactory;
 
-        public AuthDAL(DbConnectionFactory connectionFactory)
+        public AuthDAL(IDbConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
-
         }
 
         public async Task<int?> Usuario_Valida(int IdEmpresa, string Email, string PasswordIngresado)

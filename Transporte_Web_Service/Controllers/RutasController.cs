@@ -18,107 +18,107 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpGet("listaDatos_Ruta_Desactivar")]
-        public IActionResult Ruta_Desactivar(int IdRuta, int IdEmpresa)
+        public async Task<IActionResult> Ruta_Desactivar([FromQuery] int IdRuta, [FromQuery] int IdEmpresa)
         {
-            RespuestaApi resultado = _bs.Bs_Ruta_Desactivar(IdRuta, IdEmpresa);
+            var response = await _bs.Bs_Ruta_Desactivar(IdRuta, IdEmpresa);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_Ruta_Guardar")]
-        public IActionResult Ruta_Guardar(int IdRuta, int IdEmpresa, int IdSucursal, string Nombre, string Origen, string Destino, decimal DistanciaKm, int TiempoEstimadoMin, byte Activo)
+        public async Task<IActionResult> Ruta_Guardar([FromQuery] int IdRuta, [FromQuery] int IdEmpresa, [FromQuery] int IdSucursal, [FromQuery] string Nombre, [FromQuery] string Origen, [FromQuery] string Destino, [FromQuery] decimal DistanciaKm, [FromQuery] int TiempoEstimadoMin, [FromQuery] byte Activo)
         {
-            RespuestaApi resultado = _bs.Bs_Ruta_Guardar(IdRuta, IdEmpresa, IdSucursal, Nombre, Origen, Destino, DistanciaKm, TiempoEstimadoMin, Activo);
+            var response = await _bs.Bs_Ruta_Guardar(IdRuta, IdEmpresa, IdSucursal, Nombre, Origen, Destino, DistanciaKm, TiempoEstimadoMin, Activo);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_Ruta_Listar")]
-        public IActionResult Ruta_Listar(int IdEmpresa, int IdSucursal, byte SoloActivos, string TextoBusqueda)
+        public async Task<IActionResult> Ruta_Listar([FromQuery] int IdEmpresa, [FromQuery] int IdSucursal, [FromQuery] byte SoloActivos, [FromQuery] string TextoBusqueda)
         {
-            RespuestaApi resultado = _bs.Bs_Ruta_Listar(IdEmpresa, IdSucursal, SoloActivos, TextoBusqueda);
+            var response = await _bs.Bs_Ruta_Listar(IdEmpresa, IdSucursal, SoloActivos, TextoBusqueda);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_Ruta_ObtenerPorId")]
-        public IActionResult Ruta_ObtenerPorId(int IdRuta, int IdEmpresa)
+        public async Task<IActionResult> Ruta_ObtenerPorId([FromQuery] int IdRuta, [FromQuery] int IdEmpresa)
         {
-            RespuestaApi resultado = _bs.Bs_Ruta_ObtenerPorId(IdRuta, IdEmpresa);
+            var response = await _bs.Bs_Ruta_ObtenerPorId(IdRuta, IdEmpresa);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_RutaDetalle_Eliminar")]
-        public IActionResult RutaDetalle_Eliminar(int IdRutaDetalle, int IdRuta)
+        public async Task<IActionResult> RutaDetalle_Eliminar([FromQuery] int IdRutaDetalle, [FromQuery] int IdRuta)
         {
-            RespuestaApi resultado = _bs.Bs_RutaDetalle_Eliminar(IdRutaDetalle, IdRuta);
+            var response = await _bs.Bs_RutaDetalle_Eliminar(IdRutaDetalle, IdRuta);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_RutaDetalle_Guardar")]
-        public IActionResult RutaDetalle_Guardar(int IdRutaDetalle, int IdRuta, int Orden, string Punto, decimal Latitud, decimal Longitud, string Tipo)
+        public async Task<IActionResult> RutaDetalle_Guardar([FromQuery] int IdRutaDetalle, [FromQuery] int IdRuta, [FromQuery] int Orden, [FromQuery] string Punto, [FromQuery] decimal Latitud, [FromQuery] decimal Longitud, [FromQuery] string Tipo)
         {
-            RespuestaApi resultado = _bs.Bs_RutaDetalle_Guardar(IdRutaDetalle, IdRuta, Orden, Punto, Latitud, Longitud, Tipo);
+            var response = await _bs.Bs_RutaDetalle_Guardar(IdRutaDetalle, IdRuta, Orden, Punto, Latitud, Longitud, Tipo);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_RutaDetalle_Listar")]
-        public IActionResult RutaDetalle_Listar(int IdRuta)
+        public async Task<IActionResult> RutaDetalle_Listar([FromQuery] int IdRuta)
         {
-            RespuestaApi resultado = _bs.Bs_RutaDetalle_Listar(IdRuta);
+            var response = await _bs.Bs_RutaDetalle_Listar(IdRuta);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_RutaDetalle_ObtenerPorId")]
-        public IActionResult RutaDetalle_ObtenerPorId(int IdRutaDetalle, int IdRuta)
+        public async Task<IActionResult> RutaDetalle_ObtenerPorId([FromQuery] int IdRutaDetalle, [FromQuery] int IdRuta)
         {
-            RespuestaApi resultado = _bs.Bs_RutaDetalle_ObtenerPorId(IdRutaDetalle, IdRuta);
+            var response = await _bs.Bs_RutaDetalle_ObtenerPorId(IdRutaDetalle, IdRuta);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
     }

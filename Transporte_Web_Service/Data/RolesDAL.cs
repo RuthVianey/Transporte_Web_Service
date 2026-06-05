@@ -21,18 +21,18 @@ namespace Transporte_Web_Service.Data
         //private readonly MiDbContext _context;
         private readonly IDbConnectionFactory _connectionFactory;
 
-        public RolesDAL(DbConnectionFactory connectionFactory)
+        public RolesDAL(IDbConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
 
         }
 
-        public async Task<Entity_RespuestaGeneral?> Dal_Rol_Desactivar(int IdRol, int IdEmpresa)
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_Rol_Desactivar(int IdRol, int IdEmpresa)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_Rol_Desactivar",
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_Rol_Desactivar",
                 new
                 {
                     IdRol = IdRol,
@@ -41,12 +41,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_RespuestaGeneral?> Dal_Rol_Guardar(int IdRol, int IdEmpresa, string Nombre, byte Activo)
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_Rol_Guardar(int IdRol, int IdEmpresa, string Nombre, byte Activo)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_Rol_Guardar",
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_Rol_Guardar",
                 new
                 {
                     IdRol = IdRol,
@@ -57,12 +57,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_Listar_Roles?> Dal_Rol_Listar(int IdEmpresa, byte SoloActivos)
+        public async Task<IEnumerable<Entity_Listar_Roles?>> Dal_Rol_Listar(int IdEmpresa, byte SoloActivos)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_Listar_Roles>("dbo.sp_Rol_Listar",
+            return await connection.QueryAsync<Entity_Listar_Roles?>("dbo.sp_Rol_Listar",
                 new
                 {
                     IdEmpresa = IdEmpresa,
@@ -71,12 +71,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_Listar_Roles?> Dal_Rol_ObtenerPorId(int IdEmpresa, int IdRol)
+        public async Task<IEnumerable<Entity_Listar_Roles?>> Dal_Rol_ObtenerPorId(int IdEmpresa, int IdRol)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_Listar_Roles>("dbo.sp_Rol_ObtenerPorId",
+            return await connection.QueryAsync<Entity_Listar_Roles?>("dbo.sp_Rol_ObtenerPorId",
                 new
                 {
                     IdEmpresa = IdEmpresa,
@@ -86,12 +86,12 @@ namespace Transporte_Web_Service.Data
             );
         }
 
-        public async Task<Entity_RespuestaGeneral?> Dal_RolPrograma_GuardarPermiso(int IdRol, int IdEmpresa, int IdPrograma, byte PuedeLeer, byte PuedeEscribir, byte PuedeEliminar)
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_RolPrograma_GuardarPermiso(int IdRol, int IdEmpresa, int IdPrograma, byte PuedeLeer, byte PuedeEscribir, byte PuedeEliminar)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_RolPrograma_GuardarPermiso",
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_RolPrograma_GuardarPermiso",
                 new
                 {
                     IdRol = IdRol,
@@ -104,12 +104,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_RolPrograma_ListarPorRol?> Dal_RolPrograma_ListarPorRol(int IdEmpresa, int IdRol)
+        public async Task<IEnumerable<Entity_RolPrograma_ListarPorRol?>> Dal_RolPrograma_ListarPorRol(int IdEmpresa, int IdRol)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_RolPrograma_ListarPorRol>("dbo.sp_RolPrograma_ListarPorRol",
+            return await connection.QueryAsync<Entity_RolPrograma_ListarPorRol?>("dbo.sp_RolPrograma_ListarPorRol",
                 new
                 {
                     IdEmpresa = IdEmpresa,

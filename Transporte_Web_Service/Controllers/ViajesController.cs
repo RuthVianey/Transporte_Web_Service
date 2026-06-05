@@ -17,42 +17,42 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpGet("listaDatos_EstadoViaje_Guardar")]
-        public IActionResult EstadoViaje_Guardar(int IdEstadoViaje, string Descripcion)
+        public async Task<IActionResult> EstadoViaje_Guardar(int IdEstadoViaje, string Descripcion)
         {
-            RespuestaApi resultado = _bs.Bs_EstadoViaje_Guardar(IdEstadoViaje, Descripcion);
+            var response = await _bs.Bs_EstadoViaje_Guardar(IdEstadoViaje, Descripcion);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_EstadoViaje_Listar")]
-        public IActionResult EstadoViaje_Listar()
+        public async Task<IActionResult> EstadoViaje_Listar()
         {
-            RespuestaApi resultado = _bs.Bs_EstadoViaje_Listar();
+            var response = await _bs.Bs_EstadoViaje_Listar();
 
-            if (resultado.Estatus == -1)
+            if(!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_EstadoViaje_ObtenerPorId")]
-        public IActionResult EstadoViaje_ObtenerPorId(int IdEstadoViaje)
+        public async Task<IActionResult> EstadoViaje_ObtenerPorId(int IdEstadoViaje)
         {
-            RespuestaApi resultado = _bs.Bs_EstadoViaje_ObtenerPorId(IdEstadoViaje);
+            var response = await _bs.Bs_EstadoViaje_ObtenerPorId(IdEstadoViaje);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
     }

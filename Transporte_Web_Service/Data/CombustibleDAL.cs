@@ -20,17 +20,17 @@ namespace Transporte_Web_Service.Data
         //private readonly MiDbContext _context;
         private readonly IDbConnectionFactory _connectionFactory;
 
-        public CombustibleDAL(DbConnectionFactory connectionFactory)
+        public CombustibleDAL(IDbConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
 
         }
-        public async Task<Entity_RespuestaGeneral?> Dal_CargaCombustible_Eliminar(int IdCarga, int IdEmpresa)
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_CargaCombustible_Eliminar(int IdCarga, int IdEmpresa)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_CargaCombustible_Eliminar",
+            return await connection.QueryAsync<Entity_RespuestaGeneral>("dbo.sp_CargaCombustible_Eliminar",
                 new
                 {
                     IdCarga = IdCarga,
@@ -40,11 +40,11 @@ namespace Transporte_Web_Service.Data
             );
         }
 
-        public async Task<Entity_RespuestaGeneral?> Dal_CargaCombustible_Guardar(int IdCarga, int IdEmpresa, int IdSucursal, int IdUnidad, int IdViaje, string Fecha, decimal Litros, decimal PrecioLitro, decimal Km, decimal Odometro, decimal RendimientoKmPorLitro, string Referencia)
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_CargaCombustible_Guardar(int IdCarga, int IdEmpresa, int IdSucursal, int IdUnidad, int IdViaje, string Fecha, decimal Litros, decimal PrecioLitro, decimal Km, decimal Odometro, decimal RendimientoKmPorLitro, string Referencia)
         {
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_CargaCombustible_Guardar",
+            return await connection.QueryAsync<Entity_RespuestaGeneral>("dbo.sp_CargaCombustible_Guardar",
                 new
                 {
                     IdCarga = IdCarga,
@@ -64,12 +64,12 @@ namespace Transporte_Web_Service.Data
                 );
         }
 
-        public async Task<Entity_CargaCombustible_ListarPorViaje?> Dal_CargaCombustible_ListarPorViaje(int IdEmpresa, int IdViaje)
+        public async Task<IEnumerable<Entity_CargaCombustible_ListarPorViaje?>> Dal_CargaCombustible_ListarPorViaje(int IdEmpresa, int IdViaje)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_CargaCombustible_ListarPorViaje>("dbo.sp_CargaCombustible_ListarPorViaje",
+            return await connection.QueryAsync<Entity_CargaCombustible_ListarPorViaje>("dbo.sp_CargaCombustible_ListarPorViaje",
                 new
                 {
                     IdEmpresa = IdEmpresa,
@@ -79,12 +79,12 @@ namespace Transporte_Web_Service.Data
             );
         }
 
-        public async Task<Entity_CargaCombustible_ObtenerPorId?> Dal_CargaCombustible_ObtenerPorId(int IdEmpresa, int IdCarga)
+        public async Task<IEnumerable<Entity_CargaCombustible_ObtenerPorId?>> Dal_CargaCombustible_ObtenerPorId(int IdEmpresa, int IdCarga)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_CargaCombustible_ObtenerPorId>("dbo.sp_CargaCombustible_ObtenerPorId",
+            return await connection.QueryAsync<Entity_CargaCombustible_ObtenerPorId>("dbo.sp_CargaCombustible_ObtenerPorId",
                 new
                 {
                     IdEmpresa = IdEmpresa,

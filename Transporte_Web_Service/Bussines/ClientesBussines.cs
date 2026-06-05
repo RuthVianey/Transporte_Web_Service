@@ -18,11 +18,11 @@ namespace Transporte_Web_Service.Bussines
             _dal = dal;
         }
 
-        public async Task<ApiResponse<Entity_RespuestaGeneral>> Bs_Cliente_Desactivar(int iIdCliente, int iIdEmpresa)
+        public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Bs_Cliente_Desactivar(int iIdCliente, int iIdEmpresa)
         {
             if (iIdEmpresa <= 0)
             {
-                return ApiResponse<Entity_RespuestaGeneral>.Fail("La empresa es obligatoria.");
+                return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("La empresa es obligatoria.");
             }
 
 
@@ -30,16 +30,16 @@ namespace Transporte_Web_Service.Bussines
 
             if (resumen == null)
             {
-                return ApiResponse<Entity_RespuestaGeneral>.Fail("No se encontró información.");
+                return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("No se encontró información.");
             }
-            return ApiResponse<Entity_RespuestaGeneral>.Success(resumen);
+            return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(resumen);
         }
 
-        public async Task<ApiResponse<Entity_RespuestaGeneral>> Bs_Cliente_Guardar(int iIdCliente, int iIdEmpresa, int iIdSucursal, string sNombre, string sRFC, string sTelefono, string sEmail, int iRegimenFiscal, byte bActivo)
+        public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Bs_Cliente_Guardar(int iIdCliente, int iIdEmpresa, int iIdSucursal, string sNombre, string sRFC, string sTelefono, string sEmail, int iRegimenFiscal, byte bActivo)
         {
             if (iIdEmpresa <= 0)
             {
-                return ApiResponse<Entity_RespuestaGeneral>.Fail("La empresa es obligatoria.");
+                return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("La empresa es obligatoria.");
             }
 
 
@@ -47,16 +47,16 @@ namespace Transporte_Web_Service.Bussines
 
             if (resumen == null)
             {
-                return ApiResponse<Entity_RespuestaGeneral>.Fail("No se encontró información.");
+                return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("No se encontró información.");
             }
-            return ApiResponse<Entity_RespuestaGeneral>.Success(resumen);
+            return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(resumen);
         }
 
-        public async Task<ApiResponse<Entity_Obtener_Cliente_PorId>> Bs_Cliente_Listar(int iIdEmpresa, int iIdSucursal, string sSoloActivos, string sTextoBusqueda)
+        public async Task<ApiResponse<IEnumerable<Entity_Obtener_Cliente_PorId?>>> Bs_Cliente_Listar(int iIdEmpresa, int iIdSucursal, string sSoloActivos, string sTextoBusqueda)
         {
             if (iIdEmpresa <= 0)
             {
-                return ApiResponse<Entity_Obtener_Cliente_PorId>.Fail("La empresa es obligatoria.");
+                return ApiResponse<IEnumerable<Entity_Obtener_Cliente_PorId?>>.Fail("La empresa es obligatoria.");
             }
 
 
@@ -64,16 +64,16 @@ namespace Transporte_Web_Service.Bussines
 
             if (resumen == null)
             {
-                return ApiResponse<Entity_Obtener_Cliente_PorId>.Fail("No se encontró información.");
+                return ApiResponse<IEnumerable<Entity_Obtener_Cliente_PorId?>>.Fail("No se encontró información.");
             }
-            return ApiResponse<Entity_Obtener_Cliente_PorId>.Success(resumen);
+            return ApiResponse<IEnumerable<Entity_Obtener_Cliente_PorId?>>.Success(resumen);
         }
 
-        public async Task<ApiResponse<Entity_Obtener_Cliente_PorId>> Bs_Cliente_ObtenerPorId(int iIdCliente, int iIdEmpresa)
+        public async Task<ApiResponse<IEnumerable<Entity_Obtener_Cliente_PorId?>>> Bs_Cliente_ObtenerPorId(int iIdCliente, int iIdEmpresa)
         {
             if (iIdEmpresa <= 0)
             {
-                return ApiResponse<Entity_Obtener_Cliente_PorId>.Fail("La empresa es obligatoria.");
+                return ApiResponse<IEnumerable<Entity_Obtener_Cliente_PorId?>>.Fail("La empresa es obligatoria.");
             }
 
 
@@ -81,9 +81,9 @@ namespace Transporte_Web_Service.Bussines
 
             if (resumen == null)
             {
-                return ApiResponse<Entity_Obtener_Cliente_PorId>.Fail("No se encontró información.");
+                return ApiResponse<IEnumerable<Entity_Obtener_Cliente_PorId?>>.Fail("No se encontró información.");
             }
-            return ApiResponse<Entity_Obtener_Cliente_PorId>.Success(resumen);
+            return ApiResponse<IEnumerable<Entity_Obtener_Cliente_PorId>>.Success(resumen);
         }
         
     }

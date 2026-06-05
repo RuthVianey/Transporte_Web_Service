@@ -17,55 +17,55 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpGet("listaDatos_Cliente_Desactivar")]
-        public IActionResult Cliente_Desactivar(int iIdCliente, int iIdEmpresa)
+        public async Task<IActionResult> Cliente_Desactivar([FromQuery] int iIdCliente, [FromQuery] int iIdEmpresa)
         {
-            RespuestaApi resultado = _bs.Bs_Cliente_Desactivar(iIdCliente, iIdEmpresa);
+            var response = await _bs.Bs_Cliente_Desactivar(iIdCliente, iIdEmpresa);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_Cliente_Guardar")]
-        public IActionResult Cliente_Guardar(int iIdCliente, int iIdEmpresa, int iIdSucursal, string sNombre, string sRFC, string sTelefono, string sEmail, int iRegimenFiscal, byte bActivo)
+        public async Task<IActionResult> Cliente_Guardar([FromQuery] int iIdCliente, [FromQuery] int iIdEmpresa, [FromQuery] int iIdSucursal, [FromQuery] string sNombre, [FromQuery] string sRFC, [FromQuery] string sTelefono, [FromQuery] string sEmail, [FromQuery] int iRegimenFiscal, [FromQuery] byte bActivo)
         {
-            RespuestaApi resultado = _bs.Bs_Cliente_Guardar(iIdCliente, iIdEmpresa, iIdSucursal, sNombre, sRFC, sTelefono, sEmail, iRegimenFiscal, bActivo);
+            var response = await _bs.Bs_Cliente_Guardar(iIdCliente, iIdEmpresa, iIdSucursal, sNombre, sRFC, sTelefono, sEmail, iRegimenFiscal, bActivo);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_Cliente_Listar")]
-        public IActionResult Cliente_Listar(int iIdEmpresa, int iIdSucursal, string sSoloActivos, string sTextoBusqueda)
+        public async Task<IActionResult> Cliente_Listar([FromQuery] int iIdEmpresa, [FromQuery] int iIdSucursal, [FromQuery] string sSoloActivos, [FromQuery] string sTextoBusqueda)
         {
-            RespuestaApi resultado = _bs.Bs_Cliente_Listar(iIdEmpresa, iIdSucursal, sSoloActivos, sTextoBusqueda);
+            var response = await _bs.Bs_Cliente_Listar(iIdEmpresa, iIdSucursal, sSoloActivos, sTextoBusqueda);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
 
         [HttpGet("listaDatos_Cliente_ObtenerPorId")]
-        public IActionResult Cliente_ObtenerPorId(int iIdCliente, int iIdEmpresa)
+        public async Task<IActionResult> Cliente_ObtenerPorId([FromQuery] int iIdCliente, [FromQuery] int iIdEmpresa)
         {
-            RespuestaApi resultado = _bs.Bs_Cliente_ObtenerPorId(iIdCliente, iIdEmpresa);
+            var response = await _bs.Bs_Cliente_ObtenerPorId(iIdCliente, iIdEmpresa);
 
-            if (resultado.Estatus == -1)
+            if (!response.Ok)
             {
-                return StatusCode(500, resultado);
+                return BadRequest(response);
             }
 
-            return Ok(resultado);
+            return Ok(response);
         }
     }
 }

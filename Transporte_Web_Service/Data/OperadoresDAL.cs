@@ -19,17 +19,17 @@ namespace Transporte_Web_Service.Data
         //private readonly MiDbContext _context;
         private readonly IDbConnectionFactory _connectionFactory;
 
-        public OperadoresDAL(DbConnectionFactory connectionFactory)
+        public OperadoresDAL(IDbConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
 
         }
-        public async Task<Entity_RespuestaGeneral?> Operador_Desactivar(int iIdOperador, int iIdEmpresa)
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Operador_Desactivar(int iIdOperador, int iIdEmpresa)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_Operador_Desactivar",
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_Operador_Desactivar",
                 new
                 {
                     iIdOperador = iIdOperador,
@@ -38,12 +38,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_RespuestaGeneral?> Operador_Guardar(int iIdOperador, int iIdEmpresa, int iIdSucursal, string sNombre, string sLicencia, string sTipoLicencia, string sFechaVencimientoLicencia, string sCURP, string sTelefono, byte bActivo)
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Operador_Guardar(int iIdOperador, int iIdEmpresa, int iIdSucursal, string sNombre, string sLicencia, string sTipoLicencia, string sFechaVencimientoLicencia, string sCURP, string sTelefono, byte bActivo)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_RespuestaGeneral>("dbo.sp_Operador_Guardar",
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_Operador_Guardar",
                 new
                 {
                     iIdOperador = iIdOperador,
@@ -60,12 +60,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_Operador_ObtenerPorId?> Operador_Listar(int iIdEmpresa, int iIdSucursal, byte bSoloActivos, string sTextoBusqueda)
+        public async Task<IEnumerable<Entity_Operador_ObtenerPorId?>> Operador_Listar(int iIdEmpresa, int iIdSucursal, byte bSoloActivos, string sTextoBusqueda)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_Operador_ObtenerPorId>("dbo.sp_Operador_Listar",
+            return await connection.QueryAsync<Entity_Operador_ObtenerPorId?>("dbo.sp_Operador_Listar",
                 new
                 {
                     iIdEmpresa = iIdEmpresa,
@@ -76,12 +76,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<Entity_Operador_ObtenerPorId?> Operador_ObtenerPorId(int iIdEmpresa, int iIdOperador)
+        public async Task<IEnumerable<Entity_Operador_ObtenerPorId?>> Operador_ObtenerPorId(int iIdEmpresa, int iIdOperador)
         {
 
             using var connection = _connectionFactory.CreateConnection();
 
-            return await connection.QueryFirstOrDefaultAsync<Entity_Operador_ObtenerPorId>("dbo.sp_Operador_ObtenerPorId",
+            return await connection.QueryAsync<Entity_Operador_ObtenerPorId?>("dbo.sp_Operador_ObtenerPorId",
                 new
                 {
                     iIdOperador = iIdOperador,
