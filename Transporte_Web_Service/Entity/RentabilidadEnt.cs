@@ -58,7 +58,7 @@
 
     }
 
-    public class Entity_Viaje_Rentabilidad
+    public class Entity_Rentabilidad_Viaje
     {
         public int IdViaje { get; set; }
         public int IdEmpresa { get; set; }
