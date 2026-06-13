@@ -55,7 +55,10 @@
         public string? TipoUnidad { get; set; }
         public int TotalViajes { get; set; }
         public decimal IngresoTotal { get; set; }
-
+        public decimal GastosDirectos { get; set; } 
+        public decimal Combustible { get; set; }
+        public decimal Mantenimiento { get; set; }
+        public decimal CostosFijosViaje { get; set; }
         public decimal CostoTotal { get; set; }
         public decimal UtilidadTotal { get; set; }
         public decimal MargenPorcentaje { get; set; }
