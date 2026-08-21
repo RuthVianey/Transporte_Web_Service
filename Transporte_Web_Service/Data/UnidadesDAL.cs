@@ -84,5 +84,56 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_Unidad_Desactivar(int IdUnidad, int IdEmpresa)
+        {
+            using var connection = _connectionFactory.CreateConnection();
+
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_Unidad_Desactivar",
+                new { IdUnidad, IdEmpresa },
+                commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_Unidad_Guardar(int IdUnidad, int IdEmpresa, int? IdSucursal, int IdTipoUnidad, string? NumeroEconomico, string Placas, string? Marca, string? Modelo, int? Anio, decimal? CapacidadLitros, decimal? CapacidadKg, decimal? OdometroActual, byte Activo)
+        {
+            using var connection = _connectionFactory.CreateConnection();
+
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_Unidad_Guardar",
+                new
+                {
+                    IdUnidad,
+                    IdEmpresa,
+                    IdSucursal,
+                    IdTipoUnidad,
+                    NumeroEconomico,
+                    Placas,
+                    Marca,
+                    Modelo,
+                    Anio,
+                    CapacidadLitros,
+                    CapacidadKg,
+                    OdometroActual,
+                    Activo
+                },
+                commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<IEnumerable<Entity_Unidad_Listar?>> Dal_Unidad_Listar(int IdEmpresa, int? IdSucursal, byte SoloActivos, string? TextoBusqueda)
+        {
+            using var connection = _connectionFactory.CreateConnection();
+
+            return await connection.QueryAsync<Entity_Unidad_Listar?>("dbo.sp_Unidad_Listar",
+                new { IdEmpresa, IdSucursal, SoloActivos, TextoBusqueda },
+                commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<IEnumerable<Entity_Unidad_Listar?>> Dal_Unidad_ObtenerPorId(int IdUnidad, int IdEmpresa)
+        {
+            using var connection = _connectionFactory.CreateConnection();
+
+            return await connection.QueryAsync<Entity_Unidad_Listar?>("dbo.sp_Unidad_ObtenerPorId",
+                new { IdUnidad, IdEmpresa },
+                commandType: CommandType.StoredProcedure);
+        }
     }
 }
+

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Transporte_Web_Service.Bussines;
 using Transporte_Web_Service.Entity;
@@ -54,6 +54,27 @@ namespace Transporte_Web_Service.Controllers
 
             return Ok(response);
         }
+        [HttpGet("listaDatos_Viaje_Listar")]
+        public async Task<IActionResult> Viaje_Listar([FromQuery] int IdEmpresa, [FromQuery] int? IdSucursal, [FromQuery] int? IdCliente, [FromQuery] int? IdOperador, [FromQuery] int? IdEstadoViaje, [FromQuery] DateTime? FechaInicio, [FromQuery] DateTime? FechaFin, [FromQuery] string? TextoBusqueda)
+        {
+            var response = await _bs.Bs_Viaje_Listar(IdEmpresa, IdSucursal, IdCliente, IdOperador, IdEstadoViaje, FechaInicio, FechaFin, TextoBusqueda);
+            if (!response.Ok) return BadRequest(response);
+            return Ok(response);
+        }
 
+        [HttpGet("listaDatos_Viaje_ObtenerPorId")]
+        public async Task<IActionResult> Viaje_ObtenerPorId([FromQuery] int IdViaje, [FromQuery] int IdEmpresa)
+        {
+            var response = await _bs.Bs_Viaje_ObtenerPorId(IdViaje, IdEmpresa);
+            if (!response.Ok) return BadRequest(response);
+            return Ok(response);
+        }
+        [HttpGet("listaDatos_Viaje_Guardar")]
+        public async Task<IActionResult> Viaje_Guardar([FromQuery] int? IdViaje, [FromQuery] int IdEmpresa, [FromQuery] int? IdSucursal, [FromQuery] int? IdOperador, [FromQuery] int IdCliente, [FromQuery] int? IdRuta, [FromQuery] int IdEstadoViaje, [FromQuery] DateTime? FechaSalida, [FromQuery] DateTime? FechaLlegadaEstimada, [FromQuery] DateTime? FechaLlegadaReal, [FromQuery] string? Origen, [FromQuery] string? Destino, [FromQuery] decimal? KmInicial, [FromQuery] decimal? KmFinal, [FromQuery] decimal Ingreso, [FromQuery] decimal? PrecioPactado, [FromQuery] string? Observaciones)
+        {
+            var response = await _bs.Bs_Viaje_Guardar(IdViaje, IdEmpresa, IdSucursal, IdOperador, IdCliente, IdRuta, IdEstadoViaje, FechaSalida, FechaLlegadaEstimada, FechaLlegadaReal, Origen, Destino, KmInicial, KmFinal, Ingreso, PrecioPactado, Observaciones);
+            if (!response.Ok) return BadRequest(response);
+            return Ok(response);
+        }
     }
 }

@@ -48,18 +48,18 @@ namespace Transporte_Web_Service.Data
             return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_Empresa_Guardar",
                 new
                 {
-                    iIdEmpresa = iIdEmpresa ,
-                    sNombre = sNombre,
-                    sNombre_Corto = sNombre_Corto,
-                    sRFC = sRFC,
-                    sCalle = sCalle,
-                    sColonia = sColonia,
-                    sMunicipio = sMunicipio,
-                    sEstado = sEstado,
-                    sCodigo_Postal = sCodigo_Postal,
-                    sTelefono = sTelefono,
-                    sRutaLogo = sRutaLogo,
-                    bActivo = bActivo
+                    IdEmpresa = iIdEmpresa,
+                    Nombre = sNombre,
+                    NombreCorto = sNombre_Corto,
+                    RFC = sRFC,
+                    Calle = sCalle,
+                    Colonia = sColonia,
+                    Municipio = sMunicipio,
+                    Estado = sEstado,
+                    CodigoPostal = sCodigo_Postal,
+                    Telefono = sTelefono,
+                    RutaLogo = sRutaLogo,
+                    Activo = bActivo
                 },
                 commandType: CommandType.StoredProcedure
             );
@@ -88,10 +88,11 @@ namespace Transporte_Web_Service.Data
             return await connection.QueryAsync<Entity_Empresa_Listar?>("dbo.sp_Empresa_ObtenerPorId",
                 new
                 {
-                    iIdEmpresa = iIdEmpresa
+                    IdEmpresa = iIdEmpresa
                 },
                 commandType: CommandType.StoredProcedure
             );
         }
     }
 }
+

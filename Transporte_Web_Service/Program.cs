@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Transporte_Web_Service.Bussines;
 using Transporte_Web_Service.Data;
 using Transporte_Web_Service.Data.Database;
@@ -7,6 +7,16 @@ using Transporte_Web_Service.Entity;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowTransporteFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173", "https://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -35,6 +45,9 @@ builder.Services.AddScoped<DashboardDAL>();
 
 builder.Services.AddScoped<EmpresaBussines>();
 builder.Services.AddScoped<EmpresaDAL>();
+
+builder.Services.AddScoped<ExpedienteBussines>();
+builder.Services.AddScoped<ExpedienteDAL>();
 
 builder.Services.AddScoped<GastosBussines>();
 builder.Services.AddScoped<GastosDAL>();
@@ -90,8 +103,11 @@ app.UseDeveloperExceptionPage();
 
 app.UseHttpsRedirection();
 
+app.UseCors("AllowTransporteFrontend");
+
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.Run();
+
