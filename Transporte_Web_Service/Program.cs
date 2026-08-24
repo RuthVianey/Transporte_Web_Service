@@ -1,8 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
 using Transporte_Web_Service.Bussines;
 using Transporte_Web_Service.Data;
 using Transporte_Web_Service.Data.Database;
-using Transporte_Web_Service.Entity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +24,6 @@ builder.Services.AddSwaggerGen();
 //        builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
-
 
 //builder.Services.AddScoped<CatalogosBS>();
 //builder.Services.AddScoped<CatalogosDAC>();
@@ -110,4 +107,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
