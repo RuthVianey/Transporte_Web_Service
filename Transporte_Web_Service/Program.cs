@@ -8,6 +8,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FrontendLocal", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -89,6 +99,8 @@ app.MapGet("/prueba", () => "Swagger cargado");
 app.UseDeveloperExceptionPage();
 
 app.UseHttpsRedirection();
+
+app.UseCors("FrontendLocal");
 
 app.UseAuthorization();
 
