@@ -1,4 +1,4 @@
-﻿namespace Transporte_Web_Service.Entity
+namespace Transporte_Web_Service.Entity
 {
     public class Entity_Rentabilidad_ListarViajes
     {
@@ -85,7 +85,7 @@
         public int IdRuta { get; set; }
         public string? Ruta { get; set; }
         public string? Origen { get; set; }
-        public string? Destino { get; set; }    
+        public string? Destino { get; set; }
         public string? FechaSalida { get; set; }
         public string? FechaLlegadaReal { get; set; }        
         public decimal KmInicial { get; set; }
@@ -116,3 +116,4 @@
 
 
     
+
