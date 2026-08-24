@@ -1,22 +1,16 @@
-﻿using Transporte_Web_Service.Data;
+using Transporte_Web_Service.Data;
 using Transporte_Web_Service.Entity;
 
 namespace Transporte_Web_Service.Bussines
 {
     public class AuthBussines
     {
-        private Respuesta resp = new Respuesta();
-        private string sPathDescarga = "C:\\inetpub\\wwwroot\\file\\Servicio_Sistema_Gestion_Transporte";
-        private string sPathSubida = "C:\\Program Files\\Sistema_Gestion_Transporte";
-
-        
         private readonly AuthDAL _dal;
 
         public AuthBussines(AuthDAL dal)
         {
             _dal = dal;
         }
-
 
         public async Task<ApiResponse<int?>> Usuario_Valida(int iIdEmpresa, string sEmail, string sPasswordIngresado)
         {
@@ -29,26 +23,21 @@ namespace Transporte_Web_Service.Bussines
 
             if (resumen == null)
             {
-                return ApiResponse<int?>.Fail("No se encontró información del dashboard.");
+                return ApiResponse<int?>.Fail("No se encontro informacion del usuario.");
             }
+
             return ApiResponse<int?>.Success(resumen);
         }
 
-        public async Task<ApiResponse<Entity_RespuestaGeneral>> Usuarios_Empresa(string IdEmpresa)
+        public async Task<ApiResponse<IEnumerable<Entity_UsuarioEmpresa?>>> Usuarios_Empresa(string email)
         {
-            if (IdEmpresa == "")
+            if (string.IsNullOrWhiteSpace(email))
             {
-                return ApiResponse<Entity_RespuestaGeneral>.Fail("La empresa es obligatoria.");
+                return ApiResponse<IEnumerable<Entity_UsuarioEmpresa?>>.Fail("El email es obligatorio para consultar empresas.");
             }
 
-            var resumen = await _dal.Usuarios_Empresa(IdEmpresa);
-
-            if (resumen == null)
-            {
-                return ApiResponse<Entity_RespuestaGeneral>.Fail("No se encontró información del dashboard.");
-            }
-            return ApiResponse<Entity_RespuestaGeneral>.Success(resumen);
+            var empresas = (await _dal.Usuarios_Empresa(email)).ToList();
+            return ApiResponse<IEnumerable<Entity_UsuarioEmpresa?>>.Success(empresas);
         }
-
     }
 }

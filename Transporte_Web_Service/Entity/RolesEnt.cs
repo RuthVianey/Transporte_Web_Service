@@ -1,4 +1,4 @@
-﻿namespace Transporte_Web_Service.Entity
+namespace Transporte_Web_Service.Entity
 {
     public class Entity_Listar_Roles
     {
@@ -19,5 +19,13 @@
         public byte PuedeLeer { set; get; }
         public byte PuedeEscribir { set; get; }
         public byte PuedeEliminar { set; get; }
+    }
+    public class Entity_UsuarioRol_ListarPorUsuario
+    {
+        public int IdUsuarioRol { get; set; }
+        public int IdUsuario { get; set; }
+        public string? Usuario { get; set; }
+        public int IdRol { get; set; }
+        public string? Rol { get; set; }
     }
 }

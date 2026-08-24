@@ -1,48 +1,53 @@
-﻿using Dapper;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+using Dapper;
 using System.Data;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Text;
-using Transporte_Web_Service.Controllers;
 using Transporte_Web_Service.Data.Database;
 using Transporte_Web_Service.Entity;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Transporte_Web_Service.Data
 {
     public class UsuariosDAC
     {
-        //private readonly MiDbContext _context;
         private readonly IDbConnectionFactory _connectionFactory;
 
         public UsuariosDAC(IDbConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
-
         }
 
-        /*COMIENZA USUARIO*/
-        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Usuario_Guardar(int iIdUsuario, int iIdEmpresa, string sNombre, string sEmail, string sContrasenia, int iIdSucursal)
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Usuario_Guardar(int IdUsuario, int IdEmpresa, string Nombre, string Email, string Contrasenia, int? IdSucursal)
         {
-
             using var connection = _connectionFactory.CreateConnection();
 
             return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_Usuario_Guardar",
-                new
-                {
-                    iIdUsuario = iIdUsuario,
-                    iIdEmpresa = iIdEmpresa,
-                    sNombre = sNombre,
-                    sEmail = sEmail,
-                    sContrasenia = sContrasenia,
-                    iIdSucursal = iIdSucursal
-                },
-                commandType: CommandType.StoredProcedure
-            );
-        }        
+                new { IdUsuario, IdEmpresa, Nombre, Email, Contrasenia, IdSucursal },
+                commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Usuario_Desactivar(int IdUsuario, int IdEmpresa)
+        {
+            using var connection = _connectionFactory.CreateConnection();
+
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_Usuario_Desactivar",
+                new { IdUsuario, IdEmpresa },
+                commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<IEnumerable<Entity_Usuario_Listar?>> Usuario_Listar(int IdEmpresa, byte SoloActivos, string? TextoBusqueda)
+        {
+            using var connection = _connectionFactory.CreateConnection();
+
+            return await connection.QueryAsync<Entity_Usuario_Listar?>("dbo.sp_Usuario_Listar",
+                new { IdEmpresa, SoloActivos, TextoBusqueda },
+                commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<IEnumerable<Entity_Usuario_Listar?>> Usuario_ObtenerPorId(int IdUsuario, int IdEmpresa)
+        {
+            using var connection = _connectionFactory.CreateConnection();
+
+            return await connection.QueryAsync<Entity_Usuario_Listar?>("dbo.sp_Usuario_ObtenerPorId",
+                new { IdUsuario, IdEmpresa },
+                commandType: CommandType.StoredProcedure);
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Transporte_Web_Service.Entity
+namespace Transporte_Web_Service.Entity
 {
     public class Entity_Lista_Roles
     {
@@ -66,4 +66,10 @@
         public byte Activo { set; get; }
     }
     
-}
+
+    public class Entity_UsuarioEmpresa
+    {
+        public int? IdEmpresa { set; get; }
+        public string? Nombre_Corto { set; get; }
+    }}
+

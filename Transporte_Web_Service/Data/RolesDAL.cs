@@ -1,4 +1,4 @@
-﻿using Dapper;
+using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -117,6 +117,32 @@ namespace Transporte_Web_Service.Data
                 },
                 commandType: CommandType.StoredProcedure
             );
+        }
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_UsuarioRol_Asignar(int IdUsuario, int IdEmpresa, int IdRol)
+        {
+            using var connection = _connectionFactory.CreateConnection();
+
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_UsuarioRol_Asignar",
+                new { IdUsuario, IdEmpresa, IdRol },
+                commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<IEnumerable<Entity_UsuarioRol_ListarPorUsuario?>> Dal_UsuarioRol_ListarPorUsuario(int IdUsuario, int IdEmpresa)
+        {
+            using var connection = _connectionFactory.CreateConnection();
+
+            return await connection.QueryAsync<Entity_UsuarioRol_ListarPorUsuario?>("dbo.sp_UsuarioRol_ListarPorUsuario",
+                new { IdUsuario, IdEmpresa },
+                commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_UsuarioRol_Quitar(int IdUsuarioRol, int IdEmpresa)
+        {
+            using var connection = _connectionFactory.CreateConnection();
+
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_UsuarioRol_Quitar",
+                new { IdUsuarioRol, IdEmpresa },
+                commandType: CommandType.StoredProcedure);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Transporte_Web_Service.Data;
 using Transporte_Web_Service.Entity;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -114,6 +114,39 @@ namespace Transporte_Web_Service.Bussines
                 return ApiResponse<IEnumerable<Entity_RolPrograma_ListarPorRol?>>.Fail("No se encontró información.");
             }
             return ApiResponse<IEnumerable<Entity_RolPrograma_ListarPorRol?>>.Success(resumen);
+        }
+        public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Bs_UsuarioRol_Asignar(int IdUsuario, int IdEmpresa, int IdRol)
+        {
+            if (IdEmpresa <= 0) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("La empresa es obligatoria.");
+            if (IdUsuario <= 0) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("El usuario es obligatorio.");
+            if (IdRol <= 0) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("El rol es obligatorio.");
+
+            var resumen = await _dal.Dal_UsuarioRol_Asignar(IdUsuario, IdEmpresa, IdRol);
+            return resumen == null
+                ? ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("No se encontró información.")
+                : ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(resumen);
+        }
+
+        public async Task<ApiResponse<IEnumerable<Entity_UsuarioRol_ListarPorUsuario?>>> Bs_UsuarioRol_ListarPorUsuario(int IdUsuario, int IdEmpresa)
+        {
+            if (IdEmpresa <= 0) return ApiResponse<IEnumerable<Entity_UsuarioRol_ListarPorUsuario?>>.Fail("La empresa es obligatoria.");
+            if (IdUsuario <= 0) return ApiResponse<IEnumerable<Entity_UsuarioRol_ListarPorUsuario?>>.Fail("El usuario es obligatorio.");
+
+            var resumen = await _dal.Dal_UsuarioRol_ListarPorUsuario(IdUsuario, IdEmpresa);
+            return resumen == null
+                ? ApiResponse<IEnumerable<Entity_UsuarioRol_ListarPorUsuario?>>.Fail("No se encontró información.")
+                : ApiResponse<IEnumerable<Entity_UsuarioRol_ListarPorUsuario?>>.Success(resumen);
+        }
+
+        public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Bs_UsuarioRol_Quitar(int IdUsuarioRol, int IdEmpresa)
+        {
+            if (IdEmpresa <= 0) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("La empresa es obligatoria.");
+            if (IdUsuarioRol <= 0) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("La asignación es obligatoria.");
+
+            var resumen = await _dal.Dal_UsuarioRol_Quitar(IdUsuarioRol, IdEmpresa);
+            return resumen == null
+                ? ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("No se encontró información.")
+                : ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(resumen);
         }
     }
 }

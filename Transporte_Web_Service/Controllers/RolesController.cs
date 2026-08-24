@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using Transporte_Web_Service.Bussines;
@@ -93,6 +93,29 @@ namespace Transporte_Web_Service.Controllers
                 return BadRequest(response);
             }
 
+            return Ok(response);
+        }
+        [HttpGet("listaDatos_UsuarioRol_Asignar")]
+        public async Task<IActionResult> UsuarioRol_Asignar([FromQuery] int IdUsuario, [FromQuery] int IdEmpresa, [FromQuery] int IdRol)
+        {
+            var response = await _bs.Bs_UsuarioRol_Asignar(IdUsuario, IdEmpresa, IdRol);
+            if (!response.Ok) return BadRequest(response);
+            return Ok(response);
+        }
+
+        [HttpGet("listaDatos_UsuarioRol_ListarPorUsuario")]
+        public async Task<IActionResult> UsuarioRol_ListarPorUsuario([FromQuery] int IdUsuario, [FromQuery] int IdEmpresa)
+        {
+            var response = await _bs.Bs_UsuarioRol_ListarPorUsuario(IdUsuario, IdEmpresa);
+            if (!response.Ok) return BadRequest(response);
+            return Ok(response);
+        }
+
+        [HttpGet("listaDatos_UsuarioRol_Quitar")]
+        public async Task<IActionResult> UsuarioRol_Quitar([FromQuery] int IdUsuarioRol, [FromQuery] int IdEmpresa)
+        {
+            var response = await _bs.Bs_UsuarioRol_Quitar(IdUsuarioRol, IdEmpresa);
+            if (!response.Ok) return BadRequest(response);
             return Ok(response);
         }
     }
