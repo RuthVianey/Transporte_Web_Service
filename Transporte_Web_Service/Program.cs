@@ -31,6 +31,9 @@ builder.Services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
 builder.Services.AddScoped<AuthBussines>();
 builder.Services.AddScoped<AuthDAL>();
 
+builder.Services.AddScoped<CatalogoDomicilioBussines>();
+builder.Services.AddScoped<CatalogoDomicilioDAL>();
+
 builder.Services.AddScoped<ClientesBussines>();
 builder.Services.AddScoped<ClientesDAL>();
 
@@ -107,3 +110,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
