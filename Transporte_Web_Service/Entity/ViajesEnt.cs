@@ -31,6 +31,7 @@ namespace Transporte_Web_Service.Entity
         public decimal DiferenciaCarga { get; set; }
         public int Cargas { get; set; }
         public int Descargas { get; set; }
+        public string? ProductoPrincipal { get; set; }
     }
 
     public class Entity_ViajeMovimiento_Listar
@@ -44,6 +45,8 @@ namespace Transporte_Web_Service.Entity
         public DateTime? FechaMovimiento { get; set; }
         public string? Lugar { get; set; }
         public string? ClienteDestino { get; set; }
+        public int? IdProducto { get; set; }
+        public string? ProductoCatalogo { get; set; }
         public string? Producto { get; set; }
         public decimal Cantidad { get; set; }
         public string UnidadMedida { get; set; } = string.Empty;
@@ -56,4 +59,5 @@ namespace Transporte_Web_Service.Entity
         public bool Activo { get; set; }
     }
 }
+
 

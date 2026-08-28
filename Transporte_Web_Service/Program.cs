@@ -61,6 +61,9 @@ builder.Services.AddScoped<MantenimientoDAL>();
 builder.Services.AddScoped<OperadoresBussines>();
 builder.Services.AddScoped<OperadoresDAL>();
 
+builder.Services.AddScoped<ProductosBussines>();
+builder.Services.AddScoped<ProductosDAL>();
+
 builder.Services.AddScoped<RentabilidadBussines>();
 builder.Services.AddScoped<RentabilidadDAL>();
 
@@ -110,4 +113,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
 

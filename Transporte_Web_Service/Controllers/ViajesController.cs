@@ -77,9 +77,9 @@ namespace Transporte_Web_Service.Controllers
             return Ok(response);
         }
         [HttpGet("listaDatos_ViajeMovimiento_Guardar")]
-        public async Task<IActionResult> ViajeMovimiento_Guardar([FromQuery] int? IdViajeMovimiento, [FromQuery] int IdEmpresa, [FromQuery] int? IdSucursal, [FromQuery] int IdViaje, [FromQuery] string TipoMovimiento, [FromQuery] int? Secuencia, [FromQuery] DateTime? FechaMovimiento, [FromQuery] string? Lugar, [FromQuery] string? ClienteDestino, [FromQuery] string? Producto, [FromQuery] decimal Cantidad, [FromQuery] string? UnidadMedida, [FromQuery] decimal? Temperatura, [FromQuery] decimal? Densidad, [FromQuery] string? Referencia, [FromQuery] string? Observaciones, [FromQuery] int? IdUsuarioRegistro)
+        public async Task<IActionResult> ViajeMovimiento_Guardar([FromQuery] int? IdViajeMovimiento, [FromQuery] int IdEmpresa, [FromQuery] int? IdSucursal, [FromQuery] int IdViaje, [FromQuery] string TipoMovimiento, [FromQuery] int? Secuencia, [FromQuery] DateTime? FechaMovimiento, [FromQuery] string? Lugar, [FromQuery] string? ClienteDestino, [FromQuery] int? IdProducto, [FromQuery] string? Producto, [FromQuery] decimal Cantidad, [FromQuery] string? UnidadMedida, [FromQuery] decimal? Temperatura, [FromQuery] decimal? Densidad, [FromQuery] string? Referencia, [FromQuery] string? Observaciones, [FromQuery] int? IdUsuarioRegistro)
         {
-            var response = await _bs.Bs_ViajeMovimiento_Guardar(IdViajeMovimiento, IdEmpresa, IdSucursal, IdViaje, TipoMovimiento, Secuencia, FechaMovimiento, Lugar, ClienteDestino, Producto, Cantidad, UnidadMedida, Temperatura, Densidad, Referencia, Observaciones, IdUsuarioRegistro);
+            var response = await _bs.Bs_ViajeMovimiento_Guardar(IdViajeMovimiento, IdEmpresa, IdSucursal, IdViaje, TipoMovimiento, Secuencia, FechaMovimiento, Lugar, ClienteDestino, IdProducto, Producto, Cantidad, UnidadMedida, Temperatura, Densidad, Referencia, Observaciones, IdUsuarioRegistro);
             if (!response.Ok) return BadRequest(response);
             return Ok(response);
         }
@@ -101,4 +101,5 @@ namespace Transporte_Web_Service.Controllers
         }
     }
 }
+
 
