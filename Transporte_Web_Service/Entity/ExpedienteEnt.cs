@@ -1,4 +1,4 @@
-﻿namespace Transporte_Web_Service.Entity
+namespace Transporte_Web_Service.Entity
 {
     public class Entity_TipoDocumentoViaje_Guardar
     {
@@ -36,6 +36,7 @@
         public int? IdSucursal { get; set; }
         public int IdViaje { get; set; }
         public int? IdEvento { get; set; }
+        public int? IdViajeMovimiento { get; set; }
         public int? IdTipoDocumentoViaje { get; set; }
         public int? IdUsuarioCarga { get; set; }
         public string? TipoEvento { get; set; }
@@ -58,6 +59,7 @@
         public int? IdSucursal { get; set; }
         public int IdViaje { get; set; }
         public int? IdEvento { get; set; }
+        public int? IdViajeMovimiento { get; set; }
         public int? IdTipoDocumentoViaje { get; set; }
         public string? TipoDocumento { get; set; }
         public int? IdUsuarioCarga { get; set; }
@@ -83,6 +85,7 @@
         public int? IdSucursal { get; set; }
         public int IdViaje { get; set; }
         public int? IdEvento { get; set; }
+        public int? IdViajeMovimiento { get; set; }
         public int? IdTipoDocumentoViaje { get; set; }
         public int? IdUsuarioCarga { get; set; }
         public string? TipoEvento { get; set; }
@@ -102,3 +105,4 @@ namespace Transporte_Web_Service.Entity
         public IEnumerable<dynamic> Documentos { get; set; } = Enumerable.Empty<dynamic>();
     }
 }
+

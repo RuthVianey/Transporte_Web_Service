@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Transporte_Web_Service.Data;
@@ -138,6 +138,7 @@ namespace Transporte_Web_Service.Bussines
                 IdSucursal = entidad.IdSucursal,
                 IdViaje = entidad.IdViaje,
                 IdEvento = entidad.IdEvento,
+                IdViajeMovimiento = entidad.IdViajeMovimiento,
                 IdTipoDocumentoViaje = entidad.IdTipoDocumentoViaje,
                 IdUsuarioCarga = entidad.IdUsuarioCarga,
                 TipoEvento = entidad.TipoEvento,
@@ -233,4 +234,5 @@ namespace Transporte_Web_Service.Bussines
         }
     }
 }
+
 
