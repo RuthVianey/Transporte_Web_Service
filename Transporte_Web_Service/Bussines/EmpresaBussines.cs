@@ -50,9 +50,13 @@ namespace Transporte_Web_Service.Bussines
             return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(resumen);
         }
 
-        public async Task<ApiResponse<IEnumerable<Entity_Empresa_Listar?>>> Bs_Empresa_Listar(byte bSoloActivos, string sTextoBusqueda)
+        public async Task<ApiResponse<IEnumerable<Entity_Empresa_Listar?>>> Bs_Empresa_Listar(byte bSoloActivos, string? sTextoBusqueda = null)
         {
-
+            if(sTextoBusqueda == "" || sTextoBusqueda == "''" || sTextoBusqueda == "\"\"")
+            {
+                sTextoBusqueda = null;
+            }
+            
             var resumen = await _dal.Dal_Empresa_Listar(bSoloActivos, sTextoBusqueda);
 
             if (resumen == null)

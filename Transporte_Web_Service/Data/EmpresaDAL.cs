@@ -65,7 +65,7 @@ namespace Transporte_Web_Service.Data
             );
         }
 
-        public async Task<IEnumerable<Entity_Empresa_Listar?>> Dal_Empresa_Listar(byte bSoloActivos, string sTextoBusqueda)
+        public async Task<IEnumerable<Entity_Empresa_Listar?>> Dal_Empresa_Listar(byte SoloActivos, string? TextoBusqueda)
         {
 
             using var connection = _connectionFactory.CreateConnection();
@@ -73,8 +73,8 @@ namespace Transporte_Web_Service.Data
             return await connection.QueryAsync<Entity_Empresa_Listar?>("dbo.sp_Empresa_Listar",
                 new
                 {
-                    bSoloActivos = bSoloActivos,
-                    sTextoBusqueda = sTextoBusqueda
+                    SoloActivos = SoloActivos,
+                    TextoBusqueda = TextoBusqueda
                 },
                 commandType: CommandType.StoredProcedure
             );

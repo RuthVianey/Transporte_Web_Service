@@ -45,9 +45,9 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpGet("listaDatos_Empresa_Listar")]
-        public async Task<IActionResult> Empresa_Listar([FromQuery] byte bSoloActivos, [FromQuery] string sTextoBusqueda)
+        public async Task<IActionResult> Empresa_Listar([FromQuery] byte bSoloActivos, [FromQuery] string? sTextoBusqueda = "")
         {
-            var response = await _bs.Bs_Empresa_Listar(bSoloActivos, sTextoBusqueda);
+            var response = await _bs.Bs_Empresa_Listar(bSoloActivos, sTextoBusqueda ?? "");
 
             if (!response.Ok)
             {
