@@ -31,6 +31,9 @@ builder.Services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
 builder.Services.AddScoped<AuthBussines>();
 builder.Services.AddScoped<AuthDAL>();
 
+builder.Services.AddScoped<CatalogoDomicilioBussines>();
+builder.Services.AddScoped<CatalogoDomicilioDAL>();
+
 builder.Services.AddScoped<ClientesBussines>();
 builder.Services.AddScoped<ClientesDAL>();
 
@@ -57,6 +60,9 @@ builder.Services.AddScoped<MantenimientoDAL>();
 
 builder.Services.AddScoped<OperadoresBussines>();
 builder.Services.AddScoped<OperadoresDAL>();
+
+builder.Services.AddScoped<ProductosBussines>();
+builder.Services.AddScoped<ProductosDAL>();
 
 builder.Services.AddScoped<RentabilidadBussines>();
 builder.Services.AddScoped<RentabilidadDAL>();
@@ -107,3 +113,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+

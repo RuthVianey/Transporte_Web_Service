@@ -1,4 +1,4 @@
-﻿using Dapper;
+using Dapper;
 using System.Data;
 using Transporte_Web_Service.Data.Database;
 using Transporte_Web_Service.Entity;
@@ -62,6 +62,7 @@ namespace Transporte_Web_Service.Data
                     entidad.IdSucursal,
                     entidad.IdViaje,
                     entidad.IdEvento,
+                    entidad.IdViajeMovimiento,
                     entidad.IdTipoDocumentoViaje,
                     entidad.IdUsuarioCarga,
                     entidad.TipoEvento,
@@ -129,3 +130,4 @@ namespace Transporte_Web_Service.Data
         }
     }
 }
+

@@ -90,5 +90,33 @@ namespace Transporte_Web_Service.Data
                 new { IdViaje, IdEmpresa, IdSucursal, IdOperador, IdCliente, IdRuta, IdEstadoViaje, FechaSalida, FechaLlegadaEstimada, FechaLlegadaReal, Origen, Destino, KmInicial, KmFinal, Ingreso, PrecioPactado, Observaciones },
                 commandType: CommandType.StoredProcedure);
         }
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_ViajeMovimiento_Guardar(int? IdViajeMovimiento, int IdEmpresa, int? IdSucursal, int IdViaje, string TipoMovimiento, int? Secuencia, DateTime? FechaMovimiento, string? Lugar, string? ClienteDestino, int? IdProducto, string? Producto, decimal Cantidad, string? UnidadMedida, decimal? Temperatura, decimal? Densidad, string? Referencia, string? Observaciones, int? IdUsuarioRegistro)
+        {
+            using var connection = _connectionFactory.CreateConnection();
+
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_ViajeMovimiento_Guardar",
+                new { IdViajeMovimiento, IdEmpresa, IdSucursal, IdViaje, TipoMovimiento, Secuencia, FechaMovimiento, Lugar, ClienteDestino, IdProducto, Producto, Cantidad, UnidadMedida, Temperatura, Densidad, Referencia, Observaciones, IdUsuarioRegistro },
+                commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<IEnumerable<Entity_ViajeMovimiento_Listar?>> Dal_ViajeMovimiento_ListarPorViaje(int IdViaje, int IdEmpresa, string? TipoMovimiento, bool SoloActivos)
+        {
+            using var connection = _connectionFactory.CreateConnection();
+
+            return await connection.QueryAsync<Entity_ViajeMovimiento_Listar?>("dbo.sp_ViajeMovimiento_ListarPorViaje",
+                new { IdViaje, IdEmpresa, TipoMovimiento, SoloActivos },
+                commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_ViajeMovimiento_Eliminar(int IdViajeMovimiento, int IdEmpresa)
+        {
+            using var connection = _connectionFactory.CreateConnection();
+
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_ViajeMovimiento_Eliminar",
+                new { IdViajeMovimiento, IdEmpresa },
+                commandType: CommandType.StoredProcedure);
+        }
     }
 }
+
+
