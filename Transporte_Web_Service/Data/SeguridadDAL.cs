@@ -64,7 +64,7 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<IEnumerable<Entity_Sucursal_Listar?>> Dal_Sucursal_Listar(int IdEmpresa, byte SoloActivos, string TextoBusqueda)
+        public async Task<IEnumerable<Entity_Sucursal_Listar?>> Dal_Sucursal_Listar(int IdEmpresa, byte SoloActivos, string? TextoBusqueda)
         {
 
             using var connection = _connectionFactory.CreateConnection();

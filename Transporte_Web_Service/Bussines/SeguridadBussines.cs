@@ -53,8 +53,13 @@ namespace Transporte_Web_Service.Bussines
             return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(resumen);
         }
 
-        public async Task<ApiResponse<IEnumerable<Entity_Sucursal_Listar?>>> Bs_Sucursal_Listar(int IdEmpresa, byte SoloActivos, string TextoBusqueda)
+        public async Task<ApiResponse<IEnumerable<Entity_Sucursal_Listar?>>> Bs_Sucursal_Listar(int IdEmpresa, byte SoloActivos, string? TextoBusqueda = null)
         {
+            if (TextoBusqueda == "" || TextoBusqueda == "''" || TextoBusqueda == "\"\"")
+            {
+                TextoBusqueda = null;
+            }
+
             if (IdEmpresa <= 0)
             {
                 return ApiResponse<IEnumerable<Entity_Sucursal_Listar?>>.Fail("La empresa es obligatoria.");

@@ -47,9 +47,9 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpGet("listaDatos_Sucursal_Listar")]
-        public async Task<IActionResult> Sucursal_Listar([FromQuery] int IdEmpresa, [FromQuery] byte SoloActivos, [FromQuery] string TextoBusqueda)
+        public async Task<IActionResult> Sucursal_Listar([FromQuery] int IdEmpresa, [FromQuery] byte SoloActivos, [FromQuery] string TextoBusqueda = "")
         {
-            var response = await _bs.Bs_Sucursal_Listar(IdEmpresa, SoloActivos, TextoBusqueda);
+            var response = await _bs.Bs_Sucursal_Listar(IdEmpresa, SoloActivos, TextoBusqueda ?? "");
 
             if (!response.Ok)
             {

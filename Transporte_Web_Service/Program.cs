@@ -1,6 +1,7 @@
 using Transporte_Web_Service.Bussines;
 using Transporte_Web_Service.Data;
 using Transporte_Web_Service.Data.Database;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -107,6 +108,14 @@ app.UseDeveloperExceptionPage();
 app.UseHttpsRedirection();
 
 app.UseCors("AllowTransporteFrontend");
+
+var logosPath = Path.Combine(app.Environment.ContentRootPath, "ArchivosEmpresa");
+Directory.CreateDirectory(logosPath);
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(logosPath),
+    RequestPath = "/archivos/empresas"
+});
 
 app.UseAuthorization();
 

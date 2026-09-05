@@ -18,6 +18,33 @@ namespace Transporte_Web_Service.Controllers
             _bs = bs;
         }
 
+        [HttpPost("logo/subir")]
+        [RequestSizeLimit(5_242_880)]
+        public async Task<IActionResult> SubirLogo(IFormFile archivo)
+        {
+            if (archivo == null || archivo.Length == 0)
+            {
+                return BadRequest(ApiResponse<string>.Fail("Selecciona una imagen."));
+            }
+
+            var extensionesPermitidas = new[] { ".png", ".jpg", ".jpeg", ".webp" };
+            var extension = Path.GetExtension(archivo.FileName).ToLowerInvariant();
+            if (!extensionesPermitidas.Contains(extension))
+            {
+                return BadRequest(ApiResponse<string>.Fail("El logo debe ser PNG, JPG, JPEG o WEBP."));
+            }
+
+            var carpetaLogos = Path.Combine(Directory.GetCurrentDirectory(), "ArchivosEmpresa");
+            Directory.CreateDirectory(carpetaLogos);
+
+            var nombreArchivo = $"{Guid.NewGuid():N}{extension}";
+            var rutaFisica = Path.Combine(carpetaLogos, nombreArchivo);
+            await using var stream = System.IO.File.Create(rutaFisica);
+            await archivo.CopyToAsync(stream);
+
+            return Ok(ApiResponse<string>.Success($"/archivos/empresas/{nombreArchivo}"));
+        }
+
         [HttpGet("listaDatos_Empresa_Desactivar")]
         public async Task<IActionResult> Empresa_Desactivar([FromQuery] int IdEmpresa)
         {
