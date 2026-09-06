@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Transporte_Web_Service.Bussines;
 using Transporte_Web_Service.Entity;
@@ -43,9 +43,9 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpGet("listaDatos_Cliente_Listar")]
-        public async Task<IActionResult> Cliente_Listar([FromQuery] int iIdEmpresa, [FromQuery] int iIdSucursal, [FromQuery] string sSoloActivos, [FromQuery] string sTextoBusqueda)
+        public async Task<IActionResult> Cliente_Listar([FromQuery] int iIdEmpresa, [FromQuery] int iIdSucursal, [FromQuery] string sSoloActivos, [FromQuery] string? sTextoBusqueda = "")
         {
-            var response = await _bs.Bs_Cliente_Listar(iIdEmpresa, iIdSucursal, sSoloActivos, sTextoBusqueda);
+            var response = await _bs.Bs_Cliente_Listar(iIdEmpresa, iIdSucursal, sSoloActivos, string.IsNullOrWhiteSpace(sTextoBusqueda) ? string.Empty : sTextoBusqueda);
 
             if (!response.Ok)
             {
@@ -69,3 +69,4 @@ namespace Transporte_Web_Service.Controllers
         }
     }
 }
+

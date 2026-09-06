@@ -1,4 +1,4 @@
-﻿using Dapper;
+using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -33,8 +33,8 @@ namespace Transporte_Web_Service.Data
             return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_Cliente_Desactivar",
                 new
                 {
-                    iIdCliente = iIdCliente,
-                    iIdEmpresa = iIdEmpresa
+                    IdCliente = iIdCliente,
+                    IdEmpresa = iIdEmpresa
                 },
                 commandType: CommandType.StoredProcedure
             );
@@ -48,15 +48,15 @@ namespace Transporte_Web_Service.Data
             return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_Cliente_Guardar",
                 new
                 {
-                    iIdCliente = iIdCliente,
-                    iIdEmpresa = iIdEmpresa,
-                    iIdSucursal = iIdSucursal,
-                    sNombre = sNombre,
-                    sRFC = sRFC,
-                    sTelefono = sTelefono,
-                    sEmail = sEmail,
-                    iRegimenFiscal = iRegimenFiscal,
-                    bActivo = bActivo
+                    IdCliente = iIdCliente,
+                    IdEmpresa = iIdEmpresa,
+                    IdSucursal = iIdSucursal,
+                    Nombre = sNombre,
+                    RFC = sRFC,
+                    Telefono = sTelefono,
+                    Email = sEmail,
+                    RegimenFiscal = iRegimenFiscal,
+                    Activo = bActivo
                 },
                 commandType: CommandType.StoredProcedure
             );
@@ -70,10 +70,10 @@ namespace Transporte_Web_Service.Data
             return await connection.QueryAsync<Entity_Obtener_Cliente_PorId?>("dbo.sp_Cliente_Listar",
                 new
                 {
-                    iIdEmpresa = iIdEmpresa,
-                    iIdSucursal = iIdSucursal,
-                    sSoloActivos = sSoloActivos,
-                    sTextoBusqueda = sTextoBusqueda
+                    IdEmpresa = iIdEmpresa,
+                    IdSucursal = iIdSucursal,
+                    SoloActivos = sSoloActivos,
+                    TextoBusqueda = sTextoBusqueda
                 },
                 commandType: CommandType.StoredProcedure
             );
@@ -87,11 +87,12 @@ namespace Transporte_Web_Service.Data
             return await connection.QueryAsync<Entity_Obtener_Cliente_PorId?>("dbo.sp_Cliente_ObtenerPorId",
                 new
                 {
-                    iIdCliente = iIdCliente,
-                    iIdEmpresa = iIdEmpresa
+                    IdCliente = iIdCliente,
+                    IdEmpresa = iIdEmpresa
                 },
                 commandType: CommandType.StoredProcedure
             );
         }
     }
 }
+

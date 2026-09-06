@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using Transporte_Web_Service.Bussines;
@@ -44,9 +44,9 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpGet("listaDatos_TipoUnidad_Listar")]
-        public async Task<IActionResult> TipoUnidad_Listar([FromQuery] int IdEmpresa, [FromQuery] byte SoloActivos, [FromQuery] string TextoBusqueda)
+        public async Task<IActionResult> TipoUnidad_Listar([FromQuery] int IdEmpresa, [FromQuery] byte SoloActivos, [FromQuery] string? TextoBusqueda = "")
         {
-            var response = await _bs.Bs_TipoUnidad_Listar(IdEmpresa, SoloActivos, TextoBusqueda);
+            var response = await _bs.Bs_TipoUnidad_Listar(IdEmpresa, SoloActivos, string.IsNullOrWhiteSpace(TextoBusqueda) ? string.Empty : TextoBusqueda);
 
             if (!response.Ok)
             {
@@ -101,4 +101,6 @@ namespace Transporte_Web_Service.Controllers
         }
     }
 }
+
+
 

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using Transporte_Web_Service.Bussines;
@@ -44,9 +44,9 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpGet("listaDatos_Ruta_Listar")]
-        public async Task<IActionResult> Ruta_Listar([FromQuery] int IdEmpresa, [FromQuery] int IdSucursal, [FromQuery] byte SoloActivos, [FromQuery] string TextoBusqueda)
+        public async Task<IActionResult> Ruta_Listar([FromQuery] int IdEmpresa, [FromQuery] int IdSucursal, [FromQuery] byte SoloActivos, [FromQuery] string? TextoBusqueda = "")
         {
-            var response = await _bs.Bs_Ruta_Listar(IdEmpresa, IdSucursal, SoloActivos, TextoBusqueda);
+            var response = await _bs.Bs_Ruta_Listar(IdEmpresa, IdSucursal, SoloActivos, string.IsNullOrWhiteSpace(TextoBusqueda) ? string.Empty : TextoBusqueda);
 
             if (!response.Ok)
             {
@@ -123,3 +123,4 @@ namespace Transporte_Web_Service.Controllers
 
     }
 }
+
