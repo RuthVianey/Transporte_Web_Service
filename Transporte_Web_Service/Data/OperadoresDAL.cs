@@ -38,7 +38,7 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Operador_Guardar(int iIdOperador, int iIdEmpresa, int iIdSucursal, string sNombre, string sLicencia, string sTipoLicencia, string sFechaVencimientoLicencia, string sCURP, string sTelefono, byte bActivo)
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Operador_Guardar(int iIdOperador, int iIdEmpresa, int? iIdSucursal, string sNombre, string sLicencia, string sTipoLicencia, DateTime? sFechaVencimientoLicencia, string sCURP, string sTelefono, byte bActivo)
         {
 
             using var connection = _connectionFactory.CreateConnection();
@@ -60,7 +60,7 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<IEnumerable<Entity_Operador_ObtenerPorId?>> Operador_Listar(int iIdEmpresa, int iIdSucursal, byte bSoloActivos, string sTextoBusqueda)
+        public async Task<IEnumerable<Entity_Operador_ObtenerPorId?>> Operador_Listar(int iIdEmpresa, int? iIdSucursal, byte bSoloActivos, string sTextoBusqueda)
         {
 
             using var connection = _connectionFactory.CreateConnection();
@@ -92,4 +92,3 @@ namespace Transporte_Web_Service.Data
         }
     }
 }
-

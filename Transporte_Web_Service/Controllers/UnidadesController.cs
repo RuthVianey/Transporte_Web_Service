@@ -79,7 +79,8 @@ namespace Transporte_Web_Service.Controllers
         [HttpGet("listaDatos_Unidad_Guardar")]
         public async Task<IActionResult> Unidad_Guardar([FromQuery] int IdUnidad, [FromQuery] int IdEmpresa, [FromQuery] int? IdSucursal, [FromQuery] int IdTipoUnidad, [FromQuery] string? NumeroEconomico, [FromQuery] string Placas, [FromQuery] string? Marca, [FromQuery] string? Modelo, [FromQuery] int? Anio, [FromQuery] decimal? CapacidadLitros, [FromQuery] decimal? CapacidadKg, [FromQuery] decimal? OdometroActual, [FromQuery] byte Activo)
         {
-            var response = await _bs.Bs_Unidad_Guardar(IdUnidad, IdEmpresa, IdSucursal, IdTipoUnidad, NumeroEconomico, Placas, Marca, Modelo, Anio, CapacidadLitros, CapacidadKg, OdometroActual, Activo);
+            var idSucursalNormalizada = IdSucursal.HasValue && IdSucursal.Value > 0 ? IdSucursal : null;
+            var response = await _bs.Bs_Unidad_Guardar(IdUnidad, IdEmpresa, idSucursalNormalizada, IdTipoUnidad, NumeroEconomico, Placas, Marca, Modelo, Anio, CapacidadLitros, CapacidadKg, OdometroActual, Activo);
             if (!response.Ok) return BadRequest(response);
             return Ok(response);
         }
@@ -87,7 +88,8 @@ namespace Transporte_Web_Service.Controllers
         [HttpGet("listaDatos_Unidad_Listar")]
         public async Task<IActionResult> Unidad_Listar([FromQuery] int IdEmpresa, [FromQuery] int? IdSucursal, [FromQuery] byte SoloActivos, [FromQuery] string? TextoBusqueda)
         {
-            var response = await _bs.Bs_Unidad_Listar(IdEmpresa, IdSucursal, SoloActivos, TextoBusqueda);
+            var idSucursalNormalizada = IdSucursal.HasValue && IdSucursal.Value > 0 ? IdSucursal : null;
+            var response = await _bs.Bs_Unidad_Listar(IdEmpresa, idSucursalNormalizada, SoloActivos, TextoBusqueda);
             if (!response.Ok) return BadRequest(response);
             return Ok(response);
         }
@@ -101,6 +103,4 @@ namespace Transporte_Web_Service.Controllers
         }
     }
 }
-
-
 

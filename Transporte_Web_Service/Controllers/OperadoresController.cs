@@ -30,9 +30,10 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpGet("listaDatos_Operador_Guardar")]
-        public async Task<IActionResult> Operador_Guardar([FromQuery] int iIdOperador, [FromQuery] int iIdEmpresa, [FromQuery] int iIdSucursal, [FromQuery] string sNombre, [FromQuery] string sLicencia, [FromQuery] string sTipoLicencia, [FromQuery] string sFechaVencimientoLicencia, [FromQuery] string sCURP, [FromQuery] string sTelefono, [FromQuery] byte bActivo)
+        public async Task<IActionResult> Operador_Guardar([FromQuery] int iIdOperador, [FromQuery] int iIdEmpresa, [FromQuery] int? iIdSucursal, [FromQuery] string sNombre, [FromQuery] string sLicencia, [FromQuery] string sTipoLicencia, [FromQuery] DateTime? sFechaVencimientoLicencia, [FromQuery] string sCURP, [FromQuery] string sTelefono, [FromQuery] byte bActivo)
         {
-            var response = await _bs.Operador_Guardar(iIdOperador, iIdEmpresa, iIdSucursal, sNombre, sLicencia, sTipoLicencia, sFechaVencimientoLicencia, sCURP, sTelefono, bActivo);
+            var idSucursalNormalizada = iIdSucursal.HasValue && iIdSucursal.Value > 0 ? iIdSucursal : null;
+            var response = await _bs.Operador_Guardar(iIdOperador, iIdEmpresa, idSucursalNormalizada, sNombre, sLicencia, sTipoLicencia, sFechaVencimientoLicencia, sCURP, sTelefono, bActivo);
 
             if (!response.Ok)
             {
@@ -43,9 +44,10 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpGet("listaDatos_Operador_Listar")]
-        public async Task<IActionResult> Operador_Listar([FromQuery] int iIdEmpresa, [FromQuery] int iIdSucursal, [FromQuery] byte bSoloActivos, [FromQuery] string? sTextoBusqueda = "")
+        public async Task<IActionResult> Operador_Listar([FromQuery] int iIdEmpresa, [FromQuery] int? iIdSucursal, [FromQuery] byte bSoloActivos, [FromQuery] string? sTextoBusqueda = "")
         {
-            var response = await _bs.Operador_Listar(iIdEmpresa, iIdSucursal, bSoloActivos, string.IsNullOrWhiteSpace(sTextoBusqueda) ? string.Empty : sTextoBusqueda);
+            var idSucursalNormalizada = iIdSucursal.HasValue && iIdSucursal.Value > 0 ? iIdSucursal : null;
+            var response = await _bs.Operador_Listar(iIdEmpresa, idSucursalNormalizada, bSoloActivos, string.IsNullOrWhiteSpace(sTextoBusqueda) ? string.Empty : sTextoBusqueda);
 
             if (!response.Ok)
             {
@@ -69,4 +71,3 @@ namespace Transporte_Web_Service.Controllers
         }
     }
 }
-

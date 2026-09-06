@@ -1,4 +1,4 @@
-﻿using Transporte_Web_Service.Data;
+using Transporte_Web_Service.Data;
 using Transporte_Web_Service.Entity;
 
 namespace Transporte_Web_Service.Bussines
@@ -34,7 +34,7 @@ namespace Transporte_Web_Service.Bussines
             return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(resumen);
         }
 
-        public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Operador_Guardar(int iIdOperador, int iIdEmpresa, int iIdSucursal, string sNombre, string sLicencia, string sTipoLicencia, string sFechaVencimientoLicencia, string sCURP, string sTelefono, byte bActivo)
+        public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Operador_Guardar(int iIdOperador, int iIdEmpresa, int? iIdSucursal, string sNombre, string sLicencia, string sTipoLicencia, DateTime? sFechaVencimientoLicencia, string sCURP, string sTelefono, byte bActivo)
         {
             if (iIdEmpresa <= 0)
             {
@@ -50,7 +50,7 @@ namespace Transporte_Web_Service.Bussines
             return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(resumen);
         }
 
-        public async Task<ApiResponse<IEnumerable<Entity_Operador_ObtenerPorId?>>> Operador_Listar(int iIdEmpresa, int iIdSucursal, byte bSoloActivos, string sTextoBusqueda)
+        public async Task<ApiResponse<IEnumerable<Entity_Operador_ObtenerPorId?>>> Operador_Listar(int iIdEmpresa, int? iIdSucursal, byte bSoloActivos, string sTextoBusqueda)
         {
             if (iIdEmpresa <= 0)
             {

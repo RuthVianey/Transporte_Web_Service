@@ -30,9 +30,10 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpGet("listaDatos_Cliente_Guardar")]
-        public async Task<IActionResult> Cliente_Guardar([FromQuery] int iIdCliente, [FromQuery] int iIdEmpresa, [FromQuery] int iIdSucursal, [FromQuery] string sNombre, [FromQuery] string sRFC, [FromQuery] string sTelefono, [FromQuery] string sEmail, [FromQuery] int iRegimenFiscal, [FromQuery] byte bActivo)
+        public async Task<IActionResult> Cliente_Guardar([FromQuery] int iIdCliente, [FromQuery] int iIdEmpresa, [FromQuery] int? iIdSucursal, [FromQuery] string sNombre, [FromQuery] string sRFC, [FromQuery] string sTelefono, [FromQuery] string sEmail, [FromQuery] int? iRegimenFiscal, [FromQuery] byte bActivo)
         {
-            var response = await _bs.Bs_Cliente_Guardar(iIdCliente, iIdEmpresa, iIdSucursal, sNombre, sRFC, sTelefono, sEmail, iRegimenFiscal, bActivo);
+            var idSucursalNormalizada = iIdSucursal.HasValue && iIdSucursal.Value > 0 ? iIdSucursal : null;
+            var response = await _bs.Bs_Cliente_Guardar(iIdCliente, iIdEmpresa, idSucursalNormalizada, sNombre, sRFC, sTelefono, sEmail, iRegimenFiscal, bActivo);
 
             if (!response.Ok)
             {
@@ -43,9 +44,10 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpGet("listaDatos_Cliente_Listar")]
-        public async Task<IActionResult> Cliente_Listar([FromQuery] int iIdEmpresa, [FromQuery] int iIdSucursal, [FromQuery] string sSoloActivos, [FromQuery] string? sTextoBusqueda = "")
+        public async Task<IActionResult> Cliente_Listar([FromQuery] int iIdEmpresa, [FromQuery] int? iIdSucursal, [FromQuery] string sSoloActivos, [FromQuery] string? sTextoBusqueda = "")
         {
-            var response = await _bs.Bs_Cliente_Listar(iIdEmpresa, iIdSucursal, sSoloActivos, string.IsNullOrWhiteSpace(sTextoBusqueda) ? string.Empty : sTextoBusqueda);
+            var idSucursalNormalizada = iIdSucursal.HasValue && iIdSucursal.Value > 0 ? iIdSucursal : null;
+            var response = await _bs.Bs_Cliente_Listar(iIdEmpresa, idSucursalNormalizada, sSoloActivos, string.IsNullOrWhiteSpace(sTextoBusqueda) ? string.Empty : sTextoBusqueda);
 
             if (!response.Ok)
             {
@@ -69,4 +71,3 @@ namespace Transporte_Web_Service.Controllers
         }
     }
 }
-

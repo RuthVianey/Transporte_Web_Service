@@ -1,4 +1,4 @@
-﻿using Transporte_Web_Service.Data;
+using Transporte_Web_Service.Data;
 using Transporte_Web_Service.Entity;
 
 namespace Transporte_Web_Service.Bussines
@@ -35,7 +35,7 @@ namespace Transporte_Web_Service.Bussines
             return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(resumen);
         }
 
-        public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Bs_Cliente_Guardar(int iIdCliente, int iIdEmpresa, int iIdSucursal, string sNombre, string sRFC, string sTelefono, string sEmail, int iRegimenFiscal, byte bActivo)
+        public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Bs_Cliente_Guardar(int iIdCliente, int iIdEmpresa, int? iIdSucursal, string sNombre, string sRFC, string sTelefono, string sEmail, int? iRegimenFiscal, byte bActivo)
         {
             if (iIdEmpresa <= 0)
             {
@@ -52,7 +52,7 @@ namespace Transporte_Web_Service.Bussines
             return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(resumen);
         }
 
-        public async Task<ApiResponse<IEnumerable<Entity_Obtener_Cliente_PorId?>>> Bs_Cliente_Listar(int iIdEmpresa, int iIdSucursal, string sSoloActivos, string sTextoBusqueda)
+        public async Task<ApiResponse<IEnumerable<Entity_Obtener_Cliente_PorId?>>> Bs_Cliente_Listar(int iIdEmpresa, int? iIdSucursal, string sSoloActivos, string sTextoBusqueda)
         {
             if (iIdEmpresa <= 0)
             {

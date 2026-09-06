@@ -40,7 +40,7 @@ namespace Transporte_Web_Service.Data
             );
         }
 
-        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_Cliente_Guardar(int iIdCliente, int iIdEmpresa, int iIdSucursal, string sNombre, string sRFC, string sTelefono, string sEmail, int iRegimenFiscal, byte bActivo)
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_Cliente_Guardar(int iIdCliente, int iIdEmpresa, int? iIdSucursal, string sNombre, string sRFC, string sTelefono, string sEmail, int? iRegimenFiscal, byte bActivo)
         {
 
             using var connection = _connectionFactory.CreateConnection();
@@ -62,7 +62,7 @@ namespace Transporte_Web_Service.Data
             );
         }
 
-        public async Task<IEnumerable<Entity_Obtener_Cliente_PorId?>> Dal_Cliente_Listar(int iIdEmpresa, int iIdSucursal, string sSoloActivos, string sTextoBusqueda)
+        public async Task<IEnumerable<Entity_Obtener_Cliente_PorId?>> Dal_Cliente_Listar(int iIdEmpresa, int? iIdSucursal, string sSoloActivos, string sTextoBusqueda)
         {
 
             using var connection = _connectionFactory.CreateConnection();
@@ -95,4 +95,3 @@ namespace Transporte_Web_Service.Data
         }
     }
 }
-
