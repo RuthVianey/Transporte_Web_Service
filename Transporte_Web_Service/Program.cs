@@ -71,6 +71,9 @@ builder.Services.AddScoped<RentabilidadDAL>();
 builder.Services.AddScoped<RolesBussines>();
 builder.Services.AddScoped<RolesDAL>();
 
+builder.Services.AddScoped<SatCatalogosBussines>();
+builder.Services.AddScoped<SatCatalogosDAL>();
+
 builder.Services.AddScoped<RutasBussines>();
 builder.Services.AddScoped<RutasDAL>();
 
