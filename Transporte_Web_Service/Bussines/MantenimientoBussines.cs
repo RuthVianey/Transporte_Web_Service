@@ -35,6 +35,24 @@ namespace Transporte_Web_Service.Bussines
             }
             return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(resumen);
         }
+        public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Bs_MantenimientoProgramado_Guardar(int idMantenimientoProg, int idEmpresa, int idUnidad, int? idTipoMantenimiento, string? tipoServicio, decimal? kmProximo, DateTime? fechaProxima, byte activo)
+        {
+            if (idEmpresa <= 0) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("La empresa es obligatoria.");
+            if (idUnidad <= 0) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("La unidad es obligatoria.");
+            if (!kmProximo.HasValue && !fechaProxima.HasValue) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("Captura kilometraje próximo o fecha próxima.");
+            var result = await _dal.Dal_MantenimientoProgramado_Guardar(idMantenimientoProg, idEmpresa, idUnidad, idTipoMantenimiento, tipoServicio, kmProximo, fechaProxima, activo);
+            return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(result);
+        }
+        public async Task<ApiResponse<IEnumerable<Entity_MantenimientoProgramado?>>> Bs_MantenimientoProgramado_Listar(int idEmpresa, int? idUnidad, byte soloActivos)
+        {
+            if (idEmpresa <= 0) return ApiResponse<IEnumerable<Entity_MantenimientoProgramado?>>.Fail("La empresa es obligatoria.");
+            return ApiResponse<IEnumerable<Entity_MantenimientoProgramado?>>.Success(await _dal.Dal_MantenimientoProgramado_Listar(idEmpresa, idUnidad, soloActivos));
+        }
+        public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Bs_MantenimientoProgramado_Desactivar(int idMantenimientoProg, int idEmpresa)
+        {
+            if (idEmpresa <= 0 || idMantenimientoProg <= 0) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("El programa de mantenimiento es obligatorio.");
+            return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(await _dal.Dal_MantenimientoProgramado_Desactivar(idMantenimientoProg, idEmpresa));
+        }
 
         public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Bs_Mantenimiento_Guardar(int IdMantenimiento, int IdEmpresa, int IdSucursal, int IdUnidad, int IdViaje, int IdTipoMantenimiento, string Fecha, decimal KmUnidad, string Descripcion, decimal Costo, byte EsAsignableAViaje)
         {

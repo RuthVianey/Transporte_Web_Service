@@ -102,6 +102,14 @@ namespace Transporte_Web_Service.Bussines
                 return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("El archivo es obligatorio.");
             }
 
+            if ((entidad.Latitud.HasValue && !entidad.Longitud.HasValue)
+                || (!entidad.Latitud.HasValue && entidad.Longitud.HasValue)
+                || (entidad.Latitud.HasValue && (entidad.Latitud < -90 || entidad.Latitud > 90))
+                || (entidad.Longitud.HasValue && (entidad.Longitud < -180 || entidad.Longitud > 180)))
+            {
+                return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("La ubicación geográfica no es válida.");
+            }
+
             var extension = Path.GetExtension(archivo.FileName).ToLowerInvariant();
             var extensionesPermitidas = new HashSet<string> { ".jpg", ".jpeg", ".png", ".webp", ".pdf", ".doc", ".docx", ".xls", ".xlsx" };
 
@@ -221,6 +229,61 @@ namespace Transporte_Web_Service.Bussines
             }
 
             return ApiResponse<Entity_ViajeExpediente_Obtener>.Success(respuesta);
+        }
+
+        public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Bs_EventoViaje_Guardar(Entity_EventoViaje_Guardar entidad)
+        {
+            if (entidad.IdEmpresa <= 0 || entidad.IdViaje <= 0) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("Empresa y viaje son obligatorios.");
+            if (!new[] { "CARGA", "DESCARGA", "CIERRE", "GENERAL" }.Contains((entidad.TipoEvento ?? string.Empty).Trim().ToUpperInvariant())) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("El tipo de evento no es válido.");
+            var respuesta = await _dal.Dal_EventoViaje_Guardar(entidad);
+            return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(respuesta);
+        }
+
+        public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Bs_ViajeDocumento_Revisar(Entity_ViajeDocumento_Revisar entidad)
+        {
+            if (entidad.IdEmpresa <= 0 || entidad.IdViajeDocumento <= 0 || entidad.IdUsuarioRevisor <= 0) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("Empresa, documento y revisor son obligatorios.");
+            if (!new[] { "APROBADO", "RECHAZADO" }.Contains((entidad.EstadoRevision ?? string.Empty).Trim().ToUpperInvariant())) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("La decisión de revisión no es válida.");
+            if (entidad.EstadoRevision.Trim().Equals("RECHAZADO", StringComparison.OrdinalIgnoreCase) && string.IsNullOrWhiteSpace(entidad.ComentarioRevision)) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("Indica el motivo del rechazo.");
+            var respuesta = await _dal.Dal_ViajeDocumento_Revisar(entidad);
+            return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(respuesta);
+        }
+
+        public async Task<ApiResponse<Entity_ArchivoExpediente>> Bs_ViajeDocumento_ObtenerArchivo(int IdViajeDocumento, int IdViaje, int IdEmpresa)
+        {
+            if (IdEmpresa <= 0 || IdViaje <= 0 || IdViajeDocumento <= 0)
+            {
+                return ApiResponse<Entity_ArchivoExpediente>.Fail("Empresa, viaje y documento son obligatorios.");
+            }
+
+            var documentos = await _dal.Dal_ViajeDocumento_ListarPorViaje(IdViaje, IdEmpresa, null, true);
+            var documento = documentos?.FirstOrDefault(item => item?.IdViajeDocumento == IdViajeDocumento);
+            if (documento == null)
+            {
+                return ApiResponse<Entity_ArchivoExpediente>.Fail("No se encontró el documento.");
+            }
+
+            var rutaBase = _configuration["ExpedienteArchivos:RutaBase"];
+            if (string.IsNullOrWhiteSpace(rutaBase))
+            {
+                rutaBase = Path.Combine(_environment.ContentRootPath, "ArchivosExpediente");
+            }
+
+            var baseCompleta = Path.GetFullPath(rutaBase);
+            var rutaCompleta = Path.GetFullPath(Path.Combine(baseCompleta, documento.RutaRelativa));
+            if (!rutaCompleta.StartsWith(baseCompleta + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)
+                || !File.Exists(rutaCompleta))
+            {
+                return ApiResponse<Entity_ArchivoExpediente>.Fail("El archivo no se encuentra en el servidor.");
+            }
+
+            return ApiResponse<Entity_ArchivoExpediente>.Success(new Entity_ArchivoExpediente
+            {
+                RutaFisica = rutaCompleta,
+                NombreDescarga = documento.NombreOriginal,
+                ContentType = string.IsNullOrWhiteSpace(documento.ContentType)
+                    ? "application/octet-stream"
+                    : documento.ContentType
+            });
         }
 
         private static string LimpiarSegmentoRuta(string valor)

@@ -34,7 +34,7 @@ namespace Transporte_Web_Service.Bussines
             return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(resumen);
         }
 
-        public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Bs_Ruta_Guardar(int IdRuta, int IdEmpresa, int IdSucursal, string Nombre, string Origen, string Destino, decimal DistanciaKm, int TiempoEstimadoMin, byte Activo)
+        public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Bs_Ruta_Guardar(int IdRuta, int IdEmpresa, int? IdSucursal, string Nombre, string Origen, string Destino, decimal DistanciaKm, int TiempoEstimadoMin, byte Activo)
         {
             if (IdEmpresa <= 0)
             {
@@ -50,7 +50,7 @@ namespace Transporte_Web_Service.Bussines
             return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(resumen);
         }
 
-        public async Task<ApiResponse<IEnumerable<Entity_Ruta_Listar?>>> Bs_Ruta_Listar(int IdEmpresa, int IdSucursal, byte SoloActivos, string TextoBusqueda)
+        public async Task<ApiResponse<IEnumerable<Entity_Ruta_Listar?>>> Bs_Ruta_Listar(int IdEmpresa, int? IdSucursal, byte SoloActivos, string TextoBusqueda)
         {
             if (IdEmpresa <= 0)
             {

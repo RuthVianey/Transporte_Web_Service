@@ -104,5 +104,10 @@ namespace Transporte_Web_Service.Bussines
                 ? ApiResponse<IEnumerable<Entity_Unidad_Listar?>>.Fail("No se encontro informacion.")
                 : ApiResponse<IEnumerable<Entity_Unidad_Listar?>>.Success(resumen);
         }
+        public async Task<ApiResponse<IEnumerable<Entity_UnidadDisponible?>>> Bs_Unidad_Disponibilidad_Listar(int idEmpresa, int? idSucursal, DateTime? fechaInicio, DateTime? fechaFin, int? idViajeExcluir)
+        {
+            if (idEmpresa <= 0) return ApiResponse<IEnumerable<Entity_UnidadDisponible?>>.Fail("La empresa es obligatoria.");
+            return ApiResponse<IEnumerable<Entity_UnidadDisponible?>>.Success(await _dal.Dal_Unidad_Disponibilidad_Listar(idEmpresa, idSucursal, fechaInicio, fechaFin, idViajeExcluir));
+        }
     }
 }

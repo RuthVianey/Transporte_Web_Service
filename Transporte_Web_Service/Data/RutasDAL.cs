@@ -39,7 +39,7 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_Ruta_Guardar(int IdRuta, int IdEmpresa, int IdSucursal, string Nombre, string Origen, string Destino, decimal DistanciaKm, int TiempoEstimadoMin, byte Activo)
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_Ruta_Guardar(int IdRuta, int IdEmpresa, int? IdSucursal, string Nombre, string Origen, string Destino, decimal DistanciaKm, int TiempoEstimadoMin, byte Activo)
         {
 
             using var connection = _connectionFactory.CreateConnection();
@@ -60,7 +60,7 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
-        public async Task<IEnumerable<Entity_Ruta_Listar?>> Dal_Ruta_Listar(int IdEmpresa, int IdSucursal, byte SoloActivos, string TextoBusqueda)
+        public async Task<IEnumerable<Entity_Ruta_Listar?>> Dal_Ruta_Listar(int IdEmpresa, int? IdSucursal, byte SoloActivos, string TextoBusqueda)
         {
 
             using var connection = _connectionFactory.CreateConnection();

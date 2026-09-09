@@ -10,7 +10,9 @@
         public string RFC { set; get; }
         public string Telefono { set; get; }
         public string Email { set; get; }
+        public int? IdSatCatalogoRegimenFiscal { set; get; }
         public string RegimenFiscal { set; get; }
+        public string? RegimenFiscalDescripcion { set; get; }
         public byte Activo { set; get; }
     }
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using Transporte_Web_Service.Bussines;
 using Transporte_Web_Service.Entity;
 
@@ -9,10 +10,12 @@ namespace Transporte_Web_Service.Controllers
     public class ExpedienteController : ControllerBase
     {
         private readonly ExpedienteBussines _bs;
+        private readonly AuditoriaBussines _auditoria;
 
-        public ExpedienteController(ExpedienteBussines bs)
+        public ExpedienteController(ExpedienteBussines bs, AuditoriaBussines auditoria)
         {
             _bs = bs;
+            _auditoria = auditoria;
         }
 
         [HttpPost("tipo-documento/guardar")]
@@ -25,6 +28,7 @@ namespace Transporte_Web_Service.Controllers
                 return BadRequest(response);
             }
 
+            await RegistrarAuditoria(entidad.IdEmpresa, entidad.IdTipoDocumentoViaje > 0 ? "MODIFICAR" : "CREAR", "Tipo de documento", response.Data?.FirstOrDefault()?.ID, entidad.Descripcion);
             return Ok(response);
         }
 
@@ -51,7 +55,24 @@ namespace Transporte_Web_Service.Controllers
                 return BadRequest(response);
             }
 
+            await RegistrarAuditoria(entidad.IdEmpresa, entidad.IdViajeDocumento.HasValue && entidad.IdViajeDocumento.Value > 0 ? "MODIFICAR" : "CREAR", "Documento del viaje", response.Data?.FirstOrDefault()?.ID, $"Viaje {entidad.IdViaje}: {entidad.NombreOriginal}");
             return Ok(response);
+        }
+
+        [HttpPost("evento/guardar")]
+        public async Task<IActionResult> EventoViaje_Guardar([FromBody] Entity_EventoViaje_Guardar entidad)
+        {
+            var response = await _bs.Bs_EventoViaje_Guardar(entidad);
+            if (response.Ok) await RegistrarAuditoria(entidad.IdEmpresa, entidad.IdEvento.GetValueOrDefault() > 0 ? "MODIFICAR" : "CREAR", "Evento de viaje", response.Data?.FirstOrDefault()?.ID, $"Viaje {entidad.IdViaje}: {entidad.TipoEvento}");
+            return response.Ok ? Ok(response) : BadRequest(response);
+        }
+
+        [HttpPost("documento/revisar")]
+        public async Task<IActionResult> ViajeDocumento_Revisar([FromBody] Entity_ViajeDocumento_Revisar entidad)
+        {
+            var response = await _bs.Bs_ViajeDocumento_Revisar(entidad);
+            if (response.Ok) await RegistrarAuditoria(entidad.IdEmpresa, string.Equals(entidad.EstadoRevision, "RECHAZADO", StringComparison.OrdinalIgnoreCase) ? "RECHAZAR" : "APROBAR", "Revisión de evidencia", entidad.IdViajeDocumento, entidad.ComentarioRevision);
+            return response.Ok ? Ok(response) : BadRequest(response);
         }
 
         [HttpPost("documento/subir")]
@@ -65,6 +86,7 @@ namespace Transporte_Web_Service.Controllers
                 return BadRequest(response);
             }
 
+            await RegistrarAuditoria(entidad.IdEmpresa, "CREAR", "Documento del viaje", response.Data?.FirstOrDefault()?.ID, $"Viaje {entidad.IdViaje}: {archivo.FileName}");
             return Ok(response);
         }
 
@@ -81,6 +103,18 @@ namespace Transporte_Web_Service.Controllers
             return Ok(response);
         }
 
+        [HttpGet("documento/abrir")]
+        public async Task<IActionResult> ViajeDocumento_Abrir(int IdViajeDocumento, int IdViaje, int IdEmpresa)
+        {
+            var response = await _bs.Bs_ViajeDocumento_ObtenerArchivo(IdViajeDocumento, IdViaje, IdEmpresa);
+            if (!response.Ok || response.Data == null)
+            {
+                return NotFound(response);
+            }
+
+            return PhysicalFile(response.Data.RutaFisica, response.Data.ContentType, response.Data.NombreDescarga, enableRangeProcessing: true);
+        }
+
         [HttpDelete("documento/eliminar")]
         public async Task<IActionResult> ViajeDocumento_Eliminar(int IdViajeDocumento, int IdEmpresa, int? IdUsuario = null)
         {
@@ -91,6 +125,7 @@ namespace Transporte_Web_Service.Controllers
                 return BadRequest(response);
             }
 
+            await RegistrarAuditoria(IdEmpresa, "ELIMINAR", "Documento del viaje", IdViajeDocumento, null);
             return Ok(response);
         }
 
@@ -105,6 +140,12 @@ namespace Transporte_Web_Service.Controllers
             }
 
             return Ok(response);
+        }
+
+        private Task RegistrarAuditoria(int idEmpresa, string accion, string recurso, int? idRegistro, string? detalle)
+        {
+            var idUsuario = int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var usuario) ? usuario : (int?)null;
+            return _auditoria.Registrar(idEmpresa, idUsuario, "EXPEDIENTES", accion, recurso, idRegistro?.ToString(), detalle);
         }
     }
 }

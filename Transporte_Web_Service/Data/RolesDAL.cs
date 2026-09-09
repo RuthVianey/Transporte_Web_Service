@@ -11,6 +11,7 @@ using System.Text;
 using Transporte_Web_Service.Controllers;
 using Transporte_Web_Service.Data.Database;
 using Transporte_Web_Service.Entity;
+using Transporte_Web_Service.Security;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -134,6 +135,26 @@ namespace Transporte_Web_Service.Data
             return await connection.QueryAsync<Entity_UsuarioRol_ListarPorUsuario?>("dbo.sp_UsuarioRol_ListarPorUsuario",
                 new { IdUsuario, IdEmpresa },
                 commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<IEnumerable<UserPermission>> Dal_PermisosUsuario(int idEmpresa, int idUsuario)
+        {
+            using var connection = _connectionFactory.CreateConnection();
+
+            const string query = @"
+                SELECT DISTINCT
+                    P.Clave AS ProgramKey,
+                    CAST(MAX(CASE WHEN RP.PuedeLeer = 1 THEN 1 ELSE 0 END) AS bit) AS CanRead,
+                    CAST(MAX(CASE WHEN RP.PuedeEscribir = 1 THEN 1 ELSE 0 END) AS bit) AS CanWrite,
+                    CAST(MAX(CASE WHEN RP.PuedeEliminar = 1 THEN 1 ELSE 0 END) AS bit) AS CanDelete
+                FROM dbo.UsuarioRol UR
+                INNER JOIN dbo.Rol R ON R.IdRol = UR.IdRol AND R.IdEmpresa = @IdEmpresa AND R.Activo = 1
+                INNER JOIN dbo.RolPrograma RP ON RP.IdRol = UR.IdRol
+                INNER JOIN dbo.Programa P ON P.IdPrograma = RP.IdPrograma
+                WHERE UR.IdUsuario = @IdUsuario
+                GROUP BY P.Clave;";
+
+            return await connection.QueryAsync<UserPermission>(query, new { IdEmpresa = idEmpresa, IdUsuario = idUsuario });
         }
 
         public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_UsuarioRol_Quitar(int IdUsuarioRol, int IdEmpresa)

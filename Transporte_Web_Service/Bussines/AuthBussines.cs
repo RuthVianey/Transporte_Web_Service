@@ -39,5 +39,14 @@ namespace Transporte_Web_Service.Bussines
             var empresas = (await _dal.Usuarios_Empresa(email)).ToList();
             return ApiResponse<IEnumerable<Entity_UsuarioEmpresa?>>.Success(empresas);
         }
+
+        public Task<bool> SucursalPerteneceEmpresa(int idEmpresa, int idSucursal) =>
+            _dal.SucursalPerteneceEmpresa(idEmpresa, idSucursal);
+
+        public async Task<ApiResponse<IEnumerable<Entity_Sucursal_Listar>>> SucursalesEmpresa(int idEmpresa)
+        {
+            if (idEmpresa <= 0) return ApiResponse<IEnumerable<Entity_Sucursal_Listar>>.Fail("La empresa es obligatoria.");
+            return ApiResponse<IEnumerable<Entity_Sucursal_Listar>>.Success(await _dal.SucursalesEmpresa(idEmpresa));
+        }
     }
 }

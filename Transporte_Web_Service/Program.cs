@@ -2,10 +2,38 @@ using Transporte_Web_Service.Bussines;
 using Transporte_Web_Service.Data;
 using Transporte_Web_Service.Data.Database;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Transporte_Web_Service.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+
+var jwtSection = builder.Configuration.GetSection(JwtOptions.SectionName);
+var jwtOptions = jwtSection.Get<JwtOptions>() ?? new JwtOptions();
+if (jwtOptions.Key.Length < 32)
+    throw new InvalidOperationException("La clave JWT debe configurarse con al menos 32 caracteres.");
+
+builder.Services.Configure<JwtOptions>(jwtSection);
+builder.Services.AddSingleton<TokenService>();
+builder.Services.AddScoped<AccessService>();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = jwtOptions.Issuer,
+            ValidateAudience = true,
+            ValidAudience = jwtOptions.Audience,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Key)),
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.FromMinutes(1),
+        };
+    });
 
 builder.Services.AddCors(options =>
 {
@@ -31,6 +59,10 @@ builder.Services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
 
 builder.Services.AddScoped<AuthBussines>();
 builder.Services.AddScoped<AuthDAL>();
+builder.Services.AddScoped<AlertasBussines>();
+builder.Services.AddScoped<AlertasDAL>();
+builder.Services.AddScoped<AuditoriaBussines>();
+builder.Services.AddScoped<AuditoriaDAL>();
 
 builder.Services.AddScoped<CatalogoDomicilioBussines>();
 builder.Services.AddScoped<CatalogoDomicilioDAL>();
@@ -111,6 +143,9 @@ app.UseDeveloperExceptionPage();
 app.UseHttpsRedirection();
 
 app.UseCors("AllowTransporteFrontend");
+
+app.UseAuthentication();
+app.UseMiddleware<PermissionMiddleware>();
 
 var logosPath = Path.Combine(app.Environment.ContentRootPath, "ArchivosEmpresa");
 Directory.CreateDirectory(logosPath);

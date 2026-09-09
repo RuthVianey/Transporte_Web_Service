@@ -30,10 +30,10 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpGet("listaDatos_Cliente_Guardar")]
-        public async Task<IActionResult> Cliente_Guardar([FromQuery] int iIdCliente, [FromQuery] int iIdEmpresa, [FromQuery] int? iIdSucursal, [FromQuery] string sNombre, [FromQuery] string sRFC, [FromQuery] string sTelefono, [FromQuery] string sEmail, [FromQuery] int? iRegimenFiscal, [FromQuery] byte bActivo)
+        public async Task<IActionResult> Cliente_Guardar([FromQuery] int iIdCliente, [FromQuery] int iIdEmpresa, [FromQuery] int? iIdSucursal, [FromQuery] string sNombre, [FromQuery] string sRFC, [FromQuery] string sTelefono, [FromQuery] string sEmail, [FromQuery] int? iIdSatCatalogoRegimenFiscal, [FromQuery] byte bActivo)
         {
             var idSucursalNormalizada = iIdSucursal.HasValue && iIdSucursal.Value > 0 ? iIdSucursal : null;
-            var response = await _bs.Bs_Cliente_Guardar(iIdCliente, iIdEmpresa, idSucursalNormalizada, sNombre, sRFC, sTelefono, sEmail, iRegimenFiscal, bActivo);
+            var response = await _bs.Bs_Cliente_Guardar(iIdCliente, iIdEmpresa, idSucursalNormalizada, sNombre, sRFC, sTelefono, sEmail, iIdSatCatalogoRegimenFiscal, bActivo);
 
             if (!response.Ok)
             {

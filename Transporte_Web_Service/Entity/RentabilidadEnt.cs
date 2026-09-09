@@ -2,7 +2,7 @@ namespace Transporte_Web_Service.Entity
 {
     public class Entity_Rentabilidad_ListarViajes
     {
-        public int IdIdViaje { get; set; }
+        public int IdViaje { get; set; }
         public int IdSucursal { get; set; }
         public string? Sucursal { get; set; }
         public int IdCliente { get; set; }

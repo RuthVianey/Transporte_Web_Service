@@ -33,12 +33,12 @@ namespace Transporte_Web_Service.Bussines
                 : ApiResponse<IEnumerable<Entity_Producto_Listar?>>.Success(resumen);
         }
 
-        public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Bs_Producto_Guardar(int? IdProducto, int IdEmpresa, int? IdSucursal, string? Clave, string Descripcion, string? UnidadMedida, string? ClaveSAT, bool MaterialPeligroso, bool Activo)
+        public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Bs_Producto_Guardar(int? IdProducto, int IdEmpresa, int? IdSucursal, string? Clave, string Descripcion, int? IdSatCatalogoProdServ, int? IdSatCatalogoUM, bool MaterialPeligroso, bool Activo)
         {
             if (IdEmpresa <= 0) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("La empresa es obligatoria.");
             if (string.IsNullOrWhiteSpace(Descripcion)) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("La descripción del producto es obligatoria.");
 
-            var resumen = await _dal.Dal_Producto_Guardar(IdProducto, IdEmpresa, IdSucursal, Clave, Descripcion, UnidadMedida, ClaveSAT, MaterialPeligroso, Activo);
+            var resumen = await _dal.Dal_Producto_Guardar(IdProducto, IdEmpresa, IdSucursal, Clave, Descripcion, IdSatCatalogoProdServ, IdSatCatalogoUM, MaterialPeligroso, Activo);
             return resumen == null
                 ? ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("No se guardó la información.")
                 : ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(resumen);

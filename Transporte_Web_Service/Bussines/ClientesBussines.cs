@@ -35,7 +35,7 @@ namespace Transporte_Web_Service.Bussines
             return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(resumen);
         }
 
-        public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Bs_Cliente_Guardar(int iIdCliente, int iIdEmpresa, int? iIdSucursal, string sNombre, string sRFC, string sTelefono, string sEmail, int? iRegimenFiscal, byte bActivo)
+        public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Bs_Cliente_Guardar(int iIdCliente, int iIdEmpresa, int? iIdSucursal, string sNombre, string sRFC, string sTelefono, string sEmail, int? iIdSatCatalogoRegimenFiscal, byte bActivo)
         {
             if (iIdEmpresa <= 0)
             {
@@ -43,7 +43,7 @@ namespace Transporte_Web_Service.Bussines
             }
 
 
-            var resumen = await _dal.Dal_Cliente_Guardar(iIdCliente, iIdEmpresa, iIdSucursal, sNombre, sRFC, sTelefono, sEmail, iRegimenFiscal, bActivo);
+            var resumen = await _dal.Dal_Cliente_Guardar(iIdCliente, iIdEmpresa, iIdSucursal, sNombre, sRFC, sTelefono, sEmail, iIdSatCatalogoRegimenFiscal, bActivo);
 
             if (resumen == null)
             {

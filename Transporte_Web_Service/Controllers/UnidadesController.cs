@@ -68,6 +68,13 @@ namespace Transporte_Web_Service.Controllers
 
             return Ok(response);
         }
+
+        [HttpGet("disponibilidad/listar")]
+        public async Task<IActionResult> Unidad_Disponibilidad_Listar([FromQuery] int IdEmpresa, [FromQuery] int? IdSucursal, [FromQuery] DateTime? FechaInicio, [FromQuery] DateTime? FechaFin, [FromQuery] int? IdViajeExcluir)
+        {
+            var response = await _bs.Bs_Unidad_Disponibilidad_Listar(IdEmpresa, IdSucursal, FechaInicio, FechaFin, IdViajeExcluir);
+            return response.Ok ? Ok(response) : BadRequest(response);
+        }
         [HttpGet("listaDatos_Unidad_Desactivar")]
         public async Task<IActionResult> Unidad_Desactivar([FromQuery] int IdUnidad, [FromQuery] int IdEmpresa)
         {

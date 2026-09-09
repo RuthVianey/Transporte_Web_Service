@@ -70,9 +70,9 @@ namespace Transporte_Web_Service.Controllers
             return Ok(response);
         }
         [HttpGet("listaDatos_Viaje_Guardar")]
-        public async Task<IActionResult> Viaje_Guardar([FromQuery] int? IdViaje, [FromQuery] int IdEmpresa, [FromQuery] int? IdSucursal, [FromQuery] int? IdOperador, [FromQuery] int IdCliente, [FromQuery] int? IdRuta, [FromQuery] int IdEstadoViaje, [FromQuery] DateTime? FechaSalida, [FromQuery] DateTime? FechaLlegadaEstimada, [FromQuery] DateTime? FechaLlegadaReal, [FromQuery] string? Origen, [FromQuery] string? Destino, [FromQuery] decimal? KmInicial, [FromQuery] decimal? KmFinal, [FromQuery] decimal Ingreso, [FromQuery] decimal? PrecioPactado, [FromQuery] string? Observaciones)
+        public async Task<IActionResult> Viaje_Guardar([FromQuery] int? IdViaje, [FromQuery] int IdEmpresa, [FromQuery] int? IdSucursal, [FromQuery] int? IdOperador, [FromQuery] int IdCliente, [FromQuery] int? IdRuta, [FromQuery] int IdEstadoViaje, [FromQuery] string? Remision, [FromQuery] DateTime? FechaSalida, [FromQuery] DateTime? FechaLlegadaEstimada, [FromQuery] DateTime? FechaLlegadaReal, [FromQuery] string? Origen, [FromQuery] string? Destino, [FromQuery] decimal? KmInicial, [FromQuery] decimal? KmFinal, [FromQuery] decimal Ingreso, [FromQuery] decimal? PrecioPactado, [FromQuery] string? Observaciones)
         {
-            var response = await _bs.Bs_Viaje_Guardar(IdViaje, IdEmpresa, IdSucursal, IdOperador, IdCliente, IdRuta, IdEstadoViaje, FechaSalida, FechaLlegadaEstimada, FechaLlegadaReal, Origen, Destino, KmInicial, KmFinal, Ingreso, PrecioPactado, Observaciones);
+            var response = await _bs.Bs_Viaje_Guardar(IdViaje, IdEmpresa, IdSucursal, IdOperador, IdCliente, IdRuta, IdEstadoViaje, Remision, FechaSalida, FechaLlegadaEstimada, FechaLlegadaReal, Origen, Destino, KmInicial, KmFinal, Ingreso, PrecioPactado, Observaciones);
             if (!response.Ok) return BadRequest(response);
             return Ok(response);
         }
@@ -96,6 +96,46 @@ namespace Transporte_Web_Service.Controllers
         public async Task<IActionResult> ViajeMovimiento_Eliminar([FromQuery] int IdViajeMovimiento, [FromQuery] int IdEmpresa)
         {
             var response = await _bs.Bs_ViajeMovimiento_Eliminar(IdViajeMovimiento, IdEmpresa);
+            if (!response.Ok) return BadRequest(response);
+            return Ok(response);
+        }
+
+        [HttpGet("listaDatos_ViajeUnidad_Listar")]
+        public async Task<IActionResult> ViajeUnidad_Listar([FromQuery] int IdViaje, [FromQuery] int IdEmpresa)
+        {
+            var response = await _bs.Bs_ViajeUnidad_Listar(IdViaje, IdEmpresa);
+            if (!response.Ok) return BadRequest(response);
+            return Ok(response);
+        }
+
+        [HttpGet("listaDatos_ViajeUnidad_Asignar")]
+        public async Task<IActionResult> ViajeUnidad_Asignar([FromQuery] int IdViaje, [FromQuery] int IdEmpresa, [FromQuery] int IdUnidad, [FromQuery] string? TipoParticipacion)
+        {
+            var response = await _bs.Bs_ViajeUnidad_Asignar(IdViaje, IdEmpresa, IdUnidad, TipoParticipacion);
+            if (!response.Ok) return BadRequest(response);
+            return Ok(response);
+        }
+
+        [HttpGet("listaDatos_ViajeUnidad_Quitar")]
+        public async Task<IActionResult> ViajeUnidad_Quitar([FromQuery] int IdViajeUnidad, [FromQuery] int IdEmpresa)
+        {
+            var response = await _bs.Bs_ViajeUnidad_Quitar(IdViajeUnidad, IdEmpresa);
+            if (!response.Ok) return BadRequest(response);
+            return Ok(response);
+        }
+
+        [HttpGet("listaDatos_Viaje_Cerrar")]
+        public async Task<IActionResult> Viaje_Cerrar([FromQuery] int IdViaje, [FromQuery] int IdEmpresa, [FromQuery] int IdEstadoViaje, [FromQuery] DateTime FechaLlegadaReal, [FromQuery] decimal KmFinal, [FromQuery] decimal? Ingreso, [FromQuery] string? Observaciones)
+        {
+            var response = await _bs.Bs_Viaje_Cerrar(IdViaje, IdEmpresa, IdEstadoViaje, FechaLlegadaReal, KmFinal, Ingreso, Observaciones);
+            if (!response.Ok) return BadRequest(response);
+            return Ok(response);
+        }
+
+        [HttpGet("cierre/validar")]
+        public async Task<IActionResult> Viaje_CierreValidar([FromQuery] int IdViaje, [FromQuery] int IdEmpresa, [FromQuery] DateTime? FechaLlegadaReal, [FromQuery] decimal? KmFinal)
+        {
+            var response = await _bs.Bs_Viaje_CierreValidar(IdViaje, IdEmpresa, FechaLlegadaReal, KmFinal);
             if (!response.Ok) return BadRequest(response);
             return Ok(response);
         }

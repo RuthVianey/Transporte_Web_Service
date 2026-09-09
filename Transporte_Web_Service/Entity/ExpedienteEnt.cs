@@ -98,11 +98,38 @@ namespace Transporte_Web_Service.Entity
 
 namespace Transporte_Web_Service.Entity
 {
-    public class Entity_ViajeExpediente_Obtener
+public class Entity_ViajeExpediente_Obtener
     {
         public IEnumerable<dynamic> Viaje { get; set; } = Enumerable.Empty<dynamic>();
         public IEnumerable<dynamic> Eventos { get; set; } = Enumerable.Empty<dynamic>();
         public IEnumerable<dynamic> Documentos { get; set; } = Enumerable.Empty<dynamic>();
     }
+}
+
+public class Entity_ArchivoExpediente
+{
+    public string RutaFisica { get; set; } = string.Empty;
+    public string NombreDescarga { get; set; } = string.Empty;
+    public string ContentType { get; set; } = "application/octet-stream";
+}
+
+public class Entity_EventoViaje_Guardar
+{
+    public int? IdEvento { get; set; }
+    public int IdEmpresa { get; set; }
+    public int IdViaje { get; set; }
+    public DateTime? Fecha { get; set; }
+    public string TipoEvento { get; set; } = "GENERAL";
+    public string? Descripcion { get; set; }
+    public int? IdUsuarioRegistro { get; set; }
+}
+
+public class Entity_ViajeDocumento_Revisar
+{
+    public int IdViajeDocumento { get; set; }
+    public int IdEmpresa { get; set; }
+    public string EstadoRevision { get; set; } = string.Empty;
+    public string? ComentarioRevision { get; set; }
+    public int IdUsuarioRevisor { get; set; }
 }
 

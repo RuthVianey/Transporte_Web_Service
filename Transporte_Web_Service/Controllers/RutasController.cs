@@ -31,7 +31,7 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpGet("listaDatos_Ruta_Guardar")]
-        public async Task<IActionResult> Ruta_Guardar([FromQuery] int IdRuta, [FromQuery] int IdEmpresa, [FromQuery] int IdSucursal, [FromQuery] string Nombre, [FromQuery] string Origen, [FromQuery] string Destino, [FromQuery] decimal DistanciaKm, [FromQuery] int TiempoEstimadoMin, [FromQuery] byte Activo)
+        public async Task<IActionResult> Ruta_Guardar([FromQuery] int IdRuta, [FromQuery] int IdEmpresa, [FromQuery] int? IdSucursal, [FromQuery] string Nombre, [FromQuery] string Origen, [FromQuery] string Destino, [FromQuery] decimal DistanciaKm, [FromQuery] int TiempoEstimadoMin, [FromQuery] byte Activo)
         {
             var response = await _bs.Bs_Ruta_Guardar(IdRuta, IdEmpresa, IdSucursal, Nombre, Origen, Destino, DistanciaKm, TiempoEstimadoMin, Activo);
 
@@ -44,7 +44,7 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpGet("listaDatos_Ruta_Listar")]
-        public async Task<IActionResult> Ruta_Listar([FromQuery] int IdEmpresa, [FromQuery] int IdSucursal, [FromQuery] byte SoloActivos, [FromQuery] string? TextoBusqueda = "")
+        public async Task<IActionResult> Ruta_Listar([FromQuery] int IdEmpresa, [FromQuery] int? IdSucursal, [FromQuery] byte SoloActivos, [FromQuery] string? TextoBusqueda = "")
         {
             var response = await _bs.Bs_Ruta_Listar(IdEmpresa, IdSucursal, SoloActivos, string.IsNullOrWhiteSpace(TextoBusqueda) ? string.Empty : TextoBusqueda);
 

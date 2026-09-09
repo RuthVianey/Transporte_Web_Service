@@ -134,6 +134,11 @@ namespace Transporte_Web_Service.Data
                 new { IdUnidad, IdEmpresa },
                 commandType: CommandType.StoredProcedure);
         }
+        public async Task<IEnumerable<Entity_UnidadDisponible?>> Dal_Unidad_Disponibilidad_Listar(int idEmpresa, int? idSucursal, DateTime? fechaInicio, DateTime? fechaFin, int? idViajeExcluir)
+        {
+            using var connection = _connectionFactory.CreateConnection();
+            return await connection.QueryAsync<Entity_UnidadDisponible?>("dbo.sp_Unidad_Disponibilidad_Listar", new { IdEmpresa = idEmpresa, IdSucursal = idSucursal, FechaInicio = fechaInicio, FechaFin = fechaFin, IdViajeExcluir = idViajeExcluir }, commandType: CommandType.StoredProcedure);
+        }
     }
 }
 

@@ -40,7 +40,7 @@ namespace Transporte_Web_Service.Data
             );
         }
 
-        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_Cliente_Guardar(int iIdCliente, int iIdEmpresa, int? iIdSucursal, string sNombre, string sRFC, string sTelefono, string sEmail, int? iRegimenFiscal, byte bActivo)
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_Cliente_Guardar(int iIdCliente, int iIdEmpresa, int? iIdSucursal, string sNombre, string sRFC, string sTelefono, string sEmail, int? iIdSatCatalogoRegimenFiscal, byte bActivo)
         {
 
             using var connection = _connectionFactory.CreateConnection();
@@ -55,7 +55,7 @@ namespace Transporte_Web_Service.Data
                     RFC = sRFC,
                     Telefono = sTelefono,
                     Email = sEmail,
-                    RegimenFiscal = iRegimenFiscal,
+                    IdSatCatalogoRegimenFiscal = iIdSatCatalogoRegimenFiscal,
                     Activo = bActivo
                 },
                 commandType: CommandType.StoredProcedure

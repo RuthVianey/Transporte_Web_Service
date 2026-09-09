@@ -31,9 +31,9 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpGet("listaDatos_Producto_Guardar")]
-        public async Task<IActionResult> Producto_Guardar([FromQuery] int? IdProducto, [FromQuery] int IdEmpresa, [FromQuery] int? IdSucursal, [FromQuery] string? Clave, [FromQuery] string Descripcion, [FromQuery] string? UnidadMedida, [FromQuery] string? ClaveSAT, [FromQuery] bool MaterialPeligroso = false, [FromQuery] bool Activo = true)
+        public async Task<IActionResult> Producto_Guardar([FromQuery] int? IdProducto, [FromQuery] int IdEmpresa, [FromQuery] int? IdSucursal, [FromQuery] string? Clave, [FromQuery] string Descripcion, [FromQuery] int? IdSatCatalogoProdServ, [FromQuery] int? IdSatCatalogoUM, [FromQuery] bool MaterialPeligroso = false, [FromQuery] bool Activo = true)
         {
-            var response = await _bs.Bs_Producto_Guardar(IdProducto, IdEmpresa, IdSucursal, Clave, Descripcion, UnidadMedida, ClaveSAT, MaterialPeligroso, Activo);
+            var response = await _bs.Bs_Producto_Guardar(IdProducto, IdEmpresa, IdSucursal, Clave, Descripcion, IdSatCatalogoProdServ, IdSatCatalogoUM, MaterialPeligroso, Activo);
             if (!response.Ok) return BadRequest(response);
             return Ok(response);
         }

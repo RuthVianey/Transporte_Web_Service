@@ -32,12 +32,12 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_Producto_Guardar(int? IdProducto, int IdEmpresa, int? IdSucursal, string? Clave, string Descripcion, string? UnidadMedida, string? ClaveSAT, bool MaterialPeligroso, bool Activo)
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_Producto_Guardar(int? IdProducto, int IdEmpresa, int? IdSucursal, string? Clave, string Descripcion, int? IdSatCatalogoProdServ, int? IdSatCatalogoUM, bool MaterialPeligroso, bool Activo)
         {
             using var connection = _connectionFactory.CreateConnection();
 
             return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_Producto_Guardar",
-                new { IdProducto, IdEmpresa, IdSucursal, Clave, Descripcion, UnidadMedida, ClaveSAT, MaterialPeligroso, Activo },
+                new { IdProducto, IdEmpresa, IdSucursal, Clave, Descripcion, IdSatCatalogoProdServ, IdSatCatalogoUM, MaterialPeligroso, Activo },
                 commandType: CommandType.StoredProcedure);
         }
 

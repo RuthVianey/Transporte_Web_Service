@@ -14,6 +14,7 @@ namespace Transporte_Web_Service.Entity
         public string? Ruta { get; set; }
         public int IdEstadoViaje { get; set; }
         public string? EstadoViaje { get; set; }
+        public string? Remision { get; set; }
         public DateTime? FechaSalida { get; set; }
         public DateTime? FechaLlegadaEstimada { get; set; }
         public DateTime? FechaLlegadaReal { get; set; }
@@ -57,6 +58,21 @@ namespace Transporte_Web_Service.Entity
         public int? IdUsuarioRegistro { get; set; }
         public DateTime FechaRegistro { get; set; }
         public bool Activo { get; set; }
+        public int TotalDocumentos { get; set; }
+    }
+
+    public class Entity_ViajeUnidad_Listar
+    {
+        public int IdViajeUnidad { get; set; }
+        public int IdViaje { get; set; }
+        public int IdUnidad { get; set; }
+        public string? NumeroEconomico { get; set; }
+        public string? Placas { get; set; }
+        public string? Marca { get; set; }
+        public string? Modelo { get; set; }
+        public int? IdTipoUnidad { get; set; }
+        public string? TipoUnidad { get; set; }
+        public string? TipoParticipacion { get; set; }
     }
 }
 

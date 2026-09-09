@@ -41,5 +41,22 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
+
+        public async Task<bool> SucursalPerteneceEmpresa(int idEmpresa, int idSucursal)
+        {
+            using var connection = _connectionFactory.CreateConnection();
+            const string query = @"SELECT CAST(CASE WHEN EXISTS (
+                SELECT 1 FROM dbo.Sucursal WHERE IdEmpresa = @IdEmpresa AND IdSucursal = @IdSucursal AND Activo = 1
+            ) THEN 1 ELSE 0 END AS bit);";
+            return await connection.QuerySingleAsync<bool>(query, new { IdEmpresa = idEmpresa, IdSucursal = idSucursal });
+        }
+
+        public async Task<IEnumerable<Entity_Sucursal_Listar>> SucursalesEmpresa(int idEmpresa)
+        {
+            using var connection = _connectionFactory.CreateConnection();
+            const string query = @"SELECT IdSucursal, IdEmpresa, Nombre, NombreCorto, Codigo, Activo
+                FROM dbo.Sucursal WHERE IdEmpresa=@IdEmpresa AND Activo=1 ORDER BY Nombre;";
+            return await connection.QueryAsync<Entity_Sucursal_Listar>(query, new { IdEmpresa = idEmpresa });
+        }
     }
 }

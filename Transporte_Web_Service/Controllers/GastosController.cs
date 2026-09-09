@@ -31,9 +31,9 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpGet("listaDatos_Gasto_Guardar")]
-        public async Task<IActionResult> Gasto_Guardar([FromQuery] int IdGasto, [FromQuery] int IdEmpresa, [FromQuery] int IdSucursal, [FromQuery] int IdTipoGasto, [FromQuery] int IdViaje, [FromQuery] int IdUnidad, [FromQuery] string Fecha, [FromQuery] decimal Monto, [FromQuery] string Referencia, [FromQuery] string Descripcion, [FromQuery] byte EsFacturable)
+        public async Task<IActionResult> Gasto_Guardar([FromQuery] int IdGasto, [FromQuery] int IdEmpresa, [FromQuery] int IdSucursal, [FromQuery] int IdTipoGasto, [FromQuery] int IdViaje, [FromQuery] int IdUnidad, [FromQuery] string Fecha, [FromQuery] decimal Monto, [FromQuery] string? Referencia = null, [FromQuery] string? Descripcion = null, [FromQuery] byte EsFacturable = 1)
         {
-            var response = await _bs.Bs_Gasto_Guardar(IdGasto, IdEmpresa, IdSucursal, IdTipoGasto, IdViaje, IdUnidad, Fecha, Monto, Referencia, Descripcion, EsFacturable);
+            var response = await _bs.Bs_Gasto_Guardar(IdGasto, IdEmpresa, IdSucursal, IdTipoGasto, IdViaje, IdUnidad, Fecha, Monto, Referencia ?? string.Empty, Descripcion ?? string.Empty, EsFacturable);
 
             if (!response.Ok)
             {

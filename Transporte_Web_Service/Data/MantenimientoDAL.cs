@@ -40,6 +40,21 @@ namespace Transporte_Web_Service.Data
                 commandType: CommandType.StoredProcedure
             );
         }
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_MantenimientoProgramado_Guardar(int idMantenimientoProg, int idEmpresa, int idUnidad, int? idTipoMantenimiento, string? tipoServicio, decimal? kmProximo, DateTime? fechaProxima, byte activo)
+        {
+            using var connection = _connectionFactory.CreateConnection();
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_MantenimientoProgramado_Guardar", new { IdMantenimientoProg = idMantenimientoProg, IdEmpresa = idEmpresa, IdUnidad = idUnidad, IdTipoMantenimiento = idTipoMantenimiento, TipoServicio = tipoServicio, KmProximo = kmProximo, FechaProxima = fechaProxima, Activo = activo }, commandType: CommandType.StoredProcedure);
+        }
+        public async Task<IEnumerable<Entity_MantenimientoProgramado?>> Dal_MantenimientoProgramado_Listar(int idEmpresa, int? idUnidad, byte soloActivos)
+        {
+            using var connection = _connectionFactory.CreateConnection();
+            return await connection.QueryAsync<Entity_MantenimientoProgramado?>("dbo.sp_MantenimientoProgramado_Listar", new { IdEmpresa = idEmpresa, IdUnidad = idUnidad, SoloActivos = soloActivos }, commandType: CommandType.StoredProcedure);
+        }
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_MantenimientoProgramado_Desactivar(int idMantenimientoProg, int idEmpresa)
+        {
+            using var connection = _connectionFactory.CreateConnection();
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_MantenimientoProgramado_Desactivar", new { IdMantenimientoProg = idMantenimientoProg, IdEmpresa = idEmpresa }, commandType: CommandType.StoredProcedure);
+        }
         public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_Mantenimiento_Guardar(int IdMantenimiento, int IdEmpresa, int IdSucursal, int IdUnidad, int IdViaje, int IdTipoMantenimiento, string Fecha, decimal KmUnidad, string Descripcion, decimal Costo, byte EsAsignableAViaje)
         {
 

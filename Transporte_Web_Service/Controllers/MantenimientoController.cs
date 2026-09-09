@@ -18,6 +18,27 @@ namespace Transporte_Web_Service.Controllers
             _bs = bs;
         }
 
+        [HttpGet("programado/listar")]
+        public async Task<IActionResult> MantenimientoProgramado_Listar([FromQuery] int IdEmpresa, [FromQuery] int? IdUnidad, [FromQuery] byte SoloActivos = 1)
+        {
+            var response = await _bs.Bs_MantenimientoProgramado_Listar(IdEmpresa, IdUnidad, SoloActivos);
+            return response.Ok ? Ok(response) : BadRequest(response);
+        }
+
+        [HttpGet("programado/guardar")]
+        public async Task<IActionResult> MantenimientoProgramado_Guardar([FromQuery] int IdMantenimientoProg, [FromQuery] int IdEmpresa, [FromQuery] int IdUnidad, [FromQuery] int? IdTipoMantenimiento, [FromQuery] string? TipoServicio, [FromQuery] decimal? KmProximo, [FromQuery] DateTime? FechaProxima, [FromQuery] byte Activo = 1)
+        {
+            var response = await _bs.Bs_MantenimientoProgramado_Guardar(IdMantenimientoProg, IdEmpresa, IdUnidad, IdTipoMantenimiento, TipoServicio, KmProximo, FechaProxima, Activo);
+            return response.Ok ? Ok(response) : BadRequest(response);
+        }
+
+        [HttpGet("programado/desactivar")]
+        public async Task<IActionResult> MantenimientoProgramado_Desactivar([FromQuery] int IdMantenimientoProg, [FromQuery] int IdEmpresa)
+        {
+            var response = await _bs.Bs_MantenimientoProgramado_Desactivar(IdMantenimientoProg, IdEmpresa);
+            return response.Ok ? Ok(response) : BadRequest(response);
+        }
+
         [HttpGet("listaDatos_Mantenimiento_Eliminar")]
         public async Task<IActionResult> Mantenimiento_Eliminar([FromQuery] int IdMantenimiento, [FromQuery] int IdEmpresa)
         {
@@ -32,9 +53,9 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpGet("listaDatos_Mantenimiento_Guardar")]
-        public async Task<IActionResult> Mantenimiento_Guardar([FromQuery] int IdMantenimiento, [FromQuery] int IdEmpresa, [FromQuery] int IdSucursal, [FromQuery] int IdUnidad, [FromQuery] int IdViaje, [FromQuery] int IdTipoMantenimiento, [FromQuery] string Fecha, [FromQuery] decimal KmUnidad, [FromQuery] string Descripcion, [FromQuery] decimal Costo, [FromQuery] byte EsAsignableAViaje)
+        public async Task<IActionResult> Mantenimiento_Guardar([FromQuery] int IdMantenimiento, [FromQuery] int IdEmpresa, [FromQuery] int IdSucursal, [FromQuery] int IdUnidad, [FromQuery] int IdViaje, [FromQuery] int IdTipoMantenimiento, [FromQuery] string Fecha, [FromQuery] decimal KmUnidad, [FromQuery] string? Descripcion = null, [FromQuery] decimal Costo = 0, [FromQuery] byte EsAsignableAViaje = 0)
         {
-            var response = await _bs.Bs_Mantenimiento_Guardar(IdMantenimiento, IdEmpresa, IdSucursal, IdUnidad, IdViaje, IdTipoMantenimiento, Fecha, KmUnidad, Descripcion, Costo, EsAsignableAViaje);
+            var response = await _bs.Bs_Mantenimiento_Guardar(IdMantenimiento, IdEmpresa, IdSucursal, IdUnidad, IdViaje, IdTipoMantenimiento, Fecha, KmUnidad, Descripcion ?? string.Empty, Costo, EsAsignableAViaje);
 
             if (!response.Ok)
             {
@@ -190,9 +211,9 @@ namespace Transporte_Web_Service.Controllers
         }
 
         [HttpGet("listaDatos_TipoMantenimiento_Listar")]
-        public async Task<IActionResult> TipoMantenimiento_Listar([FromQuery] int IdEmpresa, [FromQuery] byte SoloActivos, [FromQuery] string TextoBusqueda)
+        public async Task<IActionResult> TipoMantenimiento_Listar([FromQuery] int IdEmpresa, [FromQuery] byte SoloActivos, [FromQuery] string? TextoBusqueda = null)
         {
-            var response = await _bs.Bs_TipoMantenimiento_Listar(IdEmpresa, SoloActivos, TextoBusqueda);
+            var response = await _bs.Bs_TipoMantenimiento_Listar(IdEmpresa, SoloActivos, TextoBusqueda ?? string.Empty);
 
             if (!response.Ok)
             {

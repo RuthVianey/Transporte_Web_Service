@@ -121,12 +121,32 @@ namespace Transporte_Web_Service.Data
                 },
                 commandType: CommandType.StoredProcedure);
 
+            var viaje = await resultado.ReadAsync<dynamic>();
+            var eventos = await resultado.ReadAsync<dynamic>();
+
+            // El tercer resultado son movimientos del viaje. El cuarto contiene
+            // los documentos que debe consumir la pantalla de expediente.
+            await resultado.ReadAsync<dynamic>();
+            var documentos = await resultado.ReadAsync<dynamic>();
+
             return new Entity_ViajeExpediente_Obtener
             {
-                Viaje = await resultado.ReadAsync<dynamic>(),
-                Eventos = await resultado.ReadAsync<dynamic>(),
-                Documentos = await resultado.ReadAsync<dynamic>()
+                Viaje = viaje,
+                Eventos = eventos,
+                Documentos = documentos
             };
+        }
+
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_EventoViaje_Guardar(Entity_EventoViaje_Guardar entidad)
+        {
+            using var connection = _connectionFactory.CreateConnection();
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_EventoViaje_Guardar", entidad, commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<IEnumerable<Entity_RespuestaGeneral?>> Dal_ViajeDocumento_Revisar(Entity_ViajeDocumento_Revisar entidad)
+        {
+            using var connection = _connectionFactory.CreateConnection();
+            return await connection.QueryAsync<Entity_RespuestaGeneral?>("dbo.sp_ViajeDocumento_Revisar", entidad, commandType: CommandType.StoredProcedure);
         }
     }
 }

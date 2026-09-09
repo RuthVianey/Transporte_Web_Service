@@ -71,13 +71,13 @@ namespace Transporte_Web_Service.Bussines
                 ? ApiResponse<IEnumerable<Entity_Viaje_Listar?>>.Fail("No se encontró información.")
                 : ApiResponse<IEnumerable<Entity_Viaje_Listar?>>.Success(resumen);
         }
-        public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Bs_Viaje_Guardar(int? IdViaje, int IdEmpresa, int? IdSucursal, int? IdOperador, int IdCliente, int? IdRuta, int IdEstadoViaje, DateTime? FechaSalida, DateTime? FechaLlegadaEstimada, DateTime? FechaLlegadaReal, string? Origen, string? Destino, decimal? KmInicial, decimal? KmFinal, decimal Ingreso, decimal? PrecioPactado, string? Observaciones)
+        public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Bs_Viaje_Guardar(int? IdViaje, int IdEmpresa, int? IdSucursal, int? IdOperador, int IdCliente, int? IdRuta, int IdEstadoViaje, string? Remision, DateTime? FechaSalida, DateTime? FechaLlegadaEstimada, DateTime? FechaLlegadaReal, string? Origen, string? Destino, decimal? KmInicial, decimal? KmFinal, decimal Ingreso, decimal? PrecioPactado, string? Observaciones)
         {
             if (IdEmpresa <= 0) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("La empresa es obligatoria.");
             if (IdCliente <= 0) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("El cliente es obligatorio.");
             if (IdEstadoViaje <= 0) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("El estado del viaje es obligatorio.");
 
-            var resumen = await _dal.Dal_Viaje_Guardar(IdViaje, IdEmpresa, IdSucursal, IdOperador, IdCliente, IdRuta, IdEstadoViaje, FechaSalida, FechaLlegadaEstimada, FechaLlegadaReal, Origen, Destino, KmInicial, KmFinal, Ingreso, PrecioPactado, Observaciones);
+            var resumen = await _dal.Dal_Viaje_Guardar(IdViaje, IdEmpresa, IdSucursal, IdOperador, IdCliente, IdRuta, IdEstadoViaje, Remision, FechaSalida, FechaLlegadaEstimada, FechaLlegadaReal, Origen, Destino, KmInicial, KmFinal, Ingreso, PrecioPactado, Observaciones);
             return resumen == null
                 ? ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("No se encontró información.")
                 : ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(resumen);
@@ -115,6 +115,59 @@ namespace Transporte_Web_Service.Bussines
             return resumen == null
                 ? ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("No se eliminó la información.")
                 : ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(resumen);
+        }
+
+        public async Task<ApiResponse<IEnumerable<Entity_ViajeUnidad_Listar?>>> Bs_ViajeUnidad_Listar(int IdViaje, int IdEmpresa)
+        {
+            if (IdEmpresa <= 0) return ApiResponse<IEnumerable<Entity_ViajeUnidad_Listar?>>.Fail("La empresa es obligatoria.");
+            if (IdViaje <= 0) return ApiResponse<IEnumerable<Entity_ViajeUnidad_Listar?>>.Fail("El viaje es obligatorio.");
+
+            var resumen = await _dal.Dal_ViajeUnidad_Listar(IdViaje, IdEmpresa);
+            return resumen == null
+                ? ApiResponse<IEnumerable<Entity_ViajeUnidad_Listar?>>.Fail("No se encontró información.")
+                : ApiResponse<IEnumerable<Entity_ViajeUnidad_Listar?>>.Success(resumen);
+        }
+
+        public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Bs_ViajeUnidad_Asignar(int IdViaje, int IdEmpresa, int IdUnidad, string? TipoParticipacion)
+        {
+            if (IdEmpresa <= 0) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("La empresa es obligatoria.");
+            if (IdViaje <= 0) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("El viaje es obligatorio.");
+            if (IdUnidad <= 0) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("La unidad es obligatoria.");
+
+            var resumen = await _dal.Dal_ViajeUnidad_Asignar(IdViaje, IdEmpresa, IdUnidad, TipoParticipacion);
+            return resumen == null
+                ? ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("No se asignó la unidad.")
+                : ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(resumen);
+        }
+
+        public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Bs_ViajeUnidad_Quitar(int IdViajeUnidad, int IdEmpresa)
+        {
+            if (IdEmpresa <= 0) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("La empresa es obligatoria.");
+            if (IdViajeUnidad <= 0) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("La asignación de unidad es obligatoria.");
+
+            var resumen = await _dal.Dal_ViajeUnidad_Quitar(IdViajeUnidad, IdEmpresa);
+            return resumen == null
+                ? ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("No se quitó la unidad.")
+                : ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(resumen);
+        }
+
+        public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Bs_Viaje_Cerrar(int IdViaje, int IdEmpresa, int IdEstadoViaje, DateTime FechaLlegadaReal, decimal KmFinal, decimal? Ingreso, string? Observaciones)
+        {
+            if (IdEmpresa <= 0) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("La empresa es obligatoria.");
+            if (IdViaje <= 0) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("El viaje es obligatorio.");
+            if (IdEstadoViaje <= 0) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("El estado de cierre es obligatorio.");
+
+            var resumen = await _dal.Dal_Viaje_Cerrar(IdViaje, IdEmpresa, IdEstadoViaje, FechaLlegadaReal, KmFinal, Ingreso, Observaciones);
+            return resumen == null
+                ? ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("No se cerró el viaje.")
+                : ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(resumen);
+        }
+
+        public async Task<ApiResponse<IEnumerable<Entity_ValidacionCierre>>> Bs_Viaje_CierreValidar(int IdViaje, int IdEmpresa, DateTime? FechaLlegadaReal, decimal? KmFinal)
+        {
+            if (IdEmpresa <= 0) return ApiResponse<IEnumerable<Entity_ValidacionCierre>>.Fail("La empresa es obligatoria.");
+            if (IdViaje <= 0) return ApiResponse<IEnumerable<Entity_ValidacionCierre>>.Fail("El viaje es obligatorio.");
+            return ApiResponse<IEnumerable<Entity_ValidacionCierre>>.Success(await _dal.Dal_Viaje_CierreValidar(IdViaje, IdEmpresa, FechaLlegadaReal, KmFinal));
         }
     }
 }
