@@ -112,6 +112,7 @@ namespace Transporte_Web_Service.Controllers
                 return NotFound(response);
             }
 
+            await RegistrarAuditoria(IdEmpresa, "DESCARGAR", "Documento del viaje", IdViajeDocumento, $"Viaje {IdViaje}: {response.Data.NombreDescarga}");
             return PhysicalFile(response.Data.RutaFisica, response.Data.ContentType, response.Data.NombreDescarga, enableRangeProcessing: true);
         }
 

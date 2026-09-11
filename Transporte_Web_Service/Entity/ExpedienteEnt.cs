@@ -102,6 +102,7 @@ public class Entity_ViajeExpediente_Obtener
     {
         public IEnumerable<dynamic> Viaje { get; set; } = Enumerable.Empty<dynamic>();
         public IEnumerable<dynamic> Eventos { get; set; } = Enumerable.Empty<dynamic>();
+        public IEnumerable<dynamic> Movimientos { get; set; } = Enumerable.Empty<dynamic>();
         public IEnumerable<dynamic> Documentos { get; set; } = Enumerable.Empty<dynamic>();
     }
 }

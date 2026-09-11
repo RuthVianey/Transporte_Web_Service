@@ -7,11 +7,11 @@ namespace Transporte_Web_Service.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CombustibleController : ControllerBase
+    public class CombustibleController : AuditableController
     {
         private readonly CombustibleBussines _bs;
 
-        public CombustibleController(CombustibleBussines bs)
+        public CombustibleController(CombustibleBussines bs, AuditoriaBussines auditoria) : base(auditoria)
         {
             _bs = bs;
         }
@@ -26,6 +26,9 @@ namespace Transporte_Web_Service.Controllers
                 return BadRequest(response);
             }
 
+            if (OperacionExitosa(response))
+                await RegistrarAuditoria(IdEmpresa, "COSTOS", "ELIMINAR", "Carga de combustible", IdCarga, null);
+
             return Ok(response);
         }
 
@@ -38,6 +41,9 @@ namespace Transporte_Web_Service.Controllers
             {
                 return BadRequest(response);
             }
+
+            if (OperacionExitosa(response))
+                await RegistrarAuditoria(IdEmpresa, "COSTOS", IdCarga > 0 ? "MODIFICAR" : "CREAR", "Carga de combustible", response.Data?.FirstOrDefault()?.ID, $"Viaje {IdViaje}; unidad {IdUnidad}; {Litros} litros; {Referencia}");
 
             return Ok(response);
         }

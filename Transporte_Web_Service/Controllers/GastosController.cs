@@ -8,11 +8,11 @@ namespace Transporte_Web_Service.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class GastosController : ControllerBase
+    public class GastosController : AuditableController
     {
         private readonly GastosBussines _bs;
 
-        public GastosController(GastosBussines bs)
+        public GastosController(GastosBussines bs, AuditoriaBussines auditoria) : base(auditoria)
         {
             _bs = bs;
         }
@@ -27,6 +27,9 @@ namespace Transporte_Web_Service.Controllers
                 return BadRequest(response);
             }
 
+            if (OperacionExitosa(response))
+                await RegistrarAuditoria(IdEmpresa, "COSTOS", "ELIMINAR", "Gasto", IdGasto, null);
+
             return Ok(response);
         }
 
@@ -39,6 +42,9 @@ namespace Transporte_Web_Service.Controllers
             {
                 return BadRequest(response);
             }
+
+            if (OperacionExitosa(response))
+                await RegistrarAuditoria(IdEmpresa, "COSTOS", IdGasto > 0 ? "MODIFICAR" : "CREAR", "Gasto", response.Data?.FirstOrDefault()?.ID, $"Viaje {IdViaje}; unidad {IdUnidad}; monto {Monto}; {Referencia}");
 
             return Ok(response);
         }

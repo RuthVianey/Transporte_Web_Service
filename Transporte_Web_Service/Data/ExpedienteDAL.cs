@@ -124,15 +124,16 @@ namespace Transporte_Web_Service.Data
             var viaje = await resultado.ReadAsync<dynamic>();
             var eventos = await resultado.ReadAsync<dynamic>();
 
-            // El tercer resultado son movimientos del viaje. El cuarto contiene
-            // los documentos que debe consumir la pantalla de expediente.
-            await resultado.ReadAsync<dynamic>();
+            // Los movimientos activos son parte de la cronología del expediente.
+            // Se conservan separados de los eventos manuales para no duplicarlos.
+            var movimientos = await resultado.ReadAsync<dynamic>();
             var documentos = await resultado.ReadAsync<dynamic>();
 
             return new Entity_ViajeExpediente_Obtener
             {
                 Viaje = viaje,
                 Eventos = eventos,
+                Movimientos = movimientos,
                 Documentos = documentos
             };
         }

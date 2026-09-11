@@ -11,7 +11,7 @@ public sealed class PermissionMiddleware
     {
         ["Dashboard"] = "DASHBOARD", ["Rentabilidad"] = "DASHBOARD", ["Viajes"] = "VIAJES", ["Expediente"] = "EXPEDIENTES",
         ["Gastos"] = "COSTOS", ["Combustible"] = "COSTOS", ["Mantenimiento"] = "COSTOS", ["Unidades"] = "UNIDADES",
-        ["Clientes"] = "CLIENTES", ["Productos"] = "PRODUCTOS", ["Rutas"] = "RUTAS", ["Operadores"] = "OPERADORES",
+        ["Clientes"] = "CLIENTES", ["Productos"] = "PRODUCTOS", ["Impuestos"] = "PRODUCTOS", ["Rutas"] = "RUTAS", ["Operadores"] = "OPERADORES",
         ["Sucursal"] = "SUCURSALES", ["Empresa"] = "EMPRESAS", ["General"] = "EMPRESAS", ["Roles"] = "SEGURIDAD",
         ["Usuarios"] = "SEGURIDAD", ["SatCatalogos"] = "PRODUCTOS",
         ["Alertas"] = "DASHBOARD",
@@ -65,8 +65,7 @@ public sealed class PermissionMiddleware
 
     private static string? GetAuditAction(string method, string path, RequestData requestData, string? accessAction)
     {
-        if (path.Contains("documento/abrir", StringComparison.OrdinalIgnoreCase))
-            return string.Equals(accessAction, "VISTA", StringComparison.OrdinalIgnoreCase) ? "VER" : "DESCARGAR";
+        if (path.Contains("documento/abrir", StringComparison.OrdinalIgnoreCase)) return string.Equals(accessAction, "VISTA", StringComparison.OrdinalIgnoreCase) ? "VER" : "DESCARGAR";
         if (method.Equals("GET", StringComparison.OrdinalIgnoreCase)) return null;
         if (method.Equals("DELETE", StringComparison.OrdinalIgnoreCase) || path.Contains("Eliminar", StringComparison.OrdinalIgnoreCase) || path.Contains("Desactivar", StringComparison.OrdinalIgnoreCase)) return "ELIMINAR";
         if (path.Contains("revisar", StringComparison.OrdinalIgnoreCase)) return string.Equals(requestData.EstadoRevision, "RECHAZADO", StringComparison.OrdinalIgnoreCase) ? "RECHAZAR" : "APROBAR";
@@ -75,25 +74,17 @@ public sealed class PermissionMiddleware
 
     private static async Task<RequestData> ReadRequestData(HttpContext context)
     {
-        if (!string.Equals(context.Request.ContentType?.Split(';')[0], "application/json", StringComparison.OrdinalIgnoreCase)
-            || context.Request.ContentLength is not > 0) return new RequestData();
+        if (!string.Equals(context.Request.ContentType?.Split(';')[0], "application/json", StringComparison.OrdinalIgnoreCase) || context.Request.ContentLength is not > 0) return new RequestData();
         context.Request.EnableBuffering();
         using var reader = new StreamReader(context.Request.Body, Encoding.UTF8, leaveOpen: true);
-        var body = await reader.ReadToEndAsync();
-        context.Request.Body.Position = 0;
+        var body = await reader.ReadToEndAsync(); context.Request.Body.Position = 0;
         if (string.IsNullOrWhiteSpace(body)) return new RequestData();
         try
         {
-            using var document = JsonDocument.Parse(body);
-            var root = document.RootElement;
-            string? Value(string name)
-            {
-                var property = root.EnumerateObject().FirstOrDefault(item => string.Equals(item.Name, name, StringComparison.OrdinalIgnoreCase));
-                return property.Value.ValueKind == JsonValueKind.Undefined ? null : property.Value.ToString();
-            }
+            using var document = JsonDocument.Parse(body); var root = document.RootElement;
+            string? Value(string name) { var property = root.EnumerateObject().FirstOrDefault(item => string.Equals(item.Name, name, StringComparison.OrdinalIgnoreCase)); return property.Value.ValueKind == JsonValueKind.Undefined ? null : property.Value.ToString(); }
             var ids = new[] { "IdViajeDocumento", "IdEvento", "IdViajeMovimiento", "IdViaje", "IdMantenimientoProg", "IdGasto", "IdCarga", "IdUnidad", "IdOperador", "IdCliente", "IdRuta" };
-            var idName = ids.FirstOrDefault(name => int.TryParse(Value(name), out var id) && id > 0);
-            var id = idName is null ? null : Value(idName);
+            var idName = ids.FirstOrDefault(name => int.TryParse(Value(name), out var id) && id > 0); var id = idName is null ? null : Value(idName);
             return new RequestData(Value("IdEmpresa"), id, idName is not null && !string.Equals(idName, "IdViaje", StringComparison.OrdinalIgnoreCase), Value("EstadoRevision"), $"{idName ?? "Solicitud"}: {id ?? "nuevo"}");
         }
         catch (JsonException) { return new RequestData(); }

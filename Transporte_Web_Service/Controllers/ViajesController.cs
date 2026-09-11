@@ -7,11 +7,11 @@ namespace Transporte_Web_Service.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ViajesController : ControllerBase
+    public class ViajesController : AuditableController
     {
         private readonly ViajesBussines _bs;
 
-        public ViajesController(ViajesBussines bs)
+        public ViajesController(ViajesBussines bs, AuditoriaBussines auditoria) : base(auditoria)
         {
             _bs = bs;
         }
@@ -74,13 +74,17 @@ namespace Transporte_Web_Service.Controllers
         {
             var response = await _bs.Bs_Viaje_Guardar(IdViaje, IdEmpresa, IdSucursal, IdOperador, IdCliente, IdRuta, IdEstadoViaje, Remision, FechaSalida, FechaLlegadaEstimada, FechaLlegadaReal, Origen, Destino, KmInicial, KmFinal, Ingreso, PrecioPactado, Observaciones);
             if (!response.Ok) return BadRequest(response);
+            if (OperacionExitosa(response))
+                await RegistrarAuditoria(IdEmpresa, "VIAJES", IdViaje.GetValueOrDefault() > 0 ? "MODIFICAR" : "CREAR", "Viaje", response.Data?.FirstOrDefault()?.ID, $"Remision: {Remision ?? "Sin remision"}; {Origen ?? "Sin origen"} a {Destino ?? "Sin destino"}");
             return Ok(response);
         }
         [HttpGet("listaDatos_ViajeMovimiento_Guardar")]
-        public async Task<IActionResult> ViajeMovimiento_Guardar([FromQuery] int? IdViajeMovimiento, [FromQuery] int IdEmpresa, [FromQuery] int? IdSucursal, [FromQuery] int IdViaje, [FromQuery] string TipoMovimiento, [FromQuery] int? Secuencia, [FromQuery] DateTime? FechaMovimiento, [FromQuery] string? Lugar, [FromQuery] string? ClienteDestino, [FromQuery] int? IdProducto, [FromQuery] string? Producto, [FromQuery] decimal Cantidad, [FromQuery] string? UnidadMedida, [FromQuery] decimal? Temperatura, [FromQuery] decimal? Densidad, [FromQuery] string? Referencia, [FromQuery] string? Observaciones, [FromQuery] int? IdUsuarioRegistro)
+        public async Task<IActionResult> ViajeMovimiento_Guardar([FromQuery] int? IdViajeMovimiento, [FromQuery] int IdEmpresa, [FromQuery] int? IdSucursal, [FromQuery] int IdViaje, [FromQuery] string TipoMovimiento, [FromQuery] int? Secuencia, [FromQuery] DateTime? FechaMovimiento, [FromQuery] string? Lugar, [FromQuery] string? ClienteDestino, [FromQuery] int? IdProducto, [FromQuery] string? Producto, [FromQuery] decimal Cantidad, [FromQuery] string? UnidadMedida, [FromQuery] decimal? Temperatura, [FromQuery] decimal? Densidad, [FromQuery] decimal? CostoUnitarioMercancia, [FromQuery] string? Referencia, [FromQuery] string? Observaciones, [FromQuery] int? IdUsuarioRegistro)
         {
-            var response = await _bs.Bs_ViajeMovimiento_Guardar(IdViajeMovimiento, IdEmpresa, IdSucursal, IdViaje, TipoMovimiento, Secuencia, FechaMovimiento, Lugar, ClienteDestino, IdProducto, Producto, Cantidad, UnidadMedida, Temperatura, Densidad, Referencia, Observaciones, IdUsuarioRegistro);
+            var response = await _bs.Bs_ViajeMovimiento_Guardar(IdViajeMovimiento, IdEmpresa, IdSucursal, IdViaje, TipoMovimiento, Secuencia, FechaMovimiento, Lugar, ClienteDestino, IdProducto, Producto, Cantidad, UnidadMedida, Temperatura, Densidad, CostoUnitarioMercancia, Referencia, Observaciones, IdUsuarioRegistro);
             if (!response.Ok) return BadRequest(response);
+            if (OperacionExitosa(response))
+                await RegistrarAuditoria(IdEmpresa, "VIAJES", IdViajeMovimiento.GetValueOrDefault() > 0 ? "MODIFICAR" : "CREAR", "Movimiento de viaje", response.Data?.FirstOrDefault()?.ID, $"Viaje {IdViaje}: {TipoMovimiento} {Referencia ?? Lugar ?? "sin referencia"}");
             return Ok(response);
         }
 
@@ -97,6 +101,8 @@ namespace Transporte_Web_Service.Controllers
         {
             var response = await _bs.Bs_ViajeMovimiento_Eliminar(IdViajeMovimiento, IdEmpresa);
             if (!response.Ok) return BadRequest(response);
+            if (OperacionExitosa(response))
+                await RegistrarAuditoria(IdEmpresa, "VIAJES", "ELIMINAR", "Movimiento de viaje", IdViajeMovimiento, null);
             return Ok(response);
         }
 
@@ -113,6 +119,8 @@ namespace Transporte_Web_Service.Controllers
         {
             var response = await _bs.Bs_ViajeUnidad_Asignar(IdViaje, IdEmpresa, IdUnidad, TipoParticipacion);
             if (!response.Ok) return BadRequest(response);
+            if (OperacionExitosa(response))
+                await RegistrarAuditoria(IdEmpresa, "VIAJES", "ASIGNAR", "Unidad al viaje", response.Data?.FirstOrDefault()?.ID, $"Viaje {IdViaje}; unidad {IdUnidad}; participacion {TipoParticipacion ?? "OTRA"}");
             return Ok(response);
         }
 
@@ -121,6 +129,8 @@ namespace Transporte_Web_Service.Controllers
         {
             var response = await _bs.Bs_ViajeUnidad_Quitar(IdViajeUnidad, IdEmpresa);
             if (!response.Ok) return BadRequest(response);
+            if (OperacionExitosa(response))
+                await RegistrarAuditoria(IdEmpresa, "VIAJES", "QUITAR", "Unidad del viaje", IdViajeUnidad, null);
             return Ok(response);
         }
 
@@ -129,6 +139,8 @@ namespace Transporte_Web_Service.Controllers
         {
             var response = await _bs.Bs_Viaje_Cerrar(IdViaje, IdEmpresa, IdEstadoViaje, FechaLlegadaReal, KmFinal, Ingreso, Observaciones);
             if (!response.Ok) return BadRequest(response);
+            if (OperacionExitosa(response))
+                await RegistrarAuditoria(IdEmpresa, "VIAJES", "CERRAR", "Viaje", IdViaje, $"Km final: {KmFinal}");
             return Ok(response);
         }
 

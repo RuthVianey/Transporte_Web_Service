@@ -53,6 +53,10 @@ namespace Transporte_Web_Service.Entity
         public string UnidadMedida { get; set; } = string.Empty;
         public decimal? Temperatura { get; set; }
         public decimal? Densidad { get; set; }
+        public decimal? CostoUnitarioMercancia { get; set; }
+        public decimal? SubtotalMercancia { get; set; }
+        public decimal? ImpuestosMercancia { get; set; }
+        public decimal? CostoTotalMercancia { get; set; }
         public string? Referencia { get; set; }
         public string? Observaciones { get; set; }
         public int? IdUsuarioRegistro { get; set; }

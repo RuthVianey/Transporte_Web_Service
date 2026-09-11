@@ -97,6 +97,9 @@ builder.Services.AddScoped<OperadoresDAL>();
 builder.Services.AddScoped<ProductosBussines>();
 builder.Services.AddScoped<ProductosDAL>();
 
+builder.Services.AddScoped<ImpuestosBussines>();
+builder.Services.AddScoped<ImpuestosDAL>();
+
 builder.Services.AddScoped<RentabilidadBussines>();
 builder.Services.AddScoped<RentabilidadDAL>();
 

@@ -9,11 +9,11 @@ namespace Transporte_Web_Service.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class MantenimientoController : ControllerBase
+    public class MantenimientoController : AuditableController
     {
         private readonly MantenimientoBussines _bs;
 
-        public MantenimientoController(MantenimientoBussines bs)
+        public MantenimientoController(MantenimientoBussines bs, AuditoriaBussines auditoria) : base(auditoria)
         {
             _bs = bs;
         }
@@ -29,6 +29,8 @@ namespace Transporte_Web_Service.Controllers
         public async Task<IActionResult> MantenimientoProgramado_Guardar([FromQuery] int IdMantenimientoProg, [FromQuery] int IdEmpresa, [FromQuery] int IdUnidad, [FromQuery] int? IdTipoMantenimiento, [FromQuery] string? TipoServicio, [FromQuery] decimal? KmProximo, [FromQuery] DateTime? FechaProxima, [FromQuery] byte Activo = 1)
         {
             var response = await _bs.Bs_MantenimientoProgramado_Guardar(IdMantenimientoProg, IdEmpresa, IdUnidad, IdTipoMantenimiento, TipoServicio, KmProximo, FechaProxima, Activo);
+            if (OperacionExitosa(response))
+                await RegistrarAuditoria(IdEmpresa, "MANTENIMIENTO", IdMantenimientoProg > 0 ? "MODIFICAR" : "CREAR", "Programa preventivo", response.Data?.FirstOrDefault()?.ID, $"Unidad {IdUnidad}; servicio {TipoServicio ?? "Sin servicio"}");
             return response.Ok ? Ok(response) : BadRequest(response);
         }
 
@@ -36,6 +38,8 @@ namespace Transporte_Web_Service.Controllers
         public async Task<IActionResult> MantenimientoProgramado_Desactivar([FromQuery] int IdMantenimientoProg, [FromQuery] int IdEmpresa)
         {
             var response = await _bs.Bs_MantenimientoProgramado_Desactivar(IdMantenimientoProg, IdEmpresa);
+            if (OperacionExitosa(response))
+                await RegistrarAuditoria(IdEmpresa, "MANTENIMIENTO", "ELIMINAR", "Programa preventivo", IdMantenimientoProg, null);
             return response.Ok ? Ok(response) : BadRequest(response);
         }
 
@@ -49,6 +53,9 @@ namespace Transporte_Web_Service.Controllers
                 return BadRequest(response);
             }
 
+            if (OperacionExitosa(response))
+                await RegistrarAuditoria(IdEmpresa, "MANTENIMIENTO", "ELIMINAR", "Mantenimiento", IdMantenimiento, null);
+
             return Ok(response);
         }
 
@@ -61,6 +68,9 @@ namespace Transporte_Web_Service.Controllers
             {
                 return BadRequest(response);
             }
+
+            if (OperacionExitosa(response))
+                await RegistrarAuditoria(IdEmpresa, "MANTENIMIENTO", IdMantenimiento > 0 ? "MODIFICAR" : "CREAR", "Mantenimiento", response.Data?.FirstOrDefault()?.ID, $"Viaje {IdViaje}; unidad {IdUnidad}; costo {Costo}; {Descripcion}");
 
             return Ok(response);
         }

@@ -82,14 +82,15 @@ namespace Transporte_Web_Service.Bussines
                 ? ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("No se encontró información.")
                 : ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(resumen);
         }
-        public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Bs_ViajeMovimiento_Guardar(int? IdViajeMovimiento, int IdEmpresa, int? IdSucursal, int IdViaje, string TipoMovimiento, int? Secuencia, DateTime? FechaMovimiento, string? Lugar, string? ClienteDestino, int? IdProducto, string? Producto, decimal Cantidad, string? UnidadMedida, decimal? Temperatura, decimal? Densidad, string? Referencia, string? Observaciones, int? IdUsuarioRegistro)
+        public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Bs_ViajeMovimiento_Guardar(int? IdViajeMovimiento, int IdEmpresa, int? IdSucursal, int IdViaje, string TipoMovimiento, int? Secuencia, DateTime? FechaMovimiento, string? Lugar, string? ClienteDestino, int? IdProducto, string? Producto, decimal Cantidad, string? UnidadMedida, decimal? Temperatura, decimal? Densidad, decimal? CostoUnitarioMercancia, string? Referencia, string? Observaciones, int? IdUsuarioRegistro)
         {
             if (IdEmpresa <= 0) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("La empresa es obligatoria.");
             if (IdViaje <= 0) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("El viaje es obligatorio.");
             if (string.IsNullOrWhiteSpace(TipoMovimiento)) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("El tipo de movimiento es obligatorio.");
             if (Cantidad < 0) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("La cantidad no puede ser negativa.");
 
-            var resumen = await _dal.Dal_ViajeMovimiento_Guardar(IdViajeMovimiento, IdEmpresa, IdSucursal, IdViaje, TipoMovimiento, Secuencia, FechaMovimiento, Lugar, ClienteDestino, IdProducto, Producto, Cantidad, UnidadMedida, Temperatura, Densidad, Referencia, Observaciones, IdUsuarioRegistro);
+            if (CostoUnitarioMercancia.GetValueOrDefault() < 0) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("El costo unitario de mercancía no puede ser negativo.");
+            var resumen = await _dal.Dal_ViajeMovimiento_Guardar(IdViajeMovimiento, IdEmpresa, IdSucursal, IdViaje, TipoMovimiento, Secuencia, FechaMovimiento, Lugar, ClienteDestino, IdProducto, Producto, Cantidad, UnidadMedida, Temperatura, Densidad, CostoUnitarioMercancia, Referencia, Observaciones, IdUsuarioRegistro);
             return resumen == null
                 ? ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("No se guardó la información.")
                 : ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(resumen);
@@ -135,9 +136,10 @@ namespace Transporte_Web_Service.Bussines
             if (IdUnidad <= 0) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("La unidad es obligatoria.");
 
             var resumen = await _dal.Dal_ViajeUnidad_Asignar(IdViaje, IdEmpresa, IdUnidad, TipoParticipacion);
-            return resumen == null
-                ? ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("No se asignó la unidad.")
-                : ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(resumen);
+            var resultado = resumen?.FirstOrDefault();
+            if (resultado == null || resultado.Resultado.GetValueOrDefault() <= 0)
+                return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail(resultado?.Mensaje ?? "No se asignó la unidad.");
+            return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(resumen!);
         }
 
         public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Bs_ViajeUnidad_Quitar(int IdViajeUnidad, int IdEmpresa)
@@ -146,9 +148,10 @@ namespace Transporte_Web_Service.Bussines
             if (IdViajeUnidad <= 0) return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("La asignación de unidad es obligatoria.");
 
             var resumen = await _dal.Dal_ViajeUnidad_Quitar(IdViajeUnidad, IdEmpresa);
-            return resumen == null
-                ? ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail("No se quitó la unidad.")
-                : ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(resumen);
+            var resultado = resumen?.FirstOrDefault();
+            if (resultado == null || resultado.Resultado.GetValueOrDefault() <= 0)
+                return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Fail(resultado?.Mensaje ?? "No se quitó la unidad.");
+            return ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>.Success(resumen!);
         }
 
         public async Task<ApiResponse<IEnumerable<Entity_RespuestaGeneral?>>> Bs_Viaje_Cerrar(int IdViaje, int IdEmpresa, int IdEstadoViaje, DateTime FechaLlegadaReal, decimal KmFinal, decimal? Ingreso, string? Observaciones)
